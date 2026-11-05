@@ -1,0 +1,24 @@
+# ninja log v7
+61	3369	8156159390389481	CMakeFiles/verity_core.dir/src/verity/util/Logger.cpp.obj	15b42783a34a5886
+207	3449	8156159391846413	CMakeFiles/verity_tests.dir/tests/dm/test_counting.cpp.obj	ec43738526c51002
+167	5266	8156159391451627	CMakeFiles/verity_tests.dir/tests/ds/test_ds_core.cpp.obj	f39be06efc5c232
+175	5986	8156159391541372	CMakeFiles/verity_tests.dir/tests/ds/test_hashtable.cpp.obj	266c1cf4d29b738a
+199	7533	8156159391772399	CMakeFiles/verity_tests.dir/tests/dm/test_sets.cpp.obj	8ad1be2ca3570ec4
+75	7162	8156159390526023	CMakeFiles/verity_core.dir/src/verity/model/Node.cpp.obj	498ada5829687dc5
+94	6435	8156159390732075	CMakeFiles/verity_core.dir/src/verity/model/NodeStore.cpp.obj	1405afb53816c7f6
+85	8589	8156159390606945	CMakeFiles/verity_core.dir/src/verity/model/ClaimNode.cpp.obj	2b4bd1383d5b4b9
+135	8722	8156159391134237	CMakeFiles/verity_tests.dir/tests/test_main.cpp.obj	95719b9f27e53b87
+182	7747	8156159391598358	CMakeFiles/verity_tests.dir/tests/ds/test_graph.cpp.obj	156e0c60fc586eb4
+152	10536	8156159391309790	CMakeFiles/verity_tests.dir/tests/oop/test_binding.cpp.obj	321cbf4e8dafaecc
+119	11891	8156159390975339	CMakeFiles/verity_core.dir/src/verity/engine/VerityEngine.cpp.obj	883b7a245dbb97d5
+215	12228	8156159391947977	CMakeFiles/verity_tests.dir/tests/io/test_jsonloader.cpp.obj	d4a212b1931b1874
+222	10202	8156159392008248	CMakeFiles/verity_tests.dir/tests/integration/test_pipeline.cpp.obj	ce66b73769e12da0
+143	11792	8156159391197174	CMakeFiles/verity_tests.dir/tests/oop/test_model.cpp.obj	b2155e74a4df8e9d
+160	9918	8156159391353000	CMakeFiles/verity_tests.dir/tests/oop/test_nodestore.cpp.obj	149ffba95cc6bf82
+127	12339	8156159391058831	CMakeFiles/verity_cli.dir/app/main.cpp.obj	72a7a9159caf297e
+111	11372	8156159390894812	CMakeFiles/verity_core.dir/src/verity/engine/GraphBuilder.cpp.obj	7a28ebfc3f99f5dd
+102	13491	8156159390777932	CMakeFiles/verity_core.dir/src/verity/io/JsonLoader.cpp.obj	da88a30a982b77cc
+58	354	8156159742615269	verity_core.lib	bf0448ea7f435c90
+77	1330	8156159742778901	CMakeFiles/verity_tests.dir/tests/dm/test_numtheory.cpp.obj	744ef6e14a30d003
+354	1405	8156159745560300	verity.exe	862ed1185b5b0d86
+1331	2520	8156159755333735	verity_tests.exe	9cc1ad45e5d4a7a3

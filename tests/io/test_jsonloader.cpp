@@ -31,7 +31,7 @@ const char* kGood = R"JSON({
      "object": {"kind": "StringValue", "text": "Bellhaven"},
      "polarity": "Positive", "confidence": 0.9,
      "document_id": "D001",
-     "span": {"start": 44, "end": 53, "quote": "Bellhaven"},
+     "span": {"start": 39, "end": 48, "quote": "Bellhaven"},
      "valid_from": null, "valid_to": null}
   ],
   "events": [],

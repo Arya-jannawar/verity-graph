@@ -1,0 +1,61 @@
+{
+  "$comment": "Frozen starter predicate vocabulary — mirrors docs/CONTRACT.md section 9. Domain/range describe the intended subject/object entity types; 'string' in range marks free-text objects allowed for phase-1 wire claims.",
+  "predicates": [
+    {
+      "name": "announced",
+      "domain": ["Organization", "Product"],
+      "range": ["Product", "Event", "string"],
+      "temporal_meaning": "The date a public statement was made. Not the availability date; announcement and launch are different predicates.",
+      "functional": false,
+      "description": "Subject publicly announced the object (product, event, or free-text program) on/around the claim's valid time."
+    },
+    {
+      "name": "launched",
+      "domain": ["Organization", "Product"],
+      "range": ["Product", "Event", "string"],
+      "temporal_meaning": "The date the object became available. Distinct from announced; a near-conflict between announced and launched dates is benign.",
+      "functional": false,
+      "description": "Subject launched/made available the object on/around the claim's valid time."
+    },
+    {
+      "name": "has_ceo",
+      "domain": ["Organization"],
+      "range": ["Person"],
+      "temporal_meaning": "The person held the CEO office during the claim's valid_time interval. Different CEOs at disjoint times are NOT contradictory.",
+      "functional": true,
+      "description": "Subject's chief executive officer is the object person, valid during the claim's validity interval."
+    },
+    {
+      "name": "located_at",
+      "domain": ["Organization", "Person"],
+      "range": ["Location"],
+      "temporal_meaning": "The subject was located at the place during the claim's valid_time interval. Conflict findings require a justified temporal overlap.",
+      "functional": true,
+      "description": "Subject's location is the object place, valid during the claim's validity interval."
+    },
+    {
+      "name": "present_at",
+      "domain": ["Person"],
+      "range": ["Location", "Event", "string"],
+      "temporal_meaning": "The person was present at the place/event during the claim's interval. Incompatible simultaneous presence findings require a defined incompatibility policy.",
+      "functional": false,
+      "description": "Person attended / was present at the object place or event."
+    },
+    {
+      "name": "happened_before",
+      "domain": ["Event"],
+      "range": ["Event"],
+      "temporal_meaning": "Strict partial order over events. Valid only when acyclic; a cycle is reported as a 'Potential temporal contradiction' with a witness path.",
+      "functional": false,
+      "description": "Event A happened strictly before event B."
+    },
+    {
+      "name": "cites",
+      "domain": ["Document"],
+      "range": ["Document"],
+      "temporal_meaning": "Static citation edge; no time semantics.",
+      "functional": false,
+      "description": "Document A cites document B as a source. Cycles enable circular-sourcing findings."
+    }
+  ]
+}

@@ -37,9 +37,11 @@ TEST_CASE("extendedGcd: Bezout identity a*x + b*y == gcd(a,b)") {
     for (const auto& [a, b] : cases) {
         const auto [g, x, y] = extendedGcd(a, b);
         CHECK_EQ(g, gcd(a, b));
-        // verify a*x + b*y == g in signed arithmetic (values small enough)
-        const __int128 lhs = static_cast<__int128>(a) * x + static_cast<__int128>(b) * y;
-        CHECK_EQ(lhs, static_cast<__int128>(g));
+        // a*x + b*y == g, checked in int64 (portable: MSVC has no __int128).
+        // |a*x| and |b*y| stay under 2^63 for these cases, and the two terms
+        // carry opposite signs (g > 0) so their sum cannot overflow.
+        const std::int64_t lhs = static_cast<std::int64_t>(a) * x + static_cast<std::int64_t>(b) * y;
+        CHECK_EQ(lhs, static_cast<std::int64_t>(g));
     }
 }
 

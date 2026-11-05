@@ -22,3 +22,9 @@
 19732	20099	8156154981294658	verity_tests.exe	5da7205dba2e53a1
 131	20625	8156154785302868	CMakeFiles/verity_cli.dir/app/main.cpp.obj	b97e4c3fa64b263a
 20625	20881	8156154990225270	verity.exe	f4d57fc4caac2cd8
+28	2891	8156157576053472	CMakeFiles/verity_tests.dir/tests/ds/test_hashtable.cpp.obj	43b9eb416daa2c61
+16	5401	8156157575924930	CMakeFiles/verity_core.dir/src/verity/engine/GraphBuilder.cpp.obj	77c72dd319c8f19e
+5401	5549	8156157629769452	verity_core.lib	d508dc2fa5bbb106
+5549	5853	8156157631257323	verity.exe	f4d57fc4caac2cd8
+38	7389	8156157576147830	CMakeFiles/verity_tests.dir/tests/io/test_jsonloader.cpp.obj	e10b0a9b03329854
+7390	7667	8156157649671276	verity_tests.exe	5da7205dba2e53a1

@@ -1,0 +1,6 @@
+D:/VIT/cp project/build-msan/CMakeFiles/verity_core.dir
+D:/VIT/cp project/build-msan/CMakeFiles/verity_cli.dir
+D:/VIT/cp project/build-msan/CMakeFiles/verity_tests.dir
+D:/VIT/cp project/build-msan/CMakeFiles/test.dir
+D:/VIT/cp project/build-msan/CMakeFiles/edit_cache.dir
+D:/VIT/cp project/build-msan/CMakeFiles/rebuild_cache.dir

@@ -67,7 +67,7 @@ TEST_CASE("HashTable: string keys use polynomial hash consistently") {
         CHECK_EQ(*t.get("key_" + std::to_string(i)), i);
     }
     CHECK_EQ(t.size(), 500u);
-    CHECK_EQ(t.bucketCount(), static_cast<std::size_t>(verity::dm::nextPrime(t.bucketCount())));
+    CHECK(verity::dm::isPrime(t.bucketCount()));   // capacity stays prime
 }
 
 TEST_CASE("HashTable: iteration enumerates exactly all entries") {
