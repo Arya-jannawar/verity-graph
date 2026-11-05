@@ -1,0 +1,148 @@
+{
+  "schema_version": "1.0.0",
+  "documents": [
+    {
+      "id": "D007",
+      "filename": "d007_industry_wire.txt",
+      "format": "txt",
+      "normalized_text": "Industry Wire\n\nAster Vale Systems launched Product X in Crescent Bay on 2024-06-05,\naccording to this wire report. The report also states that Aster Vale\nSystems appointed Priya Raman as chief executive officer since 2023-06.\n\nProduct X shipped 8 modules according to the wire. This report cites the\nanalyst note as background.\n",
+      "metadata": {
+        "language": "en"
+      },
+      "citations": [
+        "D008"
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "id": "E004",
+      "name": "Product X",
+      "type": "Product",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D007",
+          "span": {
+            "start": 43,
+            "end": 52,
+            "quote": "Product X"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E001",
+      "name": "Aster Vale Systems",
+      "type": "Organization",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D007",
+          "span": {
+            "start": 15,
+            "end": 33,
+            "quote": "Aster Vale Systems"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E013",
+      "name": "Priya Raman",
+      "type": "Person",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D007",
+          "span": {
+            "start": 172,
+            "end": 183,
+            "quote": "Priya Raman"
+          }
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "C014",
+      "subject_id": "E004",
+      "predicate": "launched",
+      "object": {
+        "kind": "DateValue",
+        "date": "2024-06-05"
+      },
+      "polarity": "Positive",
+      "confidence": 0.85,
+      "document_id": "D007",
+      "span": {
+        "start": 15,
+        "end": 82,
+        "quote": "Aster Vale Systems launched Product X in Crescent Bay on 2024-06-05"
+      },
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "id": "C015",
+      "subject_id": "E001",
+      "predicate": "has_ceo",
+      "object": {
+        "kind": "EntityRef",
+        "entity_id": "E013"
+      },
+      "polarity": "Positive",
+      "confidence": 0.85,
+      "document_id": "D007",
+      "span": {
+        "start": 143,
+        "end": 210,
+        "quote": "Aster Vale\nSystems appointed Priya Raman as chief executive officer"
+      },
+      "valid_from": "2023-06",
+      "valid_to": null
+    },
+    {
+      "id": "C016",
+      "subject_id": "E004",
+      "predicate": "launched",
+      "object": {
+        "kind": "QuantityValue",
+        "quantity": 8.0,
+        "unit": "modules"
+      },
+      "polarity": "Positive",
+      "confidence": 0.8,
+      "document_id": "D007",
+      "span": {
+        "start": 227,
+        "end": 276,
+        "quote": "Product X shipped 8 modules according to the wire"
+      },
+      "valid_from": null,
+      "valid_to": null
+    }
+  ],
+  "events": [
+    {
+      "id": "EV005",
+      "label": "Product X Crescent Bay launch",
+      "entity_id": "E004",
+      "date": "2024-06-05",
+      "document_id": "D007",
+      "span": {
+        "start": 72,
+        "end": 82,
+        "quote": "2024-06-05"
+      }
+    }
+  ],
+  "citations": [
+    {
+      "citing": "D007",
+      "cited": "D008",
+      "span": null
+    }
+  ]
+}

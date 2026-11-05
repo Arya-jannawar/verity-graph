@@ -1,0 +1,183 @@
+{
+  "schema_version": "1.0.0",
+  "documents": [
+    {
+      "id": "D006",
+      "filename": "d006_press_release.txt",
+      "format": "txt",
+      "normalized_text": "Aster Vale Press Release\n\nProduct X launched in Bellhaven on 2024-03-10 at the Aster Vale Systems\nshowcase. Aster Vale Systems had announced Product X in 2024-03.\n\nElena Vasquez was present at the showcase in Bellhaven. The company\nshipped 5 modules of Product X at launch.\n",
+      "metadata": {
+        "language": "en"
+      },
+      "citations": [
+        "D007"
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "id": "E004",
+      "name": "Product X",
+      "type": "Product",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D006",
+          "span": {
+            "start": 26,
+            "end": 35,
+            "quote": "Product X"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E001",
+      "name": "Aster Vale Systems",
+      "type": "Organization",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D006",
+          "span": {
+            "start": 79,
+            "end": 97,
+            "quote": "Aster Vale Systems"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E003",
+      "name": "Bellhaven",
+      "type": "Location",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D006",
+          "span": {
+            "start": 48,
+            "end": 57,
+            "quote": "Bellhaven"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E009",
+      "name": "Elena Vasquez",
+      "type": "Person",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D006",
+          "span": {
+            "start": 164,
+            "end": 177,
+            "quote": "Elena Vasquez"
+          }
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "C010",
+      "subject_id": "E004",
+      "predicate": "launched",
+      "object": {
+        "kind": "DateValue",
+        "date": "2024-03-10"
+      },
+      "polarity": "Positive",
+      "confidence": 0.9,
+      "document_id": "D006",
+      "span": {
+        "start": 26,
+        "end": 71,
+        "quote": "Product X launched in Bellhaven on 2024-03-10"
+      },
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "id": "C011",
+      "subject_id": "E001",
+      "predicate": "announced",
+      "object": {
+        "kind": "DateValue",
+        "date": "2024-03"
+      },
+      "polarity": "Positive",
+      "confidence": 0.85,
+      "document_id": "D006",
+      "span": {
+        "start": 108,
+        "end": 161,
+        "quote": "Aster Vale Systems had announced Product X in 2024-03"
+      },
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "id": "C012",
+      "subject_id": "E009",
+      "predicate": "present_at",
+      "object": {
+        "kind": "StringValue",
+        "text": "Bellhaven showcase"
+      },
+      "polarity": "Positive",
+      "confidence": 0.85,
+      "document_id": "D006",
+      "span": {
+        "start": 164,
+        "end": 218,
+        "quote": "Elena Vasquez was present at the showcase in Bellhaven"
+      },
+      "valid_from": "2024-03-10",
+      "valid_to": "2024-03-10"
+    },
+    {
+      "id": "C013",
+      "subject_id": "E004",
+      "predicate": "launched",
+      "object": {
+        "kind": "QuantityValue",
+        "quantity": 5.0,
+        "unit": "modules"
+      },
+      "polarity": "Positive",
+      "confidence": 0.8,
+      "document_id": "D006",
+      "span": {
+        "start": 220,
+        "end": 272,
+        "quote": "The company\nshipped 5 modules of Product X at launch"
+      },
+      "valid_from": null,
+      "valid_to": null
+    }
+  ],
+  "events": [
+    {
+      "id": "EV004",
+      "label": "Product X Bellhaven launch",
+      "entity_id": "E004",
+      "date": "2024-03-10",
+      "document_id": "D006",
+      "span": {
+        "start": 61,
+        "end": 71,
+        "quote": "2024-03-10"
+      }
+    }
+  ],
+  "citations": [
+    {
+      "citing": "D006",
+      "cited": "D007",
+      "span": null
+    }
+  ]
+}

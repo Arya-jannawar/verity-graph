@@ -1,0 +1,131 @@
+{
+  "schema_version": "1.0.0",
+  "documents": [
+    {
+      "id": "D009",
+      "filename": "d009_board_memo.txt",
+      "format": "txt",
+      "normalized_text": "Board Memo\n\nElena Vasquez was present at the Crescent Bay summit on 2024-03-10,\nadvising Northstar Meridian Labs. Maria Chen has served as chief\nexecutive officer of Aster Vale Systems since 2022-01.\n\nThis memo documents the consultant's schedule and cites the Northstar\noverview as context.\n",
+      "metadata": {
+        "language": "en"
+      },
+      "citations": [
+        "D002"
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "id": "E009",
+      "name": "Elena Vasquez",
+      "type": "Person",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D009",
+          "span": {
+            "start": 12,
+            "end": 25,
+            "quote": "Elena Vasquez"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E002",
+      "name": "Maria Chen",
+      "type": "Person",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D009",
+          "span": {
+            "start": 114,
+            "end": 124,
+            "quote": "Maria Chen"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E001",
+      "name": "Aster Vale Systems",
+      "type": "Organization",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D009",
+          "span": {
+            "start": 166,
+            "end": 184,
+            "quote": "Aster Vale Systems"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E006",
+      "name": "Northstar Meridian Labs",
+      "type": "Organization",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D009",
+          "span": {
+            "start": 89,
+            "end": 112,
+            "quote": "Northstar Meridian Labs"
+          }
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "C019",
+      "subject_id": "E009",
+      "predicate": "present_at",
+      "object": {
+        "kind": "StringValue",
+        "text": "Crescent Bay summit"
+      },
+      "polarity": "Positive",
+      "confidence": 0.9,
+      "document_id": "D009",
+      "span": {
+        "start": 12,
+        "end": 78,
+        "quote": "Elena Vasquez was present at the Crescent Bay summit on 2024-03-10"
+      },
+      "valid_from": "2024-03-10",
+      "valid_to": "2024-03-10"
+    },
+    {
+      "id": "C020",
+      "subject_id": "E001",
+      "predicate": "has_ceo",
+      "object": {
+        "kind": "EntityRef",
+        "entity_id": "E002"
+      },
+      "polarity": "Positive",
+      "confidence": 0.95,
+      "document_id": "D009",
+      "span": {
+        "start": 114,
+        "end": 184,
+        "quote": "Maria Chen has served as chief\nexecutive officer of Aster Vale Systems"
+      },
+      "valid_from": "2022-01",
+      "valid_to": null
+    }
+  ],
+  "events": [],
+  "citations": [
+    {
+      "citing": "D009",
+      "cited": "D002",
+      "span": null
+    }
+  ]
+}

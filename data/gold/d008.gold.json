@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0.0",
+  "documents": [
+    {
+      "id": "D008",
+      "filename": "d008_analyst_note.txt",
+      "format": "txt",
+      "normalized_text": "Analyst Note\n\nAnalysts noted that Aster Vale Systems did not launch Product X in\nCrescent Bay on 2024-06-05. The note repeats the March timeline: Product\nX had launched in Bellhaven on 2024-03-10.\n\nThe analyst note cites the Aster Vale press release as its source.\n",
+      "metadata": {
+        "language": "en"
+      },
+      "citations": [
+        "D006"
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "id": "E004",
+      "name": "Product X",
+      "type": "Product",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D008",
+          "span": {
+            "start": 68,
+            "end": 77,
+            "quote": "Product X"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E001",
+      "name": "Aster Vale Systems",
+      "type": "Organization",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D008",
+          "span": {
+            "start": 34,
+            "end": 52,
+            "quote": "Aster Vale Systems"
+          }
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "C017",
+      "subject_id": "E004",
+      "predicate": "launched",
+      "object": {
+        "kind": "DateValue",
+        "date": "2024-06-05"
+      },
+      "polarity": "Negative",
+      "confidence": 0.85,
+      "document_id": "D008",
+      "span": {
+        "start": 34,
+        "end": 107,
+        "quote": "Aster Vale Systems did not launch Product X in\nCrescent Bay on 2024-06-05"
+      },
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "id": "C018",
+      "subject_id": "E004",
+      "predicate": "launched",
+      "object": {
+        "kind": "DateValue",
+        "date": "2024-03-10"
+      },
+      "polarity": "Positive",
+      "confidence": 0.8,
+      "document_id": "D008",
+      "span": {
+        "start": 146,
+        "end": 195,
+        "quote": "Product\nX had launched in Bellhaven on 2024-03-10"
+      },
+      "valid_from": null,
+      "valid_to": null
+    }
+  ],
+  "events": [],
+  "citations": [
+    {
+      "citing": "D008",
+      "cited": "D006",
+      "span": null
+    }
+  ]
+}

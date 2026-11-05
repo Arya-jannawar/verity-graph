@@ -61,6 +61,10 @@ add_library(verity_core STATIC
   src/verity/engine/VerityEngine.cpp
   src/verity/engine/EntityResolver.cpp
   src/verity/engine/TimelineBuilder.cpp
+  src/verity/dm/Logic.cpp
+  src/verity/dm/Inference.cpp
+  src/verity/engine/ConflictDetector.cpp
+  src/verity/engine/Reasoning.cpp
 )
 target_include_directories(verity_core PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/include

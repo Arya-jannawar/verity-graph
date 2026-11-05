@@ -1,0 +1,13 @@
+# VERITY GRAPH conflict-rule configuration (frozen DSL grammar, see
+# ConflictDetector::RuleFactory). Lines starting with '#' are comments.
+#   functional <predicate|any> overlap      — functional predicate value clash
+#   negation <predicate|any> overlap        — opposite polarity on same value
+#   numeric <predicate|any> same_unit       — same-unit quantity mismatch
+#   location <predicate> overlap            — same-person different-place
+#   temporal_cycle <predicate>              — happened-before cycle witness
+functional has_ceo overlap
+functional launched overlap
+negation any overlap
+numeric any same_unit
+location present_at overlap
+temporal_cycle happened_before
