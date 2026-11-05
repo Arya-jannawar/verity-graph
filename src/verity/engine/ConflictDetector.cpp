@@ -35,14 +35,38 @@ bool valuesConflict(const model::ClaimObject& a, const model::ClaimObject& b) {
     return objectValue(a) != objectValue(b);
 }
 
-/// Optional valid-time interval of a claim (from valid_from/valid_to).
+/// Optional valid-time interval of a claim. A lone valid_from means OPEN-ENDED
+/// from that date ("since 2022-01" has no end); a lone valid_to means open at
+/// the start. One-sided bounds expand to full-precision calendar units so
+/// "since 2022-01" covers [2022-01-01, +inf) rather than a single month.
 std::optional<model::DateInterval> validTimeOf(const model::ClaimRecord& c) {
     if (!c.valid_from && !c.valid_to) return std::nullopt;
     if (c.valid_from && c.valid_to) {
         return model::DateInterval::fromJson(
             nlohmann::json{{"from", *c.valid_from}, {"to", *c.valid_to}});
     }
-    return model::DateInterval::fromString(c.valid_from ? *c.valid_from : *c.valid_to);
+    const model::DatePoint kFar{9999, 12, 31};
+    const model::DatePoint kPast{1, 1, 1};
+    if (c.valid_from) {
+        const model::DateInterval start = model::DateInterval::fromString(*c.valid_from);
+        const model::DateInterval expanded =
+            start.precision == model::DatePrecision::Day
+                ? start
+                : model::DateInterval::fromPoint(start.start);
+        model::DateInterval out = expanded;
+        out.precision = model::DatePrecision::Day;   // exact bounds below
+        out.end = kFar;                              // open-ended future
+        return out;
+    }
+    const model::DateInterval end = model::DateInterval::fromString(*c.valid_to);
+    const model::DateInterval expanded =
+        end.precision == model::DatePrecision::Day
+            ? end
+            : model::DateInterval::fromPoint(end.start);
+    model::DateInterval out = expanded;
+    out.precision = model::DatePrecision::Day;   // exact bounds below
+    out.start = kPast;                           // open-ended past
+    return out;
 }
 
 /// Two claims' validity intervals overlap (absent intervals count as
@@ -113,7 +137,7 @@ private:
         }
     }
 
-    void detectKey(const DetectionContext& context, const std::string& predicate,
+    void detectKey(const DetectionContext& context, const std::string& /*predicate*/,
                    const std::string& subject, const std::vector<std::string>& claimIds,
                    std::vector<Conflict>& findings) const {
         // canonical subject grouping: only compare claims whose CANONICAL
@@ -135,6 +159,8 @@ private:
                 // is preserved (CONTRACT 10.4)
                 if (a.polarity != "Positive" || b.polarity != "Positive") continue;
                 if (a.object.kind != b.object.kind) continue;
+                // QuantityValue pairs belong to NumericMismatchRule
+                if (a.object.kind == model::ClaimObject::Kind::QuantityValue) continue;
                 if (!valuesConflict(a.object, b.object)) continue;
                 if (overlap_ && !validityOverlaps(a, b)) continue;
                 findings.push_back(makeConflict(

@@ -65,11 +65,15 @@ TEST_CASE("static nextId: per-prefix counters are stable and padded") {
 }
 
 TEST_CASE("observeId: counters resume above loaded ids (no post-load collisions)") {
+    // counters are process-global and other test files observe gold ids, so
+    // assert the RELATIVE guarantee: after observing X, the next id exceeds X
     Node::observeId("C777");
     const std::string next = Node::nextId("C");
-    CHECK_EQ(next, std::string("C778"));
-    Node::observeId("EV005");
-    CHECK_EQ(Node::nextId("EV"), std::string("EV006"));
+    CHECK(NodeId(next) > NodeId("C777"));
+    CHECK(NodeId(next) <= NodeId("C999"));
+    Node::observeId("EV900");
+    const std::string nextEv = Node::nextId("EV");
+    CHECK(NodeId(nextEv) > NodeId("EV900"));
 }
 
 TEST_CASE("live-object counter balances across construction and destruction") {

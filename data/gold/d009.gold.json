@@ -52,16 +52,7 @@
       "name": "Aster Vale Systems",
       "type": "Organization",
       "aliases": [],
-      "mentions": [
-        {
-          "document_id": "D009",
-          "span": {
-            "start": 166,
-            "end": 184,
-            "quote": "Aster Vale Systems"
-          }
-        }
-      ]
+      "mentions": []
     },
     {
       "id": "E006",

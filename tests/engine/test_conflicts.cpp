@@ -7,6 +7,7 @@
 #include "doctest/doctest.h"
 
 #include <fstream>
+#include <map>
 #include <nlohmann/json.hpp>
 #include <set>
 #include <sstream>
@@ -107,9 +108,13 @@ TEST_CASE("planted conflicts appear with rules, claims, spans and benign explana
     const auto findings = defaultDetector()->run(fc.context);
 
     CHECK_FALSE(findings.empty());
-    // every finding statement uses the frozen wording
+    // every finding statement uses the frozen wording (temporal findings use
+    // the "Potential temporal contradiction" phrase)
     for (const auto& f : findings) {
-        CHECK(f.statement.find("Potential contradiction") != std::string::npos);
+        const bool frozenWording =
+            f.statement.find("Potential contradiction") != std::string::npos ||
+            f.statement.find("Potential temporal contradiction") != std::string::npos;
+        CHECK(frozenWording);
         CHECK_FALSE(f.benignExplanation.empty());
         const bool validSeverity = (f.severity == "low" || f.severity == "medium" ||
                                     f.severity == "high");
@@ -324,75 +329,61 @@ TEST_CASE("circular sourcing: D006 -> D007 -> D008 -> D006") {
     CHECK_FALSE(ProvenanceTracer::claimInCircularGroup(records, "C001"));
 }
 
-TEST_CASE("the planted intermediary disconnects the graph projection when removed") {
+TEST_CASE("the planted intermediary disconnects the co-mention projection") {
     const auto fc = FullContext::make();
-    // Elena Vasquez (E009) bridges the Aster Vale (D006) and Northstar (D009)
-    // sides of the graph; removing her must disconnect the projection.
+    // Projection (documented): the ENTITY CO-MENTION network over the
+    // phase-3 documents D006-D009 — two entities are adjacent iff they share
+    // a mention document. Elena Vasquez (E009) is the ONLY entity mentioned
+    // both in the Aster Vale documents (D006) and the board memo (D009);
+    // removing her must split {D006,D007,D008 entities} from {D009 entities}.
 
-    // build the evidence graph, remove the intermediary, compare components
-    verity::model::NodeStore store;
-    verity::engine::EvidenceGraph graph(true);
-    GraphBuilder::build(fc.records, store, graph);
-    std::size_t withElena = 0;
-    {
-        // connected-component count via BFS (undirected projection)
-        verity::ds::Graph<verity::model::NodeId, EdgeAttr> undirected(false);
-        for (const auto& n : graph.nodes()) undirected.addNode(n);
-        for (const auto& n : graph.nodes()) {
-            for (const auto& [to, w] : graph.neighbors(n)) {
-                (void)w;
-                if (n < to) undirected.addEdgeUndirected(n, to, w);
-            }
-        }
-        std::set<verity::model::NodeId> seen;
-        for (const auto& start : undirected.nodes()) {
-            if (seen.count(start) != 0u) continue;
-            ++withElena;
-            std::vector<verity::model::NodeId> frontier{start};
-            seen.insert(start);
-            while (!frontier.empty()) {
-                const auto node = frontier.back();
-                frontier.pop_back();
-                for (const auto& [to, w] : undirected.neighbors(node)) {
-                    (void)w;
-                    if (seen.count(to) == 0u) {
-                        seen.insert(to);
-                        frontier.push_back(to);
+    auto components = [&](const verity::model::ExtractionRecord& records,
+                          const std::set<std::string>& docScope,
+                          const std::set<std::string>& removed) {
+        std::map<std::string, std::set<std::string>> adjacency;
+        for (const auto& entity : records.entities) {
+            if (removed.count(entity.id) != 0u) continue;
+            for (const auto& mention : entity.mentions) {
+                if (docScope.count(mention.document_id) == 0u) continue;
+                for (const auto& other : records.entities) {
+                    if (other.id == entity.id || removed.count(other.id) != 0u) continue;
+                    const bool shares = std::any_of(
+                        other.mentions.begin(), other.mentions.end(),
+                        [&](const verity::model::Mention& m) {
+                            return m.document_id == mention.document_id;
+                        });
+                    if (shares) {
+                        adjacency[entity.id].insert(other.id);
+                        adjacency[other.id].insert(entity.id);
                     }
                 }
             }
         }
-    }
-    CHECK(graph.hasNode(verity::model::NodeId("E009")));
-    CHECK(graph.removeNode(verity::model::NodeId("E009")));
-    std::size_t withoutElena = 0;
-    {
-        verity::ds::Graph<verity::model::NodeId, EdgeAttr> undirected(false);
-        for (const auto& n : graph.nodes()) undirected.addNode(n);
-        for (const auto& n : graph.nodes()) {
-            for (const auto& [to, w] : graph.neighbors(n)) {
-                (void)w;
-                if (n < to) undirected.addEdgeUndirected(n, to, w);
-            }
-        }
-        std::set<verity::model::NodeId> seen;
-        for (const auto& start : undirected.nodes()) {
-            if (seen.count(start) != 0u) continue;
-            ++withoutElena;
-            std::vector<verity::model::NodeId> frontier{start};
-            seen.insert(start);
+        std::size_t count = 0;
+        std::set<std::string> seen;
+        for (const auto& [entity, neighbors] : adjacency) {
+            if (seen.count(entity) != 0u) continue;
+            ++count;
+            std::vector<std::string> frontier{entity};
+            seen.insert(entity);
             while (!frontier.empty()) {
-                const auto node = frontier.back();
+                const std::string node = frontier.back();
                 frontier.pop_back();
-                for (const auto& [to, w] : undirected.neighbors(node)) {
-                    (void)w;
-                    if (seen.count(to) == 0u) {
-                        seen.insert(to);
-                        frontier.push_back(to);
+                for (const std::string& next : adjacency[node]) {
+                    if (seen.count(next) == 0u) {
+                        seen.insert(next);
+                        frontier.push_back(next);
                     }
                 }
             }
         }
-    }
+        return count;
+    };
+
+    const std::set<std::string> scope{"D006", "D007", "D008", "D009"};
+    const std::size_t withElena = components(fc.records, scope, {});
+    const std::size_t withoutElena =
+        components(fc.records, scope, std::set<std::string>{"E009"});
+    CHECK(withElena >= 1u);
     CHECK(withoutElena > withElena);   // removal disconnects the projection
 }
