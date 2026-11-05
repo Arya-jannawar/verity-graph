@@ -15,8 +15,6 @@
 #include "verity/dm/NoisyOr.hpp"
 #include "verity/util/VerityError.hpp"
 
-using verity::dm::GraphAnalysisFriend;
-
 namespace {
 
 verity::ds::Graph<std::string, double> cycle4() {
@@ -63,8 +61,7 @@ TEST_CASE("isolated, pendant, connected components") {
     const auto pendant = verity::dm::pendantVertices(g);
     CHECK_EQ(isolated.size(), 1u);
     CHECK_EQ(isolated[0], "D");
-    CHECK_EQ(pendant.size(), 1u);   // A and E both degree 1 -> 2
-    CHECK_EQ(pendant.size(), 2u);
+    CHECK_EQ(pendant.size(), 2u);   // A and E both degree 1
     CHECK_EQ(verity::dm::connectedComponents(g), 2u);
     CHECK_FALSE(verity::dm::isConnected(g));
 }
@@ -85,8 +82,8 @@ TEST_CASE("bipartite: even cycle yes, odd cycle no") {
 TEST_CASE("Euler existence") {
     const auto circuit = cycle4();
     CHECK_EQ(verity::dm::eulerType(circuit), std::string("circuit"));
-    circuit.addEdgeUndirected("A", "C", 1);   // A:4, B:2, C:4, D:2 -> still circuit
-    CHECK_EQ(verity::dm::eulerType(circuit), std::string("circuit"));
+    circuit.addEdgeUndirected("A", "C", 1);   // A:3, C:3, B:2, D:2 -> exactly 2 odd
+    CHECK_EQ(verity::dm::eulerType(circuit), std::string("path"));
     verity::ds::Graph<std::string, double> path(false);
     for (const char* n : {"A", "B", "C", "D"}) path.addNode(n);
     path.addEdgeUndirected("A", "B", 1);
@@ -106,8 +103,10 @@ TEST_CASE("Hamiltonian brute force: cycle yes, path-missing graph no") {
     star.addEdgeUndirected("A", "C", 1);
     star.addEdgeUndirected("A", "D", 1);
     CHECK_FALSE(verity::dm::hasHamiltonianPath(star));
-    std::vector<std::string> big(11, "n");
-    CHECK_THROWS_AS((void)verity::dm::hasHamiltonianPath(star), verity::util::ParseError);
+    // guard: an 11-vertex graph throws instead of exploding
+    verity::ds::Graph<std::string, double> big(false);
+    for (int i = 0; i < 11; ++i) big.addNode("v" + std::to_string(i));
+    CHECK_THROWS_AS((void)verity::dm::hasHamiltonianPath(big), verity::util::ParseError);
 }
 
 TEST_CASE("induced subgraph and greedy coloring") {
@@ -129,8 +128,8 @@ TEST_CASE("A^k walk counting (walks may repeat vertices)") {
     CHECK_EQ(verity::dm::walkCount(g, std::string("A"), std::string("C"), 1), 0u);
     // length-2 walks A->C: A-B-C and A-D-C
     CHECK_EQ(verity::dm::walkCount(g, std::string("A"), std::string("C"), 2), 2u);
-    // length-4 walks A->A: around the cycle twice? one full loop = 2 ways (cw/ccw)
-    CHECK_EQ(verity::dm::walkCount(g, std::string("A"), std::string("A"), 4), 2u);
+    // length-4 walks A->A on C4: brute force counts 6 (A^4 diagonal entry)
+    CHECK_EQ(verity::dm::walkCount(g, std::string("A"), std::string("A"), 4), 8u);  // eigenvalue check: (2^4+0^4+(-2)^4+0^4)/4 = 8
 }
 
 TEST_CASE("noisy-OR: monoid laws over [0,1] with identity 0 (fp tolerance)") {
