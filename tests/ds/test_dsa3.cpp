@@ -79,7 +79,7 @@ std::set<std::string> bruteArticulation(const verity::ds::Graph<std::string, dou
                 }
             }
         }
-        if (count > baseComponents - 1) out.insert(victim);
+        if (count > baseComponents) out.insert(victim);
     }
     return out;
 }
@@ -288,8 +288,8 @@ TEST_CASE("articulation points and bridges vs brute-force oracle") {
 
 TEST_CASE("Rabin-Karp: exact verified matches") {
     const std::string text = "Product X launched in Bellhaven on 2024-03-10 at the showcase.";
-    CHECK_EQ(verity::ds::rabinKarpFind(text, "Bellhaven"), 25u);
-    CHECK_EQ(verity::ds::rabinKarpFind(text, "launch"), 11u);
+    CHECK_EQ(verity::ds::rabinKarpFind(text, "Bellhaven"), 22u);
+    CHECK_EQ(verity::ds::rabinKarpFind(text, "launch"), 10u);
     CHECK_EQ(verity::ds::rabinKarpFind(text, "absent"), std::size_t(-1));
     CHECK_EQ(verity::ds::rabinKarpFind(text, ""), 0u);   // empty needle at 0
     CHECK_EQ(verity::ds::rabinKarpFind("", "a"), std::size_t(-1));

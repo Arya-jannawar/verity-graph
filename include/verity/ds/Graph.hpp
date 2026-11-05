@@ -233,14 +233,13 @@ private:
     }
 
     static void removeFromList(std::vector<std::pair<N, E>>& list, const N& id) {
-        std::size_t write = 0;
-        for (std::size_t i = 0; i < list.size(); ++i) {
-            if (!(list[i].first == id)) {
-                if (write != i) list[write] = std::move(list[i]);
-                ++write;
-            }
-        }
-        list.resize(write);
+        // erase-remove idiom (vector::resize would require the pair to be
+        // default-constructible, which Node-keyed graphs must not demand)
+        list.erase(std::remove_if(list.begin(), list.end(),
+                                  [&id](const std::pair<N, E>& entry) {
+                                      return entry.first == id;
+                                  }),
+                   list.end());
     }
 
     bool directed_;

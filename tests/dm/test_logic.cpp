@@ -77,7 +77,7 @@ TEST_CASE("evaluation and truth tables") {
     const auto table = truthTable(*iff);
     CHECK_EQ(table.size(), 4u);   // 2 variables
     // rows in sorted-variable order: (F,F),(F,T),(T,F),(T,T)
-    CHECK_FALSE(table[0].second);
+    CHECK(table[0].second);      // F,F -> iff true
     CHECK_FALSE(table[1].second);
     CHECK_FALSE(table[2].second);
     CHECK(table[3].second);

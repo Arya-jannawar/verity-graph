@@ -31,10 +31,12 @@ verity::model::ExtractionRecord loadAll() {
     nlohmann::json merged;
     merged["schema_version"] = "1.0.0";
     merged["documents"] = nlohmann::json::array();
-    merged["entities"] = nlohmann::json::array();
     merged["claims"] = nlohmann::json::array();
     merged["events"] = nlohmann::json::array();
     merged["citations"] = nlohmann::json::array();
+    // entities merge BY ID (aliases/mentions append) exactly like MockExtractor
+    std::map<std::string, nlohmann::json> entityById;
+    std::vector<std::string> entityOrder;
     for (const char* file : files) {
         std::ifstream in(file);
         if (!in) throw verity::util::VerityError(std::string("missing gold file: ") + file);
@@ -44,8 +46,22 @@ verity::model::ExtractionRecord loadAll() {
         for (const auto& c : fragment["claims"]) merged["claims"].push_back(c);
         for (const auto& e : fragment["events"]) merged["events"].push_back(e);
         for (const auto& c : fragment["citations"]) merged["citations"].push_back(c);
-        for (const auto& e : fragment["entities"]) merged["entities"].push_back(e);
+        for (const auto& e : fragment["entities"]) {
+            const std::string id = e.at("id").get<std::string>();
+            if (entityById.find(id) == entityById.end()) {
+                entityById[id] = e;
+                entityOrder.push_back(id);
+            } else {
+                for (const auto& alias : e.at("aliases")) {
+                    entityById[id]["aliases"].push_back(alias);
+                }
+                for (const auto& m : e.at("mentions")) {
+                    entityById[id]["mentions"].push_back(m);
+                }
+            }
+        }
     }
+    for (const std::string& id : entityOrder) merged["entities"].push_back(entityById[id]);
     return verity::io::JsonLoader::parseExtraction(merged.dump());
 }
 
@@ -95,7 +111,9 @@ TEST_CASE("planted conflicts appear with rules, claims, spans and benign explana
     for (const auto& f : findings) {
         CHECK(f.statement.find("Potential contradiction") != std::string::npos);
         CHECK_FALSE(f.benignExplanation.empty());
-        CHECK(f.severity == "low" || f.severity == "medium" || f.severity == "high");
+        const bool validSeverity = (f.severity == "low" || f.severity == "medium" ||
+                                    f.severity == "high");
+        CHECK(validSeverity);
         const bool wellFormedId = f.id == "X001" || f.id.size() == 4;
         CHECK(wellFormedId);   // X001-style ids
     }
