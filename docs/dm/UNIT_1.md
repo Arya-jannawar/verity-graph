@@ -34,3 +34,56 @@ IE vs brute force agree: `{1,2,3,4,5}` has 5 elements. Run: `verity dm sets`.
 `tests/dm/test_sets.cpp`: "FiniteSet: algebra laws over fixed sets",
 "FiniteSet: randomized oracle vs std::set", "set-operation oracle on random
 pairs + IE identity", "power set sizes and content for n<=12, guard above 20".
+
+## 2. Relations (implemented in Phase 2)
+
+### Definitions
+A binary relation R over a finite universe U is a subset of U×U. Properties:
+reflexive (∀x xRx), irreflexive, symmetric, antisymmetric (aRb ∧ bRa ⟹ a=b),
+asymmetric, transitive. Equivalence = reflexive+symmetric+transitive;
+(partial) order = reflexive+antisymmetric+transitive; strict order =
+irreflexive+asymmetric+transitive. Closures add the minimum pairs to obtain a
+property; **Warshall's algorithm** computes the transitive closure in O(n³).
+Equivalence classes form a **partition** (disjoint + covering). For a poset:
+Hasse diagram = transitive reduction; minimal/maximal elements; lower/upper
+bounds; lub/glb; lattice when every pair has both; comparable/incomparable.
+
+### Theorem (Warshall correctness idea)
+After processing pivot k, entry m[i][j] records "there is a path i→j using
+only intermediate vertices < k". Induction on k: adding paths through k
+merges paths i→k and k→j already known to use intermediates < k.
+
+### Use in Verity
+- EntityResolver: matched entity pairs populate a `Relation`; the **equivalence
+  closure** yields canonical classes; DisjointSet computes the same partition
+  independently and the two must agree.
+- TimelineBuilder: `happened_before` (+ precise disjoint dates) build a strict
+  order; a cycle breaks asymmetry → the Hasse diagram and topological order
+  are WITHHELD and a "Potential temporal contradiction" finding with a witness
+  path is emitted instead.
+
+### Worked example
+Divides-relation on {1,2,3,4,6,12}: lub(2,3)=6, glb(4,6)=2, a lattice.
+Hasse cover edges drop 1<3, 1<4, 1<6, 1<12, 2<4(implied? no — 2<4 kept, 2<12
+implied by 2<6<12), etc. Run: `verity dm relations`.
+
+### Tests
+tests/dm/test_relations.cpp (10 cases incl. randomized Warshall oracle,
+DisjointSet agreement, Hasse exactness, partition checks).
+
+## 3. Functions (implemented in Phase 2)
+
+### Definitions
+A finite function maps every domain element to at most one codomain element.
+total / injective / surjective / bijective; composition g∘f; inverse exists
+iff bijective.
+
+### Use in Verity
+The mention→canonical-entity mapping is verified **total and onto** the
+canonical entity set (`isTotalSurjective`) — every mention resolves and every
+canonical entity is reachable. Inverse corresponds to expanding a canonical
+entity back to its mentions.
+
+### Tests
+tests/dm/test_functions.cpp (classification, composition/inverse, failure
+paths, the mention→canonical pattern).

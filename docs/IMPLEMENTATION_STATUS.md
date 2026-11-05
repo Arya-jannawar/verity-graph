@@ -38,3 +38,28 @@ test/log proves it) / **Failed** / **Not run**. Evidence points at logs under
 | Zero warnings -Wall -Wextra -Wpedantic | PHASES P1 | all sources | build log: 0 warnings (clang 23.1.4) | Verified |
 | ASan test run clean | PHASES P1 | MSVC ASan build | `phase1_asan_msvc.log` 76/76 | Verified (Windows/MSVC) |
 | UBSan test run clean | PHASES P1 | — | not available on Windows toolchains; Linux commands in README | Not run |
+
+## Phase 2 — Identity & order
+
+| Req | Source | Implementation | Test / evidence | Status |
+|---|---|---|---|---|
+| Document abstract + Text/Pdf/Docx + factory | PHASES P2 OOP | model/Document.hpp/.cpp | test_oop2 "DocumentFactory…" | Verified |
+| Composite TextUnit tree (Document>Section>Paragraph>Sentence) | PHASES P2 | Document.hpp | test_oop2 "Composite tree…" (offsets exact) | Verified |
+| Evidence abstract + Supporting/Contradicting/Neutral SIBLINGS | PHASES P2 | model/Evidence.hpp/.cpp | test_oop2 "Evidence siblings…" | Verified |
+| Author diamond via virtual inheritance; exactly one Node subobject | PHASES P2 | model/Author.hpp | test_oop2 "Author diamond…" (same Node* both paths) | Verified |
+| Operators ==,<,+ on Entity; >> on ClaimNode; functor/IScorable/IExportable | PHASES P2 | Entity.hpp, ClaimNode.hpp, Interfaces.hpp, Evidence.hpp | test_algebra "Entity operators…", test_oop2 | Verified |
+| Relations complete (properties, closures incl. Warshall, classes, partitions, Hasse, bounds, lattice, incomparables) | PHASES P2 DM | dm/Relations.hpp | test_relations (Warshall vs brute oracle, Hasse exactness) | Verified |
+| Functions: injective/surjective/bijective/composition/inverse + total/onto check | PHASES P2 | dm/Functions.hpp | test_functions | Verified |
+| Recursive/iterative combinations, next-permutation, linear extensions, pigeonhole | PHASES P2 | dm/Combinatorics.hpp | test_combinatorics (std oracle, brute-force LE oracle) | Verified |
+| Semigroup/Monoid/Group checkers; Z_n, Z_p*; subgroups; generators; Lagrange; homomorphism with honest failure | PHASES P2 | dm/Algebra.hpp | test_algebra | Verified |
+| AliasSet monoid (empty identity) per brief §8 | brief §8 | model/Entity.hpp (AliasSet) | test_algebra "AliasSet… commutative monoid" | Verified |
+| Trie / AVL(with between) / DSU / NaryTree / Heap(top-K, decreaseKey) | PHASES P2 DSA | ds/Trie,AVLTree,DisjointSet,NaryTree,Heap | test_ds2 (oracles) | Verified |
+| Kahn+DFS topo, directed cycle witness, undirected DSU cycle | PHASES P2 | ds/TopoSort.hpp | test_topo (random DAG validity, witness) | Verified |
+| Levenshtein (+DP table), merge/quick/binarySearch | PHASES P2 | ds/Levenshtein.hpp, SortAlgo.hpp | test_sorts (std oracles, stability) | Verified |
+| RuleBasedExtractor (entities, ISO dates, aliases, templates) | PHASES P2 AI | ai/extractors/rule.py | ai/tests/test_phase2.py | Verified |
+| pdf_reader (pypdf), docx_reader (python-docx) with span integrity | PHASES P2 | ai/readers/pdf_reader.py, docx_reader.py | pytest reader tests (fixtures via make_phase2_fixtures.py) | Verified |
+| EntityResolver (Trie blocking, Levenshtein, alias table → Relation closure → canonical, DSU cross-check) | PHASES P2 | engine/EntityResolver.cpp | test_engine2 (4 aliases merge; unrelated stay separate) | Verified |
+| TimelineBuilder (AVL index, strict order, Hasse DOT, topo, incomparables, cycle → "Potential temporal contradiction") | PHASES P2 | engine/TimelineBuilder.cpp | test_engine2 (cycle witness C007-C009; Hasse withheld) | Verified |
+| CLI: timeline, query autocomplete, dm relations/functions/groups/combinatorics | PHASES P2 | app/main.cpp | phase2_cli_acceptance.log | Verified |
+| D004 (aliases) + D005 (temporal cycle) with gold | PHASES P2 | data/sample, data/gold | pytest spans; resolver/timeline tests | Verified |
+| Zero warnings; ASan clean | PHASES P2 | — | phase2_doctest_full.log (135/135), phase2_asan_msvc.log | Verified |

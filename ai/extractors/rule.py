@@ -42,7 +42,7 @@ _DATE_WORD_MONTH = re.compile(r"\b(" + "|".join(_MONTHS) + r")\s+(\d{4})\b", re.
 
 # --- entity / alias patterns --------------------------------------------------
 
-_ALIAS_INITIAL = re.compile(r"\b([A-Z])[a-z]+\.?\s+([A-Z][a-z]+)\b")        # J. Smith
+_ALIAS_INITIAL = re.compile(r"\b([A-Z])[a-z]*\.?\s+([A-Z][a-z]+)\b")        # J. Smith
 _ALIAS_TITLE = re.compile(r"\b(Mr\.|Ms\.|Mrs\.|Dr\.)\s+([A-Z][a-z]+)\b")    # Mr. Smith
 _ALIAS_SURNAME_FIRST = re.compile(r"\b([A-Z][a-z]+),\s*([A-Z][a-z]+)\b")    # Smith, John
 _CAPITALIZED_PHRASE = re.compile(r"\b([A-Z][A-Za-z]*(?:\s+[A-Z][A-Za-z0-9]+)*)\b")

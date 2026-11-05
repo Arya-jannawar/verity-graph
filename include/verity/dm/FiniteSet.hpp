@@ -19,6 +19,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <iterator>
 #include <functional>
 #include <set>
 #include <utility>

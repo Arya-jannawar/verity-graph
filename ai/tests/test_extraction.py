@@ -47,7 +47,7 @@ def test_schema_validates_mock_output(record: dict) -> None:
 def test_all_gold_spans_exact(documents: dict[str, str]) -> None:
     """Every shipped gold span must slice exactly (code points, not bytes)."""
     gold_files = sorted(GOLD_DIR.glob("*.gold.json"))
-    assert len(gold_files) == 3
+    assert len(gold_files) == 5
     checked = 0
     for gold in gold_files:
         fragment = json.loads(gold.read_text(encoding="utf-8"))
@@ -99,13 +99,20 @@ def test_mock_merges_documents(record: dict) -> None:
 
 def test_semantic_reference_integrity(record: dict) -> None:
     entity_ids = {e["id"] for e in record["entities"]}
+    event_ids = {e["id"] for e in record["events"]}
     doc_ids = {d["id"] for d in record["documents"]}
     for claim in record["claims"]:
-        assert claim["subject_id"] in entity_ids
+        # happened_before claims bind events; all other predicates bind entities
+        if claim["predicate"] == "happened_before":
+            assert claim["subject_id"] in event_ids
+            assert claim["object"]["kind"] == "EntityRef"
+            assert claim["object"]["entity_id"] in event_ids
+        else:
+            assert claim["subject_id"] in entity_ids
+            obj = claim["object"]
+            if obj["kind"] == "EntityRef":
+                assert obj["entity_id"] in entity_ids
         assert claim["document_id"] in doc_ids
-        obj = claim["object"]
-        if obj["kind"] == "EntityRef":
-            assert obj["entity_id"] in entity_ids
     for citation in record["citations"]:
         assert citation["citing"] in doc_ids
         assert citation["cited"] in doc_ids
