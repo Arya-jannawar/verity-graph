@@ -19,7 +19,10 @@
 #include <string>
 #include <vector>
 
+#include "verity/ds/Graph.hpp"
+#include "verity/ds/Heap.hpp"
 #include "verity/ds/Queue.hpp"
+#include "verity/ds/Stack.hpp"
 #include "verity/util/VerityError.hpp"
 
 namespace verity::ds {
@@ -123,7 +126,11 @@ public:
 
     /// Leaf/internal counts for the full-binary law (a well-formed arithmetic
     /// tree IS a full binary tree: every operator node has exactly 2 children).
-    [[nodiscard]] std::pair<std::size_t, std::size_t> internalAndLeaves() const;
+    [[nodiscard]] std::pair<std::size_t, std::size_t> internalAndLeaves() const {
+        std::size_t internal = 0, leaves = 0;
+        countWalk(root_.get(), internal, leaves);
+        return {internal, leaves};
+    }
 
 private:
     ExpressionTree() = default;

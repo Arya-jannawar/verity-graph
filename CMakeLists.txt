@@ -57,6 +57,8 @@ add_library(verity_core STATIC
   src/verity/model/Document.cpp
   src/verity/model/Evidence.cpp
   src/verity/io/JsonLoader.cpp
+  src/verity/io/GraphSerializer.cpp
+  src/verity/engine/Exporter.cpp
   src/verity/engine/GraphBuilder.cpp
   src/verity/engine/VerityEngine.cpp
   src/verity/engine/EntityResolver.cpp
@@ -113,6 +115,7 @@ set(VERITY_TEST_SOURCES
   tests/dm/test_logic.cpp
   tests/dm/test_graphanalysis.cpp
   tests/io/test_jsonloader.cpp
+  tests/io/test_phase4.cpp
   tests/engine/test_engine2.cpp
   tests/engine/test_conflicts.cpp
   tests/integration/test_pipeline.cpp
