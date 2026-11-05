@@ -50,7 +50,9 @@
       "id": "E011",
       "name": "Mr. Smith",
       "type": "Person",
-      "aliases": [],
+      "aliases": [
+        "John Smith"
+      ],
       "mentions": [
         {
           "document_id": "D004",

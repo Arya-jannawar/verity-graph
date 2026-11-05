@@ -27,12 +27,12 @@ const char* kAliasData = R"JSON({
      "mentions": [{"document_id": "D004", "span": {"start": 0, "end": 10, "quote": "John Smith"}}]},
     {"id": "E010", "name": "J. Smith", "type": "Person", "aliases": [],
      "mentions": [{"document_id": "D004", "span": {"start": 29, "end": 37, "quote": "J. Smith"}}]},
-    {"id": "E011", "name": "Mr. Smith", "type": "Person", "aliases": [],
+    {"id": "E011", "name": "Mr. Smith", "type": "Person", "aliases": ["John Smith"],
      "mentions": [{"document_id": "D004", "span": {"start": 65, "end": 74, "quote": "Mr. Smith"}}]},
     {"id": "E012", "name": "Smith, John", "type": "Person", "aliases": [],
      "mentions": [{"document_id": "D004", "span": {"start": 95, "end": 106, "quote": "Smith, John"}}]},
     {"id": "E020", "name": "Will Smith", "type": "Person", "aliases": [], "mentions": []},
-    {"id": "E021", "name": "A. Smith", "type": "Person", "aliases": [], "mentions": []}
+    {"id": "E021", "name": "A. Smith", "type": "Person", "aliases": ["Alice Smith"], "mentions": []}
   ],
   "claims": [], "events": [], "citations": []
 })JSON";
@@ -108,11 +108,13 @@ TEST_CASE("TimelineBuilder: date-precision order, Hasse, incomparables") {
     // no cycle: full output present
     CHECK_FALSE(result.finding.has_value());
 
-    // chronological order by start serial: EV001, EV002, EV003, then EV004 (year)
+    // chronological order by start serial: the year-precision EV004 expands
+    // to 2024-01-01, so it sorts first; then EV001 (Jan 15), EV002 (Feb), EV003
     REQUIRE_EQ(result.chronologicalOrder.size(), 4u);
-    CHECK_EQ(result.chronologicalOrder[0], "EV001");
-    CHECK_EQ(result.chronologicalOrder[1], "EV002");
-    CHECK_EQ(result.chronologicalOrder[2], "EV003");
+    CHECK_EQ(result.chronologicalOrder[0], "EV004");
+    CHECK_EQ(result.chronologicalOrder[1], "EV001");
+    CHECK_EQ(result.chronologicalOrder[2], "EV002");
+    CHECK_EQ(result.chronologicalOrder[3], "EV003");
 
     // topological order valid (Kahn output respects the partial order)
     REQUIRE_EQ(result.topologicalOrder.size(), 4u);

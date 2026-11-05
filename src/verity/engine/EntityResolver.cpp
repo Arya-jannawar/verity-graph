@@ -71,11 +71,13 @@ std::string firstNameToken(const std::string& name) {
         (first.size() == 2 && first[1] == '.'));
 }
 
-/// True when two first-name tokens are compatible:
-/// identical, or one is an initial matching the other's first character,
-/// or one is unknown (empty).
+/// True when two first-name tokens are compatible: identical, or one is an
+/// initial matching the other's first character. An EMPTY first name (a bare
+/// honorific like "Mr. Smith") is NOT compatible — it would merge every
+/// same-surname person; title-form entities merge through the alias table
+/// instead (gold records the contextual alias).
 [[nodiscard]] bool firstNamesCompatible(const std::string& a, const std::string& b) {
-    if (a.empty() || b.empty()) return true;
+    if (a.empty() || b.empty()) return false;
     if (a == b) return true;
     if (isInitial(a)) return a[0] == b[0];
     if (isInitial(b)) return b[0] == a[0];

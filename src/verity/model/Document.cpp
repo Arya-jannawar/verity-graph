@@ -45,28 +45,31 @@ void Document::buildFromText(const std::string& normalizedText) {
         }();
         Paragraph& paragraph = section.addParagraph();
 
-        // Sentence split inside [blockStart, blockEnd)
+        // Sentence split inside [blockStart, blockEnd): a sentence ends at
+        // '.', '!' or '?' followed by whitespace, or at the end of the block.
+        // The terminating punctuation is part of the sentence text.
         std::size_t sentStart = blockStart;
         for (std::size_t i = blockStart; i <= blockEnd; ++i) {
-            const bool boundary =
-                i == blockEnd ||
-                (i + 1 < textLen && (normalizedText[i] == '.' || normalizedText[i] == '!' ||
-                                     normalizedText[i] == '?') &&
-                 (normalizedText[i + 1] == ' ' || normalizedText[i + 1] == '\n'));
-            if (boundary) {
-                std::string sentence = normalizedText.substr(sentStart, i - sentStart);
-                // trim leading/trailing spaces
-                const auto first = sentence.find_first_not_of(" \t");
-                if (first == std::string::npos) {
-                    sentStart = i + 1;
-                    continue;
-                }
-                const auto last = sentence.find_last_not_of(" \t");
-                sentence = sentence.substr(first, last - first + 1);
-                Sentence& s = paragraph.addSentence(sentence);
-                s.setOffsets(sentStart + first, sentStart + last + 1);
-                sentStart = i + 1;
+            const bool atBlockEnd = i == blockEnd;
+            const bool atPunctuation =
+                !atBlockEnd && (normalizedText[i] == '.' || normalizedText[i] == '!' ||
+                                normalizedText[i] == '?') &&
+                (i + 1 < textLen && (normalizedText[i + 1] == ' ' ||
+                                     normalizedText[i + 1] == '\n'));
+            if (!atBlockEnd && !atPunctuation) continue;
+
+            const std::size_t sentEnd = atPunctuation ? i + 1 : i;
+            std::string sentence = normalizedText.substr(sentStart, sentEnd - sentStart);
+            const auto first = sentence.find_first_not_of(" \t");
+            if (first == std::string::npos) {
+                sentStart = sentEnd;
+                continue;
             }
+            const auto last = sentence.find_last_not_of(" \t");
+            sentence = sentence.substr(first, last - first + 1);
+            Sentence& s = paragraph.addSentence(sentence);
+            s.setOffsets(sentStart + first, sentStart + last + 1);
+            sentStart = sentEnd;   // the next sentence starts after the delimiter
         }
         section.setOffsets(blockStart, blockEnd);
         pos = blockEnd;

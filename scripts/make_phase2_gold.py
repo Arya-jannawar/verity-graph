@@ -58,7 +58,7 @@ def main() -> int:
              "mentions": [{"document_id": "D004",
                            "span": span_of("D004", t, "J. Smith")}]},
             {"id": "E011", "name": "Mr. Smith", "type": "Person",
-             "aliases": [],
+             "aliases": ["John Smith"],
              "mentions": [{"document_id": "D004",
                            "span": span_of("D004", t, "Mr. Smith")}]},
             {"id": "E012", "name": "Smith, John", "type": "Person",

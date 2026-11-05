@@ -50,7 +50,7 @@ TEST_CASE("Composite tree: Document > Section > Paragraph > Sentence") {
     // word counts aggregate up the tree
     int total = 0;
     for (const auto& s : sections) total += s->wordCount();
-    CHECK_EQ(total, 10);   // 2 + 6 + 2
+    CHECK_EQ(total, 12);   // 3 + 6 + 3
 }
 
 TEST_CASE("Evidence siblings: distinct kinds, == and <, interfaces") {
