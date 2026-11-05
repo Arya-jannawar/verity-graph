@@ -91,12 +91,6 @@ FormulaPtr parseFormula(const std::string& text) {
             continue;
         }
         if (c == '=') {
-            if (text.compare(i, 3, "<=>") == 0) {
-                tokens.emplace_back("<=>");
-                i += 1;   // handled by '<' below instead
-                tokens.pop_back();
-                throw util::ParseError("use <=> not =<>");
-            }
             if (text.compare(i, 2, "==") == 0) { tokens.emplace_back("=="); i += 2; continue; }
             if (text.compare(i, 2, "=>") == 0) { tokens.emplace_back("=>"); i += 2; continue; }
             throw util::ParseError("stray '=' in formula");
@@ -177,9 +171,9 @@ FormulaPtr parseFormula(const std::string& text) {
     for (const std::string& t : rpn) {
         if (t == "!") {
             if (build.empty()) throw util::ParseError("negation without operand");
-            build.push(Formula::makeNot(std::move(build.top())));
-            build.pop() = nullptr;   // top moved; release slot
+            FormulaPtr inner = std::move(build.top());
             build.pop();
+            build.push(Formula::makeNot(std::move(inner)));
             continue;
         }
         if (t == "TRUE" || t == "true") {
@@ -415,48 +409,19 @@ FormulaPtr toNNF(const Formula& f) {
     }
 }
 
-namespace {
-
-void literalsOf(const Formula& f, std::vector<std::vector<std::string>>& shapeOut,
-                bool conjunctiveShape);
-
-/// Flattens an NNF formula into the literal-set shape (AND-of-ORs or
-/// OR-of-ANDs depending on `conjunctiveShape`).
-void collectShape(const Formula& f, bool wantAnd, std::vector<std::vector<std::string>>& groups) {
-    if (f.kind() == Formula::Kind::And && wantAnd) {
-        collectShape(f.left(), wantAnd, groups);
-        collectShape(f.right(), wantAnd, groups);
-        return;
-    }
-    if (f.kind() == Formula::Kind::Or && !wantAnd) {
-        collectShape(f.left(), wantAnd, groups);
-        collectShape(f.right(), wantAnd, groups);
-        return;
-    }
-    if (f.kind() == Formula::Kind::Var) {
-        groups.emplace_back(1, f.name());
-        return;
-    }
-    if (f.kind() == Formula::Kind::Not && f.operand().kind() == Formula::Kind::Var) {
-        groups.emplace_back(1, "!" + f.operand().name());
-        return;
-    }
-    if (f.kind() == Formula::Kind::Const) {
-        // TRUE in a CNF clause / FALSE in a DNF term is trivially absorbable;
-        // the dual value makes the whole form trivial
-        groups.emplace_back(1, f.value() ? "TRUE" : "FALSE");
-        return;
-    }
-    throw util::ParseError("normal-form expansion exceeded its shape (formula too nested)");
-}
-
-} // namespace
-
 std::vector<std::vector<std::string>> toCNF(const Formula& f) {
-    (void)sortedVars(f);   // guard: >12 variables throws
-    const FormulaPtr nnf = toNNF(f);
+    // Truth-table dual construction (bounded, always correct): one clause per
+    // FALSIFYING assignment, containing the negation of that row's literals.
     std::vector<std::vector<std::string>> clauses;
-    collectShape(*nnf, true, clauses);
+    for (const auto& [assignment, value] : truthTable(f)) {
+        if (value) continue;
+        std::vector<std::string> clause;
+        for (const auto& [name, v] : assignment) {
+            clause.push_back(v ? "!" + name : name);
+        }
+        clauses.push_back(std::move(clause));
+    }
+    if (clauses.empty()) clauses.emplace_back(1, "TRUE");
     return clauses;
 }
 
