@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VERITY — Evidence Observatory</title>
+<link rel="stylesheet" href="css/verity.css">
+</head>
+<body>
+<header>
+  <div class="wordmark">VERITY<span>·</span>OBSERVATORY</div>
+  <div class="tagline">Follow the evidence. Explore connections, inspect
+  sources, and investigate potential contradictions.</div>
+  <span class="dataset-label">Fictional demo dataset</span>
+  <button class="ghost" id="import-trigger"
+    onclick="document.getElementById('import-file').click()">Load report</button>
+  <input type="file" id="import-file" accept=".json" class="sr-only"
+    aria-label="Import exported report JSON">
+  <span id="import-status" class="tagline" role="status"></span>
+</header>
+
+<div class="metrics" id="metrics" aria-label="dataset metrics"></div>
+
+<nav role="tablist" aria-label="report tabs">
+  <button role="tab" aria-selected="true" data-tab="tab-graph">Graph</button>
+  <button role="tab" aria-selected="false" data-tab="tab-conflicts">Conflicts</button>
+  <button role="tab" aria-selected="false" data-tab="tab-timeline">Timeline</button>
+  <button role="tab" aria-selected="false" data-tab="tab-provenance">Provenance</button>
+  <button role="tab" aria-selected="false" data-tab="tab-dm">DM Lab</button>
+</nav>
+
+<main>
+  <section id="tab-graph" role="tabpanel" class="active" aria-label="Graph">
+    <div class="layout">
+      <div>
+        <div class="controls">
+          <input id="graph-search" type="search" placeholder="search / autocomplete nodes"
+            aria-label="search nodes">
+          <select id="graph-kind" aria-label="node kind filter">
+            <option value="all">all kinds</option>
+            <option value="Entity">Entity</option>
+            <option value="Claim">Claim</option>
+            <option value="Event">Event</option>
+            <option value="Document">Document</option>
+          </select>
+          <select id="graph-hops" aria-label="hop depth">
+            <option value="1">1 hop</option>
+            <option value="2" selected>2 hops</option>
+            <option value="3">3 hops</option>
+          </select>
+          <button class="ghost" id="graph-fit">fit view</button>
+          <button class="ghost" id="graph-physics">start physics</button>
+          <span id="graph-total" class="tagline"></span>
+        </div>
+        <div id="graph-ac" aria-live="polite"></div>
+        <div id="graph-canvas" role="img"
+          aria-label="evidence graph canvas; a text list of nodes follows"></div>
+      </div>
+      <aside>
+        <h2>Inspector</h2>
+        <div id="inspector"><p class="tagline">Select a node to inspect its
+        metadata, neighbors and claim excerpts.</p></div>
+        <h2>Node list (canvas-free access)</h2>
+        <div id="node-list"></div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="tab-conflicts" role="tabpanel" aria-label="Conflicts">
+    <h2>Conflicts</h2>
+    <p id="conflicts-count" class="tagline"></p>
+    <div id="conflict-list"></div>
+  </section>
+
+  <section id="tab-timeline" role="tabpanel" aria-label="Timeline">
+    <h2>Timeline</h2>
+    <div id="timeline-cycle"></div>
+    <div id="timeline-events"></div>
+    <div id="timeline-hasse"></div>
+    <p id="timeline-incomparable" class="incomparable"></p>
+  </section>
+
+  <section id="tab-provenance" role="tabpanel" aria-label="Provenance">
+    <h2>Provenance</h2>
+    <h3>Circular sourcing (prominently marked)</h3>
+    <div id="provenance-cycles"></div>
+    <h3>Evidence ledger</h3>
+    <div id="provenance-ledger"></div>
+    <h3>Citation origins</h3>
+    <div id="provenance-origins"></div>
+  </section>
+
+  <section id="tab-dm" role="tabpanel" aria-label="DM Lab">
+    <h2>DM Lab — live discrete-math demonstrations</h2>
+    <p class="tagline">Every card computes in your browser and is cross-checked
+    against the exported C++ fixture values shown under each result.</p>
+    <div class="dm-grid">
+      <div id="dm-sets"></div>
+      <div id="dm-relations"></div>
+      <div id="dm-logic"></div>
+      <div id="dm-numtheory"></div>
+      <div id="dm-graphs"></div>
+    </div>
+  </section>
+</main>
+
+<script src="vendor/vis-network.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

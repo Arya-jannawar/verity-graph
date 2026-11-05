@@ -184,8 +184,9 @@ void GraphSerializer::save(const std::vector<SerializedRecord>& records,
         record.push_back(static_cast<char>(r.kind));
         putStr(record, r.id);
         putStr(record, r.payload);
+        // record offset = magic(4) + version(4) + bytes of previous records
         index.push_back({r.id, r.kind,
-                         static_cast<std::uint64_t>(4 + 4 + 8 + recordSection.size()),
+                         static_cast<std::uint64_t>(4 + 4 + recordSection.size()),
                          static_cast<std::uint32_t>(record.size())});
         recordSection += record;
     }
@@ -219,8 +220,10 @@ void GraphSerializer::save(const std::vector<SerializedRecord>& records,
         out.flush();
         if (!out) streamFailure("trailer write failed", tempPath);
     }
-    // atomic rename
-    if (std::remove(path.c_str()) != 0 && std::rename(tempPath.c_str(), path.c_str()) != 0) {
+    // atomic publish: remove a stale destination (best effort — its absence
+    // is fine), then ALWAYS rename; only the rename result decides success.
+    std::remove(path.c_str());
+    if (std::rename(tempPath.c_str(), path.c_str()) != 0) {
         std::remove(tempPath.c_str());
         streamFailure("atomic rename failed", path);
     }

@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "documents": [
+    {
+      "id": "D010",
+      "filename": "d010_final_summary.txt",
+      "format": "txt",
+      "normalized_text": "Final Summary Report\n\nAster Vale Systems and Northstar Meridian Labs published a joint summary.\nProduct X is available in Bellhaven and Crescent Bay since 2024-06.\n\nElena Vasquez, Priya Raman, Maria Chen, David Okoro and John Smith are\nlisted as contributors. The summary cites the press release and the wire.\n",
+      "metadata": {
+        "language": "en"
+      },
+      "citations": [
+        "D006",
+        "D007"
+      ]
+    }
+  ],
+  "entities": [],
+  "claims": [],
+  "events": [],
+  "citations": [
+    {
+      "citing": "D010",
+      "cited": "D006",
+      "span": null
+    },
+    {
+      "citing": "D010",
+      "cited": "D007",
+      "span": null
+    }
+  ]
+}

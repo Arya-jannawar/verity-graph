@@ -28,7 +28,7 @@ GOLD_DIR = _REPO_ROOT / "data" / "gold"
 @pytest.fixture(scope="module")
 def documents() -> dict[str, str]:
     txts = sorted(SAMPLE_DIR.glob("*.txt"))
-    assert len(txts) == 9, f"expected 9 sample documents, found {len(txts)}"
+    assert len(txts) == 10, f"expected 10 sample documents, found {len(txts)}"
     return {p.name: read_txt(p) for p in txts}
 
 
@@ -47,7 +47,7 @@ def test_schema_validates_mock_output(record: dict) -> None:
 def test_all_gold_spans_exact(documents: dict[str, str]) -> None:
     """Every shipped gold span must slice exactly (code points, not bytes)."""
     gold_files = sorted(GOLD_DIR.glob("*.gold.json"))
-    assert len(gold_files) == 9
+    assert len(gold_files) == 10
     checked = 0
     for gold in gold_files:
         fragment = json.loads(gold.read_text(encoding="utf-8"))
@@ -87,11 +87,11 @@ def test_utf8_code_points_not_bytes(documents: dict[str, str]) -> None:
 
 def test_mock_merges_documents(record: dict) -> None:
     assert record["schema_version"] == "1.0.0"
-    assert len(record["documents"]) == 9
+    assert len(record["documents"]) == 10
     assert len(record["entities"]) == 13
     assert len(record["claims"]) == 20
     assert len(record["events"]) == 5
-    assert len(record["citations"]) == 6
+    assert len(record["citations"]) == 8
     # entity ids merged across fragments stay unique and sorted
     ids = [e["id"] for e in record["entities"]]
     assert ids == sorted(set(ids))

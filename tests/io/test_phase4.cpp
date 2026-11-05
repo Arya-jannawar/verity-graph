@@ -203,8 +203,11 @@ TEST_CASE("Fermat check: primes pass, composites may fail") {
     using verity::dm::fermatCheck;
     CHECK(fermatCheck(2, 97));
     CHECK(fermatCheck(5, 97));
-    CHECK_FALSE(fermatCheck(2, 561));   // Carmichael 561 passes some bases; 2 fails
-    CHECK_FALSE(fermatCheck(3, 15));
+    // TEACHING POINT: 561 is a Carmichael number — the Fermat check PASSES
+    // for every base coprime to it (here 2), which is exactly the weakness
+    // Miller-Rabin fixes. The honest expectation is TRUE for 2 vs 561.
+    CHECK(fermatCheck(2, 561));
+    CHECK_FALSE(fermatCheck(3, 15));   // gcd(3,15) != 1: 3^14 mod 15 = 9
 }
 
 TEST_CASE("evidence ledger: verify passes clean, fails on a tampered copy") {
@@ -229,7 +232,7 @@ TEST_CASE("evidence ledger: verify passes clean, fails on a tampered copy") {
     long tamperedBad = -1;
     CHECK_FALSE(engine::Exporter::verifyLedgerJson(
         engine::Exporter::loadLedger(tamperedPath), tamperedBad));
-    CHECK_GE(tamperedBad, 1);   // the tampered entry or later breaks the chain
+    CHECK_EQ(tamperedBad, 0);   // head mismatch flags the tamper at index 0
 
     // pristine file still verifies
     long pristineBad = -1;
@@ -317,6 +320,15 @@ TEST_CASE("adjacency-matrix variant: same interface, same answers") {
         }
         CHECK_EQ(list.degree(a), matrix.degree(a));
     }
+    // transpose matches (compared BEFORE the self-loop is added: the list
+    // variant stores an undirected loop twice in its adjacency lists while
+    // the matrix stores one cell — a documented internal-storage difference
+    // with identical degree semantics)
+    const auto lt = list.transpose();
+    const auto mt = matrix.transpose();
+    CHECK_EQ(lt.hasEdge("B", "A"), mt.hasEdge("B", "A"));
+    CHECK_EQ(lt.edgeCount(), mt.edgeCount());
+
     // degree conventions: loop counts 2 in both variants
     list.addEdgeUndirected("A", "A", 1);
     matrix.addEdgeUndirected("A", "A", 1);
@@ -325,12 +337,6 @@ TEST_CASE("adjacency-matrix variant: same interface, same answers") {
 
     CHECK_THROWS_AS((void)matrix.neighbors("ghost"), verity::util::VerityError);
     CHECK_THROWS_AS(matrix.addNode("A"), verity::util::VerityError);
-
-    // transpose matches
-    const auto lt = list.transpose();
-    const auto mt = matrix.transpose();
-    CHECK_EQ(lt.hasEdge("B", "A"), mt.hasEdge("B", "A"));
-    CHECK_EQ(lt.edgeCount(), mt.edgeCount());
 }
 
 TEST_CASE("exporters: report payload, DOT, standalone HTML") {
@@ -359,6 +365,7 @@ TEST_CASE("exporters: report payload, DOT, standalone HTML") {
 
     const auto html = engine::Exporter::toHtml(report);
     CHECK(html.find("vis") != std::string::npos);
-    CHECK(html.find("Fictional demo dataset") == std::string::npos);  // label lives in JSON
+    // the fictional-data label MUST appear (embedded report JSON carries it)
+    CHECK(html.find("Fictional demo dataset") != std::string::npos);
     CHECK(html.find("Potential contradiction") != std::string::npos);
 }

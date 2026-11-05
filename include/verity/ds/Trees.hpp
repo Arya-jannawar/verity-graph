@@ -82,7 +82,7 @@ public:
     /// input (wrong arity, unknown token, leftover operands).
     [[nodiscard]] static ExpressionTree fromPostfix(const std::vector<std::string>& tokens) {
         ExpressionTree tree;
-        Stack<Node*> build;
+        Stack<std::unique_ptr<Node>> build;
         for (const std::string& token : tokens) {
             const bool isOp = token == "+" || token == "-" || token == "*" || token == "/";
             if (isOp) {
@@ -90,25 +90,24 @@ public:
                     throw util::ParseError("expression tree: operator '" + token +
                                            "' lacks operands");
                 }
+                auto right = build.pop();   // moves the unique_ptr out
+                auto left = build.pop();
                 auto node = std::make_unique<Node>();
                 node->token = token;
-                node->right.reset(build.pop());
-                node->left.reset(build.pop());
-                build.push(node.get());
-                tree.roots_.push_back(std::move(node));
+                node->right = std::move(right);
+                node->left = std::move(left);
+                build.push(std::move(node));
             } else {
                 auto node = std::make_unique<Node>();
                 node->token = token;
-                build.push(node.get());
-                tree.roots_.push_back(std::move(node));
+                build.push(std::move(node));
             }
             ++tree.count_;
         }
         if (build.size() != 1) {
             throw util::ParseError("expression tree: leftover operands");
         }
-        tree.root_.reset(build.pop());
-        tree.roots_.clear();
+        tree.root_ = build.pop();   // sole owner transfer
         return tree;
     }
 
@@ -179,7 +178,6 @@ private:
     }
 
     std::unique_ptr<Node> root_;
-    std::vector<std::unique_ptr<Node>> roots_;   // keeps nodes alive during build
     std::size_t count_ = 0;
 };
 

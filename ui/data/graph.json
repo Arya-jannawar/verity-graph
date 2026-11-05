@@ -1,0 +1,2325 @@
+{
+  "claims": [
+    {
+      "confidence": 0.95,
+      "document_id": "D001",
+      "id": "C001",
+      "object": {
+        "date": null,
+        "entity_id": "E003",
+        "kind": "EntityRef",
+        "quantity": 0.0,
+        "text": "",
+        "unit": ""
+      },
+      "polarity": "Positive",
+      "predicate": "located_at",
+      "span": {
+        "end": 99,
+        "quote": "Aster Vale Systems is a fictional software company based in Bellhaven.",
+        "start": 29
+      },
+      "subject_id": "E001",
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "confidence": 0.95,
+      "document_id": "D001",
+      "id": "C002",
+      "object": {
+        "date": null,
+        "entity_id": "E002",
+        "kind": "EntityRef",
+        "quantity": 0.0,
+        "text": "",
+        "unit": ""
+      },
+      "polarity": "Positive",
+      "predicate": "has_ceo",
+      "span": {
+        "end": 170,
+        "quote": "Maria Chen has served as chief executive officer of Aster Vale Systems",
+        "start": 100
+      },
+      "subject_id": "E001",
+      "valid_from": "2022-01",
+      "valid_to": null
+    },
+    {
+      "confidence": 0.95,
+      "document_id": "D002",
+      "id": "C003",
+      "object": {
+        "date": null,
+        "entity_id": "E008",
+        "kind": "EntityRef",
+        "quantity": 0.0,
+        "text": "",
+        "unit": ""
+      },
+      "polarity": "Positive",
+      "predicate": "located_at",
+      "span": {
+        "end": 103,
+        "quote": "Northstar Meridian Labs is a fictional research laboratory located in",
+        "start": 34
+      },
+      "subject_id": "E006",
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "confidence": 0.95,
+      "document_id": "D002",
+      "id": "C004",
+      "object": {
+        "date": null,
+        "entity_id": "E007",
+        "kind": "EntityRef",
+        "quantity": 0.0,
+        "text": "",
+        "unit": ""
+      },
+      "polarity": "Positive",
+      "predicate": "has_ceo",
+      "span": {
+        "end": 187,
+        "quote": "David Okoro is the chief executive officer of Northstar\nMeridian Labs",
+        "start": 118
+      },
+      "subject_id": "E006",
+      "valid_from": "2021-06",
+      "valid_to": null
+    },
+    {
+      "confidence": 0.9,
+      "document_id": "D003",
+      "id": "C005",
+      "object": {
+        "date": null,
+        "entity_id": "",
+        "kind": "StringValue",
+        "quantity": 0.0,
+        "text": "joint metadata research partnership",
+        "unit": ""
+      },
+      "polarity": "Positive",
+      "predicate": "announced",
+      "span": {
+        "end": 112,
+        "quote": "Aster Vale Systems and Northstar Meridian Labs announced a joint\nmetadata research partnership",
+        "start": 18
+      },
+      "subject_id": "E001",
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "confidence": 0.85,
+      "document_id": "D003",
+      "id": "C006",
+      "object": {
+        "date": null,
+        "entity_id": "",
+        "kind": "StringValue",
+        "quantity": 0.0,
+        "text": "Café Meridian",
+        "unit": ""
+      },
+      "polarity": "Positive",
+      "predicate": "present_at",
+      "span": {
+        "end": 221,
+        "quote": "John Smith and Elena Vasquez attended the announcement",
+        "start": 167
+      },
+      "subject_id": "E005",
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "confidence": 0.9,
+      "document_id": "D005",
+      "id": "C007",
+      "object": {
+        "date": null,
+        "entity_id": "EV002",
+        "kind": "EntityRef",
+        "quantity": 0.0,
+        "text": "",
+        "unit": ""
+      },
+      "polarity": "Positive",
+      "predicate": "happened_before",
+      "span": {
+        "end": 83,
+        "quote": "Product X reached internal beta before the pilot rollout",
+        "start": 27
+      },
+      "subject_id": "EV001",
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "confidence": 0.9,
+      "document_id": "D005",
+      "id": "C008",
+      "object": {
+        "date": null,
+        "entity_id": "EV003",
+        "kind": "EntityRef",
+        "quantity": 0.0,
+        "text": "",
+        "unit": ""
+      },
+      "polarity": "Positive",
+      "predicate": "happened_before",
+      "span": {
+        "end": 134,
+        "quote": "The pilot\nrollout happened before the public beta",
+        "start": 85
+      },
+      "subject_id": "EV002",
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "confidence": 0.9,
+      "document_id": "D005",
+      "id": "C009",
+      "object": {
+        "date": null,
+        "entity_id": "EV001",
+        "kind": "EntityRef",
+        "quantity": 0.0,
+        "text": "",
+        "unit": ""
+      },
+      "polarity": "Positive",
+      "predicate": "happened_before",
+      "span": {
+        "end": 227,
+        "quote": "the public beta happened before the internal beta review",
+        "start": 171
+      },
+      "subject_id": "EV003",
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "confidence": 0.9,
+      "document_id": "D006",
+      "id": "C010",
+      "object": {
+        "date": "2024-03-10",
+        "entity_id": "",
+        "kind": "DateValue",
+        "quantity": 0.0,
+        "text": "",
+        "unit": ""
+      },
+      "polarity": "Positive",
+      "predicate": "launched",
+      "span": {
+        "end": 71,
+        "quote": "Product X launched in Bellhaven on 2024-03-10",
+        "start": 26
+      },
+      "subject_id": "E004",
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "confidence": 0.85,
+      "document_id": "D006",
+      "id": "C011",
+      "object": {
+        "date": "2024-03",
+        "entity_id": "",
+        "kind": "DateValue",
+        "quantity": 0.0,
+        "text": "",
+        "unit": ""
+      },
+      "polarity": "Positive",
+      "predicate": "announced",
+      "span": {
+        "end": 161,
+        "quote": "Aster Vale Systems had announced Product X in 2024-03",
+        "start": 108
+      },
+      "subject_id": "E001",
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "confidence": 0.85,
+      "document_id": "D006",
+      "id": "C012",
+      "object": {
+        "date": null,
+        "entity_id": "",
+        "kind": "StringValue",
+        "quantity": 0.0,
+        "text": "Bellhaven showcase",
+        "unit": ""
+      },
+      "polarity": "Positive",
+      "predicate": "present_at",
+      "span": {
+        "end": 218,
+        "quote": "Elena Vasquez was present at the showcase in Bellhaven",
+        "start": 164
+      },
+      "subject_id": "E009",
+      "valid_from": "2024-03-10",
+      "valid_to": "2024-03-10"
+    },
+    {
+      "confidence": 0.8,
+      "document_id": "D006",
+      "id": "C013",
+      "object": {
+        "date": null,
+        "entity_id": "",
+        "kind": "QuantityValue",
+        "quantity": 5.0,
+        "text": "",
+        "unit": "modules"
+      },
+      "polarity": "Positive",
+      "predicate": "launched",
+      "span": {
+        "end": 272,
+        "quote": "The company\nshipped 5 modules of Product X at launch",
+        "start": 220
+      },
+      "subject_id": "E004",
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "confidence": 0.85,
+      "document_id": "D007",
+      "id": "C014",
+      "object": {
+        "date": "2024-06-05",
+        "entity_id": "",
+        "kind": "DateValue",
+        "quantity": 0.0,
+        "text": "",
+        "unit": ""
+      },
+      "polarity": "Positive",
+      "predicate": "launched",
+      "span": {
+        "end": 82,
+        "quote": "Aster Vale Systems launched Product X in Crescent Bay on 2024-06-05",
+        "start": 15
+      },
+      "subject_id": "E004",
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "confidence": 0.85,
+      "document_id": "D007",
+      "id": "C015",
+      "object": {
+        "date": null,
+        "entity_id": "E013",
+        "kind": "EntityRef",
+        "quantity": 0.0,
+        "text": "",
+        "unit": ""
+      },
+      "polarity": "Positive",
+      "predicate": "has_ceo",
+      "span": {
+        "end": 210,
+        "quote": "Aster Vale\nSystems appointed Priya Raman as chief executive officer",
+        "start": 143
+      },
+      "subject_id": "E001",
+      "valid_from": "2023-06",
+      "valid_to": null
+    },
+    {
+      "confidence": 0.8,
+      "document_id": "D007",
+      "id": "C016",
+      "object": {
+        "date": null,
+        "entity_id": "",
+        "kind": "QuantityValue",
+        "quantity": 8.0,
+        "text": "",
+        "unit": "modules"
+      },
+      "polarity": "Positive",
+      "predicate": "launched",
+      "span": {
+        "end": 276,
+        "quote": "Product X shipped 8 modules according to the wire",
+        "start": 227
+      },
+      "subject_id": "E004",
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "confidence": 0.85,
+      "document_id": "D008",
+      "id": "C017",
+      "object": {
+        "date": "2024-06-05",
+        "entity_id": "",
+        "kind": "DateValue",
+        "quantity": 0.0,
+        "text": "",
+        "unit": ""
+      },
+      "polarity": "Negative",
+      "predicate": "launched",
+      "span": {
+        "end": 107,
+        "quote": "Aster Vale Systems did not launch Product X in\nCrescent Bay on 2024-06-05",
+        "start": 34
+      },
+      "subject_id": "E004",
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "confidence": 0.8,
+      "document_id": "D008",
+      "id": "C018",
+      "object": {
+        "date": "2024-03-10",
+        "entity_id": "",
+        "kind": "DateValue",
+        "quantity": 0.0,
+        "text": "",
+        "unit": ""
+      },
+      "polarity": "Positive",
+      "predicate": "launched",
+      "span": {
+        "end": 195,
+        "quote": "Product\nX had launched in Bellhaven on 2024-03-10",
+        "start": 146
+      },
+      "subject_id": "E004",
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "confidence": 0.9,
+      "document_id": "D009",
+      "id": "C019",
+      "object": {
+        "date": null,
+        "entity_id": "",
+        "kind": "StringValue",
+        "quantity": 0.0,
+        "text": "Crescent Bay summit",
+        "unit": ""
+      },
+      "polarity": "Positive",
+      "predicate": "present_at",
+      "span": {
+        "end": 78,
+        "quote": "Elena Vasquez was present at the Crescent Bay summit on 2024-03-10",
+        "start": 12
+      },
+      "subject_id": "E009",
+      "valid_from": "2024-03-10",
+      "valid_to": "2024-03-10"
+    },
+    {
+      "confidence": 0.95,
+      "document_id": "D009",
+      "id": "C020",
+      "object": {
+        "date": null,
+        "entity_id": "E002",
+        "kind": "EntityRef",
+        "quantity": 0.0,
+        "text": "",
+        "unit": ""
+      },
+      "polarity": "Positive",
+      "predicate": "has_ceo",
+      "span": {
+        "end": 184,
+        "quote": "Maria Chen has served as chief\nexecutive officer of Aster Vale Systems",
+        "start": 114
+      },
+      "subject_id": "E001",
+      "valid_from": "2022-01",
+      "valid_to": null
+    }
+  ],
+  "conflicts": [
+    {
+      "benign_explanation": "Different values for a functional predicate are only contradictory when both hold in the same interval; disjoint validity times are consistent, and unrelated predicates (announced vs launched) are never compared.",
+      "claim_a": "C002",
+      "claim_b": "C015",
+      "confidence": 0.9924999999999999,
+      "derivation": [],
+      "documents": [
+        "D001",
+        "D007"
+      ],
+      "excerpts": [
+        {
+          "document_id": "D001",
+          "end": 170,
+          "quote": "Maria Chen has served as chief executive officer of Aster Vale Systems",
+          "start": 100
+        },
+        {
+          "document_id": "D007",
+          "end": 210,
+          "quote": "Aster Vale\nSystems appointed Priya Raman as chief executive officer",
+          "start": 143
+        }
+      ],
+      "id": "X001",
+      "predicate": "has_ceo",
+      "rule": "FunctionalPredicateRule",
+      "severity": "high",
+      "statement": "Potential contradiction",
+      "subject_id": "E001"
+    },
+    {
+      "benign_explanation": "Different values for a functional predicate are only contradictory when both hold in the same interval; disjoint validity times are consistent, and unrelated predicates (announced vs launched) are never compared.",
+      "claim_a": "C010",
+      "claim_b": "C014",
+      "confidence": 0.985,
+      "derivation": [],
+      "documents": [
+        "D006",
+        "D007"
+      ],
+      "excerpts": [
+        {
+          "document_id": "D006",
+          "end": 71,
+          "quote": "Product X launched in Bellhaven on 2024-03-10",
+          "start": 26
+        },
+        {
+          "document_id": "D007",
+          "end": 82,
+          "quote": "Aster Vale Systems launched Product X in Crescent Bay on 2024-06-05",
+          "start": 15
+        }
+      ],
+      "id": "X002",
+      "predicate": "launched",
+      "rule": "FunctionalPredicateRule",
+      "severity": "high",
+      "statement": "Potential contradiction",
+      "subject_id": "E004"
+    },
+    {
+      "benign_explanation": "Different values for a functional predicate are only contradictory when both hold in the same interval; disjoint validity times are consistent, and unrelated predicates (announced vs launched) are never compared.",
+      "claim_a": "C014",
+      "claim_b": "C018",
+      "confidence": 0.97,
+      "derivation": [],
+      "documents": [
+        "D007",
+        "D008"
+      ],
+      "excerpts": [
+        {
+          "document_id": "D007",
+          "end": 82,
+          "quote": "Aster Vale Systems launched Product X in Crescent Bay on 2024-06-05",
+          "start": 15
+        },
+        {
+          "document_id": "D008",
+          "end": 195,
+          "quote": "Product\nX had launched in Bellhaven on 2024-03-10",
+          "start": 146
+        }
+      ],
+      "id": "X003",
+      "predicate": "launched",
+      "rule": "FunctionalPredicateRule",
+      "severity": "high",
+      "statement": "Potential contradiction",
+      "subject_id": "E004"
+    },
+    {
+      "benign_explanation": "Different values for a functional predicate are only contradictory when both hold in the same interval; disjoint validity times are consistent, and unrelated predicates (announced vs launched) are never compared.",
+      "claim_a": "C015",
+      "claim_b": "C020",
+      "confidence": 0.9924999999999999,
+      "derivation": [],
+      "documents": [
+        "D007",
+        "D009"
+      ],
+      "excerpts": [
+        {
+          "document_id": "D007",
+          "end": 210,
+          "quote": "Aster Vale\nSystems appointed Priya Raman as chief executive officer",
+          "start": 143
+        },
+        {
+          "document_id": "D009",
+          "end": 184,
+          "quote": "Maria Chen has served as chief\nexecutive officer of Aster Vale Systems",
+          "start": 114
+        }
+      ],
+      "id": "X004",
+      "predicate": "has_ceo",
+      "rule": "FunctionalPredicateRule",
+      "severity": "high",
+      "statement": "Potential contradiction",
+      "subject_id": "E001"
+    },
+    {
+      "benign_explanation": "Presence findings require a justified temporal overlap; the engine does NOT model travel time, so same-day presence in two places may still be physically possible.",
+      "claim_a": "C012",
+      "claim_b": "C019",
+      "confidence": 0.985,
+      "derivation": [],
+      "documents": [
+        "D006",
+        "D009"
+      ],
+      "excerpts": [
+        {
+          "document_id": "D006",
+          "end": 218,
+          "quote": "Elena Vasquez was present at the showcase in Bellhaven",
+          "start": 164
+        },
+        {
+          "document_id": "D009",
+          "end": 78,
+          "quote": "Elena Vasquez was present at the Crescent Bay summit on 2024-03-10",
+          "start": 12
+        }
+      ],
+      "id": "X005",
+      "predicate": "present_at",
+      "rule": "LocationTimeRule",
+      "severity": "high",
+      "statement": "Potential contradiction",
+      "subject_id": "E009"
+    },
+    {
+      "benign_explanation": "A polarity flip often reflects a retraction or correction timeline; the sources may disagree about WHEN rather than WHETHER.",
+      "claim_a": "C014",
+      "claim_b": "C017",
+      "confidence": 0.9775,
+      "derivation": [],
+      "documents": [
+        "D007",
+        "D008"
+      ],
+      "excerpts": [
+        {
+          "document_id": "D007",
+          "end": 82,
+          "quote": "Aster Vale Systems launched Product X in Crescent Bay on 2024-06-05",
+          "start": 15
+        },
+        {
+          "document_id": "D008",
+          "end": 107,
+          "quote": "Aster Vale Systems did not launch Product X in\nCrescent Bay on 2024-06-05",
+          "start": 34
+        }
+      ],
+      "id": "X006",
+      "predicate": "launched",
+      "rule": "NegationRule",
+      "severity": "high",
+      "statement": "Potential contradiction",
+      "subject_id": "E004"
+    },
+    {
+      "benign_explanation": "Quantities with different units are never compared; same-unit mismatches may reflect projections, estimates or amended reports.",
+      "claim_a": "C013",
+      "claim_b": "C016",
+      "confidence": 0.96,
+      "derivation": [],
+      "documents": [
+        "D006",
+        "D007"
+      ],
+      "excerpts": [
+        {
+          "document_id": "D006",
+          "end": 272,
+          "quote": "The company\nshipped 5 modules of Product X at launch",
+          "start": 220
+        },
+        {
+          "document_id": "D007",
+          "end": 276,
+          "quote": "Product X shipped 8 modules according to the wire",
+          "start": 227
+        }
+      ],
+      "id": "X007",
+      "predicate": "launched",
+      "rule": "NumericMismatchRule",
+      "severity": "medium",
+      "statement": "Potential contradiction",
+      "subject_id": "E004"
+    },
+    {
+      "benign_explanation": "The happened-before claims may encode different framings of the same milestone; the witness path shows the exact claims to inspect. No Hasse diagram or topological order is produced for cyclic data.",
+      "claim_a": "C007",
+      "claim_b": "",
+      "confidence": 0.9,
+      "derivation": [
+        "cycle witness: EV001 -> EV002 -> EV003 -> EV001",
+        "happened_before claim on the cycle: C007",
+        "happened_before claim on the cycle: C008",
+        "happened_before claim on the cycle: C009"
+      ],
+      "documents": [
+        "D005",
+        "D005",
+        "D005"
+      ],
+      "excerpts": [
+        {
+          "document_id": "D005",
+          "end": 83,
+          "quote": "Product X reached internal beta before the pilot rollout",
+          "start": 27
+        },
+        {
+          "document_id": "D005",
+          "end": 134,
+          "quote": "The pilot\nrollout happened before the public beta",
+          "start": 85
+        },
+        {
+          "document_id": "D005",
+          "end": 227,
+          "quote": "the public beta happened before the internal beta review",
+          "start": 171
+        }
+      ],
+      "id": "X008",
+      "predicate": "happened_before",
+      "rule": "TemporalCycleRule",
+      "severity": "medium",
+      "statement": "Potential temporal contradiction",
+      "subject_id": "EV001"
+    }
+  ],
+  "dm": {
+    "logic_de_morgan_tautology": true,
+    "note": "Precomputed engine examples; the DM Lab recomputes interactively",
+    "numtheory": {
+      "gcd_240_46": 2,
+      "nextprime_64": 67,
+      "phi_12": 4
+    },
+    "sets_inclusion_exclusion": {
+      "a": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "b": [
+        3,
+        4,
+        5
+      ],
+      "union_size_ie": 5
+    }
+  },
+  "documents": [
+    {
+      "citations": [],
+      "filename": "d001_aster_vale_overview.txt",
+      "format": "txt",
+      "id": "D001",
+      "normalized_text": "Aster Vale Systems Overview\n\nAster Vale Systems is a fictional software company based in Bellhaven.\nMaria Chen has served as chief executive officer of Aster Vale Systems\nsince January 2022. The company was founded in 2019.\n\nProduct X, a metadata search platform, is developed by Aster Vale Systems.\nJohn Smith works as a senior engineer at Aster Vale Systems.\n"
+    },
+    {
+      "citations": [],
+      "filename": "d002_northstar_overview.txt",
+      "format": "txt",
+      "id": "D002",
+      "normalized_text": "Northstar Meridian Labs Overview\n\nNorthstar Meridian Labs is a fictional research laboratory located in\nCrescent Bay. David Okoro is the chief executive officer of Northstar\nMeridian Labs.\n\nElena Vasquez is an independent consultant who advises Northstar\nMeridian Labs on metadata standards.\n"
+    },
+    {
+      "citations": [
+        "D001",
+        "D002"
+      ],
+      "filename": "d003_partnership_wire.txt",
+      "format": "txt",
+      "id": "D003",
+      "normalized_text": "Partnership Wire\n\nAster Vale Systems and Northstar Meridian Labs announced a joint\nmetadata research partnership at a press event held at Café Meridian\nin Bellhaven.\n\nJohn Smith and Elena Vasquez attended the announcement. The companies\ncited the overview documents as background material.\n"
+    },
+    {
+      "citations": [],
+      "filename": "d004_consulting_note.txt",
+      "format": "txt",
+      "id": "D004",
+      "normalized_text": "Consulting Note\n\nJohn Smith joined the review board this quarter. J. Smith previously\nadvised Aster Vale Systems on metadata standards.\n\nA memo addressed to Mr. Smith confirmed his travel plans. The visitor\nregister lists Smith, John as an independent consultant.\n"
+    },
+    {
+      "citations": [],
+      "filename": "d005_milestones_memo.txt",
+      "format": "txt",
+      "id": "D005",
+      "normalized_text": "Product X Milestones Memo\n\nProduct X reached internal beta before the pilot rollout. The pilot\nrollout happened before the public beta. According to the follow-up\nreview, the public beta happened before the internal beta review.\n"
+    },
+    {
+      "citations": [
+        "D007"
+      ],
+      "filename": "d006_press_release.txt",
+      "format": "txt",
+      "id": "D006",
+      "normalized_text": "Aster Vale Press Release\n\nProduct X launched in Bellhaven on 2024-03-10 at the Aster Vale Systems\nshowcase. Aster Vale Systems had announced Product X in 2024-03.\n\nElena Vasquez was present at the showcase in Bellhaven. The company\nshipped 5 modules of Product X at launch.\n"
+    },
+    {
+      "citations": [
+        "D008"
+      ],
+      "filename": "d007_industry_wire.txt",
+      "format": "txt",
+      "id": "D007",
+      "normalized_text": "Industry Wire\n\nAster Vale Systems launched Product X in Crescent Bay on 2024-06-05,\naccording to this wire report. The report also states that Aster Vale\nSystems appointed Priya Raman as chief executive officer since 2023-06.\n\nProduct X shipped 8 modules according to the wire. This report cites the\nanalyst note as background.\n"
+    },
+    {
+      "citations": [
+        "D006"
+      ],
+      "filename": "d008_analyst_note.txt",
+      "format": "txt",
+      "id": "D008",
+      "normalized_text": "Analyst Note\n\nAnalysts noted that Aster Vale Systems did not launch Product X in\nCrescent Bay on 2024-06-05. The note repeats the March timeline: Product\nX had launched in Bellhaven on 2024-03-10.\n\nThe analyst note cites the Aster Vale press release as its source.\n"
+    },
+    {
+      "citations": [
+        "D002"
+      ],
+      "filename": "d009_board_memo.txt",
+      "format": "txt",
+      "id": "D009",
+      "normalized_text": "Board Memo\n\nElena Vasquez was present at the Crescent Bay summit on 2024-03-10,\nadvising Northstar Meridian Labs. Maria Chen has served as chief\nexecutive officer of Aster Vale Systems since 2022-01.\n\nThis memo documents the consultant's schedule and cites the Northstar\noverview as context.\n"
+    },
+    {
+      "citations": [
+        "D006",
+        "D007"
+      ],
+      "filename": "d010_final_summary.txt",
+      "format": "txt",
+      "id": "D010",
+      "normalized_text": "Final Summary Report\n\nAster Vale Systems and Northstar Meridian Labs published a joint summary.\nProduct X is available in Bellhaven and Crescent Bay since 2024-06.\n\nElena Vasquez, Priya Raman, Maria Chen, David Okoro and John Smith are\nlisted as contributors. The summary cites the press release and the wire.\n"
+    }
+  ],
+  "edges": [
+    {
+      "from": "D003",
+      "label": "cites",
+      "relation": "Cites",
+      "to": "D001",
+      "weight": 1.0
+    },
+    {
+      "from": "D003",
+      "label": "cites",
+      "relation": "Cites",
+      "to": "D002",
+      "weight": 1.0
+    },
+    {
+      "from": "D006",
+      "label": "cites",
+      "relation": "Cites",
+      "to": "D007",
+      "weight": 1.0
+    },
+    {
+      "from": "D007",
+      "label": "cites",
+      "relation": "Cites",
+      "to": "D008",
+      "weight": 1.0
+    },
+    {
+      "from": "D008",
+      "label": "cites",
+      "relation": "Cites",
+      "to": "D006",
+      "weight": 1.0
+    },
+    {
+      "from": "D009",
+      "label": "cites",
+      "relation": "Cites",
+      "to": "D002",
+      "weight": 1.0
+    },
+    {
+      "from": "D010",
+      "label": "cites",
+      "relation": "Cites",
+      "to": "D006",
+      "weight": 1.0
+    },
+    {
+      "from": "D010",
+      "label": "cites",
+      "relation": "Cites",
+      "to": "D007",
+      "weight": 1.0
+    },
+    {
+      "from": "E001",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D001",
+      "weight": 1.0
+    },
+    {
+      "from": "E001",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D003",
+      "weight": 1.0
+    },
+    {
+      "from": "E001",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D004",
+      "weight": 1.0
+    },
+    {
+      "from": "E001",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D006",
+      "weight": 1.0
+    },
+    {
+      "from": "E001",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D007",
+      "weight": 1.0
+    },
+    {
+      "from": "E001",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D008",
+      "weight": 1.0
+    },
+    {
+      "from": "E002",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D001",
+      "weight": 1.0
+    },
+    {
+      "from": "E002",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D009",
+      "weight": 1.0
+    },
+    {
+      "from": "E003",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D001",
+      "weight": 1.0
+    },
+    {
+      "from": "E003",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D006",
+      "weight": 1.0
+    },
+    {
+      "from": "E004",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D001",
+      "weight": 1.0
+    },
+    {
+      "from": "E004",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D005",
+      "weight": 1.0
+    },
+    {
+      "from": "E004",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D006",
+      "weight": 1.0
+    },
+    {
+      "from": "E004",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D007",
+      "weight": 1.0
+    },
+    {
+      "from": "E004",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D008",
+      "weight": 1.0
+    },
+    {
+      "from": "E005",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D001",
+      "weight": 1.0
+    },
+    {
+      "from": "E005",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D003",
+      "weight": 1.0
+    },
+    {
+      "from": "E005",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D004",
+      "weight": 1.0
+    },
+    {
+      "from": "E006",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D002",
+      "weight": 1.0
+    },
+    {
+      "from": "E006",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D003",
+      "weight": 1.0
+    },
+    {
+      "from": "E006",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D009",
+      "weight": 1.0
+    },
+    {
+      "from": "E007",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D002",
+      "weight": 1.0
+    },
+    {
+      "from": "E008",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D002",
+      "weight": 1.0
+    },
+    {
+      "from": "E009",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D002",
+      "weight": 1.0
+    },
+    {
+      "from": "E009",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D003",
+      "weight": 1.0
+    },
+    {
+      "from": "E009",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D006",
+      "weight": 1.0
+    },
+    {
+      "from": "E009",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D009",
+      "weight": 1.0
+    },
+    {
+      "from": "E010",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D004",
+      "weight": 1.0
+    },
+    {
+      "from": "E011",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D004",
+      "weight": 1.0
+    },
+    {
+      "from": "E012",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D004",
+      "weight": 1.0
+    },
+    {
+      "from": "E013",
+      "label": "mention",
+      "relation": "MentionedIn",
+      "to": "D007",
+      "weight": 1.0
+    },
+    {
+      "from": "C001",
+      "label": "located_at",
+      "relation": "SubjectOf",
+      "to": "E001",
+      "weight": 0.95
+    },
+    {
+      "from": "C001",
+      "label": "located_at",
+      "relation": "ObjectOf",
+      "to": "E003",
+      "weight": 0.95
+    },
+    {
+      "from": "C001",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D001",
+      "weight": 0.95
+    },
+    {
+      "from": "C002",
+      "label": "has_ceo",
+      "relation": "SubjectOf",
+      "to": "E001",
+      "weight": 0.95
+    },
+    {
+      "from": "C002",
+      "label": "has_ceo",
+      "relation": "ObjectOf",
+      "to": "E002",
+      "weight": 0.95
+    },
+    {
+      "from": "C002",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D001",
+      "weight": 0.95
+    },
+    {
+      "from": "C003",
+      "label": "located_at",
+      "relation": "SubjectOf",
+      "to": "E006",
+      "weight": 0.95
+    },
+    {
+      "from": "C003",
+      "label": "located_at",
+      "relation": "ObjectOf",
+      "to": "E008",
+      "weight": 0.95
+    },
+    {
+      "from": "C003",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D002",
+      "weight": 0.95
+    },
+    {
+      "from": "C004",
+      "label": "has_ceo",
+      "relation": "SubjectOf",
+      "to": "E006",
+      "weight": 0.95
+    },
+    {
+      "from": "C004",
+      "label": "has_ceo",
+      "relation": "ObjectOf",
+      "to": "E007",
+      "weight": 0.95
+    },
+    {
+      "from": "C004",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D002",
+      "weight": 0.95
+    },
+    {
+      "from": "C005",
+      "label": "announced",
+      "relation": "SubjectOf",
+      "to": "E001",
+      "weight": 0.9
+    },
+    {
+      "from": "C005",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D003",
+      "weight": 0.9
+    },
+    {
+      "from": "C006",
+      "label": "present_at",
+      "relation": "SubjectOf",
+      "to": "E005",
+      "weight": 0.85
+    },
+    {
+      "from": "C006",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D003",
+      "weight": 0.85
+    },
+    {
+      "from": "C007",
+      "label": "happened_before",
+      "relation": "SubjectOf",
+      "to": "EV001",
+      "weight": 0.9
+    },
+    {
+      "from": "C007",
+      "label": "happened_before",
+      "relation": "ObjectOf",
+      "to": "EV002",
+      "weight": 0.9
+    },
+    {
+      "from": "C007",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D005",
+      "weight": 0.9
+    },
+    {
+      "from": "C008",
+      "label": "happened_before",
+      "relation": "SubjectOf",
+      "to": "EV002",
+      "weight": 0.9
+    },
+    {
+      "from": "C008",
+      "label": "happened_before",
+      "relation": "ObjectOf",
+      "to": "EV003",
+      "weight": 0.9
+    },
+    {
+      "from": "C008",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D005",
+      "weight": 0.9
+    },
+    {
+      "from": "C009",
+      "label": "happened_before",
+      "relation": "SubjectOf",
+      "to": "EV003",
+      "weight": 0.9
+    },
+    {
+      "from": "C009",
+      "label": "happened_before",
+      "relation": "ObjectOf",
+      "to": "EV001",
+      "weight": 0.9
+    },
+    {
+      "from": "C009",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D005",
+      "weight": 0.9
+    },
+    {
+      "from": "C010",
+      "label": "launched",
+      "relation": "SubjectOf",
+      "to": "E004",
+      "weight": 0.9
+    },
+    {
+      "from": "C010",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D006",
+      "weight": 0.9
+    },
+    {
+      "from": "C011",
+      "label": "announced",
+      "relation": "SubjectOf",
+      "to": "E001",
+      "weight": 0.85
+    },
+    {
+      "from": "C011",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D006",
+      "weight": 0.85
+    },
+    {
+      "from": "C012",
+      "label": "present_at",
+      "relation": "SubjectOf",
+      "to": "E009",
+      "weight": 0.85
+    },
+    {
+      "from": "C012",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D006",
+      "weight": 0.85
+    },
+    {
+      "from": "C013",
+      "label": "launched",
+      "relation": "SubjectOf",
+      "to": "E004",
+      "weight": 0.8
+    },
+    {
+      "from": "C013",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D006",
+      "weight": 0.8
+    },
+    {
+      "from": "C014",
+      "label": "launched",
+      "relation": "SubjectOf",
+      "to": "E004",
+      "weight": 0.85
+    },
+    {
+      "from": "C014",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D007",
+      "weight": 0.85
+    },
+    {
+      "from": "C015",
+      "label": "has_ceo",
+      "relation": "SubjectOf",
+      "to": "E001",
+      "weight": 0.85
+    },
+    {
+      "from": "C015",
+      "label": "has_ceo",
+      "relation": "ObjectOf",
+      "to": "E013",
+      "weight": 0.85
+    },
+    {
+      "from": "C015",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D007",
+      "weight": 0.85
+    },
+    {
+      "from": "C016",
+      "label": "launched",
+      "relation": "SubjectOf",
+      "to": "E004",
+      "weight": 0.8
+    },
+    {
+      "from": "C016",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D007",
+      "weight": 0.8
+    },
+    {
+      "from": "C017",
+      "label": "launched",
+      "relation": "SubjectOf",
+      "to": "E004",
+      "weight": 0.85
+    },
+    {
+      "from": "C017",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D008",
+      "weight": 0.85
+    },
+    {
+      "from": "C018",
+      "label": "launched",
+      "relation": "SubjectOf",
+      "to": "E004",
+      "weight": 0.8
+    },
+    {
+      "from": "C018",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D008",
+      "weight": 0.8
+    },
+    {
+      "from": "C019",
+      "label": "present_at",
+      "relation": "SubjectOf",
+      "to": "E009",
+      "weight": 0.9
+    },
+    {
+      "from": "C019",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D009",
+      "weight": 0.9
+    },
+    {
+      "from": "C020",
+      "label": "has_ceo",
+      "relation": "SubjectOf",
+      "to": "E001",
+      "weight": 0.95
+    },
+    {
+      "from": "C020",
+      "label": "has_ceo",
+      "relation": "ObjectOf",
+      "to": "E002",
+      "weight": 0.95
+    },
+    {
+      "from": "C020",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D009",
+      "weight": 0.95
+    },
+    {
+      "from": "EV001",
+      "label": "event_subject",
+      "relation": "SubjectOf",
+      "to": "E004",
+      "weight": 1.0
+    },
+    {
+      "from": "EV001",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D005",
+      "weight": 1.0
+    },
+    {
+      "from": "EV002",
+      "label": "event_subject",
+      "relation": "SubjectOf",
+      "to": "E004",
+      "weight": 1.0
+    },
+    {
+      "from": "EV002",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D005",
+      "weight": 1.0
+    },
+    {
+      "from": "EV003",
+      "label": "event_subject",
+      "relation": "SubjectOf",
+      "to": "E004",
+      "weight": 1.0
+    },
+    {
+      "from": "EV003",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D005",
+      "weight": 1.0
+    },
+    {
+      "from": "EV004",
+      "label": "event_subject",
+      "relation": "SubjectOf",
+      "to": "E004",
+      "weight": 1.0
+    },
+    {
+      "from": "EV004",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D006",
+      "weight": 1.0
+    },
+    {
+      "from": "EV005",
+      "label": "event_subject",
+      "relation": "SubjectOf",
+      "to": "E004",
+      "weight": 1.0
+    },
+    {
+      "from": "EV005",
+      "label": "evidence",
+      "relation": "DocumentEvidence",
+      "to": "D007",
+      "weight": 1.0
+    }
+  ],
+  "entity_resolution": {
+    "classes": [
+      [
+        "E001"
+      ],
+      [
+        "E002"
+      ],
+      [
+        "E003"
+      ],
+      [
+        "E004"
+      ],
+      [
+        "E005",
+        "E010",
+        "E011",
+        "E012"
+      ],
+      [
+        "E006"
+      ],
+      [
+        "E007"
+      ],
+      [
+        "E008"
+      ],
+      [
+        "E009"
+      ],
+      [
+        "E013"
+      ]
+    ],
+    "merged_pairs": 4
+  },
+  "ledger": {
+    "entries": 20,
+    "entries_data": [
+      "C001|E001|located_at|D001",
+      "C002|E001|has_ceo|D001",
+      "C003|E006|located_at|D002",
+      "C004|E006|has_ceo|D002",
+      "C005|E001|announced|D003",
+      "C006|E005|present_at|D003",
+      "C007|EV001|happened_before|D005",
+      "C008|EV002|happened_before|D005",
+      "C009|EV003|happened_before|D005",
+      "C010|E004|launched|D006",
+      "C011|E001|announced|D006",
+      "C012|E009|present_at|D006",
+      "C013|E004|launched|D006",
+      "C014|E004|launched|D007",
+      "C015|E001|has_ceo|D007",
+      "C016|E004|launched|D007",
+      "C017|E004|launched|D008",
+      "C018|E004|launched|D008",
+      "C019|E009|present_at|D009",
+      "C020|E001|has_ceo|D009"
+    ],
+    "head": "328518904939929282",
+    "mode": "teaching-grade modular hash chain (NOT cryptographic integrity)",
+    "note": "loading this JSON does NOT re-verify the binary ledger; run `verity verify-ledger` for an actual verification",
+    "verification_time": "2026-11-06T04:47:03",
+    "verified": true
+  },
+  "metadata": {
+    "dataset": "Fictional demo dataset",
+    "generated": "2026-11-06T04:47:03",
+    "generator": "verity engine 1.0.0",
+    "wording": "Potential contradiction (never a truth verdict)"
+  },
+  "nodes": [
+    {
+      "citations": [],
+      "format": "txt",
+      "id": "D001",
+      "kind": "Document",
+      "label": "d001_aster_vale_overview.txt",
+      "text_length": 361,
+      "type": "Document"
+    },
+    {
+      "citations": [],
+      "format": "txt",
+      "id": "D002",
+      "kind": "Document",
+      "label": "d002_northstar_overview.txt",
+      "text_length": 292,
+      "type": "Document"
+    },
+    {
+      "citations": [
+        "D001",
+        "D002"
+      ],
+      "format": "txt",
+      "id": "D003",
+      "kind": "Document",
+      "label": "d003_partnership_wire.txt",
+      "text_length": 291,
+      "type": "Document"
+    },
+    {
+      "citations": [],
+      "format": "txt",
+      "id": "D004",
+      "kind": "Document",
+      "label": "d004_consulting_note.txt",
+      "text_length": 264,
+      "type": "Document"
+    },
+    {
+      "citations": [],
+      "format": "txt",
+      "id": "D005",
+      "kind": "Document",
+      "label": "d005_milestones_memo.txt",
+      "text_length": 229,
+      "type": "Document"
+    },
+    {
+      "citations": [
+        "D007"
+      ],
+      "format": "txt",
+      "id": "D006",
+      "kind": "Document",
+      "label": "d006_press_release.txt",
+      "text_length": 274,
+      "type": "Document"
+    },
+    {
+      "citations": [
+        "D008"
+      ],
+      "format": "txt",
+      "id": "D007",
+      "kind": "Document",
+      "label": "d007_industry_wire.txt",
+      "text_length": 328,
+      "type": "Document"
+    },
+    {
+      "citations": [
+        "D006"
+      ],
+      "format": "txt",
+      "id": "D008",
+      "kind": "Document",
+      "label": "d008_analyst_note.txt",
+      "text_length": 265,
+      "type": "Document"
+    },
+    {
+      "citations": [
+        "D002"
+      ],
+      "format": "txt",
+      "id": "D009",
+      "kind": "Document",
+      "label": "d009_board_memo.txt",
+      "text_length": 292,
+      "type": "Document"
+    },
+    {
+      "citations": [
+        "D006",
+        "D007"
+      ],
+      "format": "txt",
+      "id": "D010",
+      "kind": "Document",
+      "label": "d010_final_summary.txt",
+      "text_length": 310,
+      "type": "Document"
+    },
+    {
+      "aliases": [],
+      "entity_type": "Organization",
+      "id": "E001",
+      "kind": "Entity",
+      "label": "Aster Vale Systems",
+      "type": "Entity"
+    },
+    {
+      "aliases": [],
+      "entity_type": "Person",
+      "id": "E002",
+      "kind": "Entity",
+      "label": "Maria Chen",
+      "type": "Entity"
+    },
+    {
+      "aliases": [],
+      "entity_type": "Location",
+      "id": "E003",
+      "kind": "Entity",
+      "label": "Bellhaven",
+      "type": "Entity"
+    },
+    {
+      "aliases": [],
+      "entity_type": "Product",
+      "id": "E004",
+      "kind": "Entity",
+      "label": "Product X",
+      "type": "Entity"
+    },
+    {
+      "aliases": [],
+      "entity_type": "Person",
+      "id": "E005",
+      "kind": "Entity",
+      "label": "John Smith",
+      "type": "Entity"
+    },
+    {
+      "aliases": [],
+      "entity_type": "Organization",
+      "id": "E006",
+      "kind": "Entity",
+      "label": "Northstar Meridian Labs",
+      "type": "Entity"
+    },
+    {
+      "aliases": [],
+      "entity_type": "Person",
+      "id": "E007",
+      "kind": "Entity",
+      "label": "David Okoro",
+      "type": "Entity"
+    },
+    {
+      "aliases": [],
+      "entity_type": "Location",
+      "id": "E008",
+      "kind": "Entity",
+      "label": "Crescent Bay",
+      "type": "Entity"
+    },
+    {
+      "aliases": [],
+      "entity_type": "Person",
+      "id": "E009",
+      "kind": "Entity",
+      "label": "Elena Vasquez",
+      "type": "Entity"
+    },
+    {
+      "aliases": [],
+      "entity_type": "Person",
+      "id": "E010",
+      "kind": "Entity",
+      "label": "J. Smith",
+      "type": "Entity"
+    },
+    {
+      "aliases": [
+        "John Smith"
+      ],
+      "entity_type": "Person",
+      "id": "E011",
+      "kind": "Entity",
+      "label": "Mr. Smith",
+      "type": "Entity"
+    },
+    {
+      "aliases": [],
+      "entity_type": "Person",
+      "id": "E012",
+      "kind": "Entity",
+      "label": "Smith, John",
+      "type": "Entity"
+    },
+    {
+      "aliases": [],
+      "entity_type": "Person",
+      "id": "E013",
+      "kind": "Entity",
+      "label": "Priya Raman",
+      "type": "Entity"
+    },
+    {
+      "confidence": 0.95,
+      "document_id": "D001",
+      "id": "C001",
+      "kind": "Claim",
+      "label": "located_at (C001)",
+      "object": "E003",
+      "polarity": "Positive",
+      "predicate": "located_at",
+      "span": {
+        "end": 99,
+        "quote": "Aster Vale Systems is a fictional software company based in Bellhaven.",
+        "start": 29
+      },
+      "subject_id": "E001",
+      "type": "Claim"
+    },
+    {
+      "confidence": 0.95,
+      "document_id": "D001",
+      "id": "C002",
+      "kind": "Claim",
+      "label": "has_ceo (C002)",
+      "object": "E002",
+      "polarity": "Positive",
+      "predicate": "has_ceo",
+      "span": {
+        "end": 170,
+        "quote": "Maria Chen has served as chief executive officer of Aster Vale Systems",
+        "start": 100
+      },
+      "subject_id": "E001",
+      "type": "Claim",
+      "valid_time": "2022-01"
+    },
+    {
+      "confidence": 0.95,
+      "document_id": "D002",
+      "id": "C003",
+      "kind": "Claim",
+      "label": "located_at (C003)",
+      "object": "E008",
+      "polarity": "Positive",
+      "predicate": "located_at",
+      "span": {
+        "end": 103,
+        "quote": "Northstar Meridian Labs is a fictional research laboratory located in",
+        "start": 34
+      },
+      "subject_id": "E006",
+      "type": "Claim"
+    },
+    {
+      "confidence": 0.95,
+      "document_id": "D002",
+      "id": "C004",
+      "kind": "Claim",
+      "label": "has_ceo (C004)",
+      "object": "E007",
+      "polarity": "Positive",
+      "predicate": "has_ceo",
+      "span": {
+        "end": 187,
+        "quote": "David Okoro is the chief executive officer of Northstar\nMeridian Labs",
+        "start": 118
+      },
+      "subject_id": "E006",
+      "type": "Claim",
+      "valid_time": "2021-06"
+    },
+    {
+      "confidence": 0.9,
+      "document_id": "D003",
+      "id": "C005",
+      "kind": "Claim",
+      "label": "announced (C005)",
+      "object": "\"joint metadata research partnership\"",
+      "polarity": "Positive",
+      "predicate": "announced",
+      "span": {
+        "end": 112,
+        "quote": "Aster Vale Systems and Northstar Meridian Labs announced a joint\nmetadata research partnership",
+        "start": 18
+      },
+      "subject_id": "E001",
+      "type": "Claim"
+    },
+    {
+      "confidence": 0.85,
+      "document_id": "D003",
+      "id": "C006",
+      "kind": "Claim",
+      "label": "present_at (C006)",
+      "object": "\"Café Meridian\"",
+      "polarity": "Positive",
+      "predicate": "present_at",
+      "span": {
+        "end": 221,
+        "quote": "John Smith and Elena Vasquez attended the announcement",
+        "start": 167
+      },
+      "subject_id": "E005",
+      "type": "Claim"
+    },
+    {
+      "confidence": 0.9,
+      "document_id": "D005",
+      "id": "C007",
+      "kind": "Claim",
+      "label": "happened_before (C007)",
+      "object": "EV002",
+      "polarity": "Positive",
+      "predicate": "happened_before",
+      "span": {
+        "end": 83,
+        "quote": "Product X reached internal beta before the pilot rollout",
+        "start": 27
+      },
+      "subject_id": "EV001",
+      "type": "Claim"
+    },
+    {
+      "confidence": 0.9,
+      "document_id": "D005",
+      "id": "C008",
+      "kind": "Claim",
+      "label": "happened_before (C008)",
+      "object": "EV003",
+      "polarity": "Positive",
+      "predicate": "happened_before",
+      "span": {
+        "end": 134,
+        "quote": "The pilot\nrollout happened before the public beta",
+        "start": 85
+      },
+      "subject_id": "EV002",
+      "type": "Claim"
+    },
+    {
+      "confidence": 0.9,
+      "document_id": "D005",
+      "id": "C009",
+      "kind": "Claim",
+      "label": "happened_before (C009)",
+      "object": "EV001",
+      "polarity": "Positive",
+      "predicate": "happened_before",
+      "span": {
+        "end": 227,
+        "quote": "the public beta happened before the internal beta review",
+        "start": 171
+      },
+      "subject_id": "EV003",
+      "type": "Claim"
+    },
+    {
+      "confidence": 0.9,
+      "document_id": "D006",
+      "id": "C010",
+      "kind": "Claim",
+      "label": "launched (C010)",
+      "object": "2024-03-10",
+      "polarity": "Positive",
+      "predicate": "launched",
+      "span": {
+        "end": 71,
+        "quote": "Product X launched in Bellhaven on 2024-03-10",
+        "start": 26
+      },
+      "subject_id": "E004",
+      "type": "Claim"
+    },
+    {
+      "confidence": 0.85,
+      "document_id": "D006",
+      "id": "C011",
+      "kind": "Claim",
+      "label": "announced (C011)",
+      "object": "2024-03",
+      "polarity": "Positive",
+      "predicate": "announced",
+      "span": {
+        "end": 161,
+        "quote": "Aster Vale Systems had announced Product X in 2024-03",
+        "start": 108
+      },
+      "subject_id": "E001",
+      "type": "Claim"
+    },
+    {
+      "confidence": 0.85,
+      "document_id": "D006",
+      "id": "C012",
+      "kind": "Claim",
+      "label": "present_at (C012)",
+      "object": "\"Bellhaven showcase\"",
+      "polarity": "Positive",
+      "predicate": "present_at",
+      "span": {
+        "end": 218,
+        "quote": "Elena Vasquez was present at the showcase in Bellhaven",
+        "start": 164
+      },
+      "subject_id": "E009",
+      "type": "Claim",
+      "valid_time": "2024-03-10"
+    },
+    {
+      "confidence": 0.8,
+      "document_id": "D006",
+      "id": "C013",
+      "kind": "Claim",
+      "label": "launched (C013)",
+      "object": "5.000000 modules",
+      "polarity": "Positive",
+      "predicate": "launched",
+      "span": {
+        "end": 272,
+        "quote": "The company\nshipped 5 modules of Product X at launch",
+        "start": 220
+      },
+      "subject_id": "E004",
+      "type": "Claim"
+    },
+    {
+      "confidence": 0.85,
+      "document_id": "D007",
+      "id": "C014",
+      "kind": "Claim",
+      "label": "launched (C014)",
+      "object": "2024-06-05",
+      "polarity": "Positive",
+      "predicate": "launched",
+      "span": {
+        "end": 82,
+        "quote": "Aster Vale Systems launched Product X in Crescent Bay on 2024-06-05",
+        "start": 15
+      },
+      "subject_id": "E004",
+      "type": "Claim"
+    },
+    {
+      "confidence": 0.85,
+      "document_id": "D007",
+      "id": "C015",
+      "kind": "Claim",
+      "label": "has_ceo (C015)",
+      "object": "E013",
+      "polarity": "Positive",
+      "predicate": "has_ceo",
+      "span": {
+        "end": 210,
+        "quote": "Aster Vale\nSystems appointed Priya Raman as chief executive officer",
+        "start": 143
+      },
+      "subject_id": "E001",
+      "type": "Claim",
+      "valid_time": "2023-06"
+    },
+    {
+      "confidence": 0.8,
+      "document_id": "D007",
+      "id": "C016",
+      "kind": "Claim",
+      "label": "launched (C016)",
+      "object": "8.000000 modules",
+      "polarity": "Positive",
+      "predicate": "launched",
+      "span": {
+        "end": 276,
+        "quote": "Product X shipped 8 modules according to the wire",
+        "start": 227
+      },
+      "subject_id": "E004",
+      "type": "Claim"
+    },
+    {
+      "confidence": 0.85,
+      "document_id": "D008",
+      "id": "C017",
+      "kind": "Claim",
+      "label": "launched (C017)",
+      "object": "2024-06-05",
+      "polarity": "Negative",
+      "predicate": "launched",
+      "span": {
+        "end": 107,
+        "quote": "Aster Vale Systems did not launch Product X in\nCrescent Bay on 2024-06-05",
+        "start": 34
+      },
+      "subject_id": "E004",
+      "type": "Claim"
+    },
+    {
+      "confidence": 0.8,
+      "document_id": "D008",
+      "id": "C018",
+      "kind": "Claim",
+      "label": "launched (C018)",
+      "object": "2024-03-10",
+      "polarity": "Positive",
+      "predicate": "launched",
+      "span": {
+        "end": 195,
+        "quote": "Product\nX had launched in Bellhaven on 2024-03-10",
+        "start": 146
+      },
+      "subject_id": "E004",
+      "type": "Claim"
+    },
+    {
+      "confidence": 0.9,
+      "document_id": "D009",
+      "id": "C019",
+      "kind": "Claim",
+      "label": "present_at (C019)",
+      "object": "\"Crescent Bay summit\"",
+      "polarity": "Positive",
+      "predicate": "present_at",
+      "span": {
+        "end": 78,
+        "quote": "Elena Vasquez was present at the Crescent Bay summit on 2024-03-10",
+        "start": 12
+      },
+      "subject_id": "E009",
+      "type": "Claim",
+      "valid_time": "2024-03-10"
+    },
+    {
+      "confidence": 0.95,
+      "document_id": "D009",
+      "id": "C020",
+      "kind": "Claim",
+      "label": "has_ceo (C020)",
+      "object": "E002",
+      "polarity": "Positive",
+      "predicate": "has_ceo",
+      "span": {
+        "end": 184,
+        "quote": "Maria Chen has served as chief\nexecutive officer of Aster Vale Systems",
+        "start": 114
+      },
+      "subject_id": "E001",
+      "type": "Claim",
+      "valid_time": "2022-01"
+    },
+    {
+      "date": "2024",
+      "date_precision": "Year",
+      "document_id": "D005",
+      "entity_id": "E004",
+      "id": "EV001",
+      "kind": "Event",
+      "label": "internal beta",
+      "span": {
+        "end": 58,
+        "quote": "internal beta",
+        "start": 45
+      },
+      "type": "Event"
+    },
+    {
+      "date": "2024",
+      "date_precision": "Year",
+      "document_id": "D005",
+      "entity_id": "E004",
+      "id": "EV002",
+      "kind": "Event",
+      "label": "pilot rollout",
+      "span": {
+        "end": 102,
+        "quote": "pilot\nrollout",
+        "start": 89
+      },
+      "type": "Event"
+    },
+    {
+      "date": "2024",
+      "date_precision": "Year",
+      "document_id": "D005",
+      "entity_id": "E004",
+      "id": "EV003",
+      "kind": "Event",
+      "label": "public beta",
+      "span": {
+        "end": 134,
+        "quote": "public beta",
+        "start": 123
+      },
+      "type": "Event"
+    },
+    {
+      "date": "2024-03-10",
+      "date_precision": "Day",
+      "document_id": "D006",
+      "entity_id": "E004",
+      "id": "EV004",
+      "kind": "Event",
+      "label": "Product X Bellhaven launch",
+      "span": {
+        "end": 71,
+        "quote": "2024-03-10",
+        "start": 61
+      },
+      "type": "Event"
+    },
+    {
+      "date": "2024-06-05",
+      "date_precision": "Day",
+      "document_id": "D007",
+      "entity_id": "E004",
+      "id": "EV005",
+      "kind": "Event",
+      "label": "Product X Crescent Bay launch",
+      "span": {
+        "end": 82,
+        "quote": "2024-06-05",
+        "start": 72
+      },
+      "type": "Event"
+    }
+  ],
+  "provenance": {
+    "circular_groups": [
+      {
+        "edges": [
+          {
+            "from": "D006",
+            "to": "D007"
+          },
+          {
+            "from": "D007",
+            "to": "D008"
+          },
+          {
+            "from": "D008",
+            "to": "D006"
+          }
+        ],
+        "witness": [
+          "D006",
+          "D007",
+          "D008",
+          "D006"
+        ]
+      }
+    ]
+  },
+  "rankings": {
+    "key_entities": [
+      {
+        "degree": 16,
+        "entity_id": "E004",
+        "evidence_score": 0.81815625,
+        "label": "Product X"
+      },
+      {
+        "degree": 13,
+        "entity_id": "E001",
+        "evidence_score": 0.99991734375,
+        "label": "Aster Vale Systems"
+      },
+      {
+        "degree": 6,
+        "entity_id": "E006",
+        "evidence_score": 0.95,
+        "label": "Northstar Meridian Labs"
+      },
+      {
+        "degree": 6,
+        "entity_id": "E009",
+        "evidence_score": 0.9425,
+        "label": "Elena Vasquez"
+      },
+      {
+        "degree": 4,
+        "entity_id": "E005",
+        "evidence_score": 0.85,
+        "label": "John Smith"
+      },
+      {
+        "degree": 4,
+        "entity_id": "E002",
+        "evidence_score": 0.0,
+        "label": "Maria Chen"
+      },
+      {
+        "degree": 3,
+        "entity_id": "E003",
+        "evidence_score": 0.0,
+        "label": "Bellhaven"
+      },
+      {
+        "degree": 2,
+        "entity_id": "E007",
+        "evidence_score": 0.0,
+        "label": "David Okoro"
+      }
+    ]
+  },
+  "schema_version": "1.0.0",
+  "timeline": {
+    "finding": {
+      "claims": [
+        "C007",
+        "C008",
+        "C009"
+      ],
+      "statement": "Potential temporal contradiction",
+      "witness": [
+        "EV001",
+        "EV002",
+        "EV003",
+        "EV001"
+      ]
+    }
+  }
+}

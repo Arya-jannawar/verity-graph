@@ -21,6 +21,7 @@
 
 #include <cmath>
 #include <cstdlib>
+#include <map>
 #include <exception>
 #include <fstream>
 #include <iostream>
@@ -95,6 +96,7 @@ const char* kHelpText =
 
 struct Args {
     std::vector<std::string> positional;
+    std::map<std::string, std::string> flags;   // command-specific --flag value
     int depth = 1;
     bool json = false;
 };
@@ -118,8 +120,13 @@ Args parseArgs(const std::vector<std::string>& tokens) {
                 std::exit(kExitUsage);
             }
         } else if (t.rfind("--", 0) == 0) {
-            std::cerr << "usage: unknown option '" << t << "'\n";
-            std::exit(kExitUsage);
+            // command-specific flag with a value (e.g. --rules X, --fetch id);
+            // a trailing flag or bare boolean flag is tolerated
+            if (i + 1 < tokens.size() && tokens[i + 1].rfind("--", 0) != 0) {
+                args.flags[t] = tokens[++i];
+            } else {
+                args.flags[t] = "";
+            }
         } else {
             args.positional.push_back(t);
         }
@@ -506,10 +513,9 @@ std::vector<verity::engine::Conflict> runConflictDetection(const std::string& ru
 }
 
 int cmdConflicts(const Args& args) {
-    std::string rulesPath = "data/rules/rules.txt";
-    for (std::size_t i = 0; i + 1 < args.positional.size(); i += 2) {
-        if (args.positional[i] == "--rules") rulesPath = args.positional[i + 1];
-    }
+    const std::string rulesPath = args.flags.count("--rules") != 0u
+                                      ? args.flags.at("--rules")
+                                      : std::string("data/rules/rules.txt");
     verity::engine::ConflictJsonCollector collector;
     const auto findings = runConflictDetection(rulesPath, collector);
     std::cout << findings.size() << " finding(s)\n";
@@ -710,17 +716,40 @@ int cmdDmGraphs() {
 }
 
 
-int cmdExport(const Args& args) {
-    std::string jsonPath, dotPath, htmlPath;
-    for (std::size_t i = 0; i + 1 < args.positional.size(); i += 2) {
-        if (args.positional[i] == "--json") jsonPath = args.positional[i + 1];
-        else if (args.positional[i] == "--dot") dotPath = args.positional[i + 1];
-        else if (args.positional[i] == "--html") htmlPath = args.positional[i + 1];
+int cmdExportDefaults() {
+    const verity::engine::VerityEngine engine =
+        verity::engine::VerityEngine::fromExtractionFile(readSessionExtraction());
+    const auto report = verity::engine::Exporter::buildReport(engine);
+    const std::vector<std::string> paths{"out/graph.json", "out/graph.dot",
+                                         "out/report.html"};
+    for (const std::string& path : paths) {
+        std::ofstream out(path);
+        if (!out) throw verity::util::StorageError("cannot open " + path);
+        if (path.size() >= 5 && path.compare(path.size() - 5, 5, ".json") == 0) {
+            out << report.dump(2) << "\n";
+            const std::string uiCopy = "ui/data/graph.json";
+            std::ofstream uiOut(uiCopy);
+            if (uiOut) uiOut << report.dump(2) << "\n";
+        } else if (path.size() >= 4 && path.compare(path.size() - 4, 4, ".dot") == 0) {
+            out << verity::engine::Exporter::toDot(engine);
+        } else {
+            out << verity::engine::Exporter::toHtml(report);
+        }
     }
+    std::cout << "wrote out/graph.json + ui/data/graph.json + out/graph.dot + "
+                 "out/report.html\n";
+    return kExitOk;
+}
+
+int cmdExport(const Args& args) {
+    const std::string jsonPath = args.flags.count("--json") != 0u
+                                     ? args.flags.at("--json") : std::string();
+    const std::string dotPath = args.flags.count("--dot") != 0u
+                                    ? args.flags.at("--dot") : std::string();
+    const std::string htmlPath = args.flags.count("--html") != 0u
+                                     ? args.flags.at("--html") : std::string();
     if (jsonPath.empty() && dotPath.empty() && htmlPath.empty()) {
-        jsonPath = "out/graph.json";
-        dotPath = "out/graph.dot";
-        htmlPath = "out/report.html";
+        return cmdExportDefaults();
     }
     const verity::engine::VerityEngine engine =
         verity::engine::VerityEngine::fromExtractionFile(readSessionExtraction());
@@ -729,9 +758,21 @@ int cmdExport(const Args& args) {
         std::ofstream out(jsonPath);
         if (!out) throw verity::util::StorageError("cannot open " + jsonPath);
         out << report.dump(2) << "\n";
-        std::cout << "wrote " << jsonPath << " (nodes " << report["nodes"].size()
-                  << ", edges " << report["edges"].size() << ", conflicts "
-                  << report["conflicts"].size() << ")\n";
+        // the UI package's data copy (same payload, stable location)
+        const std::string uiCopy = "ui/data/graph.json";
+        std::ofstream uiOut(uiCopy);
+        if (uiOut) {
+            uiOut << report.dump(2) << "\n";
+            std::cout << "wrote " << jsonPath << " (nodes " << report["nodes"].size()
+                      << ", edges " << report["edges"].size() << ", conflicts "
+                      << report["conflicts"].size() << ") + UI copy at " << uiCopy
+                      << "\n";
+        } else {
+            std::cout << "wrote " << jsonPath << " (nodes " << report["nodes"].size()
+                      << ", edges " << report["edges"].size() << ", conflicts "
+                      << report["conflicts"].size()
+                      << ") — UI copy skipped: create ui/data/\n";
+        }
     }
     if (!dotPath.empty()) {
         std::ofstream out(dotPath);
@@ -769,10 +810,9 @@ int cmdLoad(const Args& args) {
         return kExitUsage;
     }
     const std::string& path = args.positional[0];
-    std::string fetchId;
-    for (std::size_t i = 1; i + 1 < args.positional.size(); i += 2) {
-        if (args.positional[i] == "--fetch") fetchId = args.positional[i + 1];
-    }
+    const std::string fetchId = args.flags.count("--fetch") != 0u
+                                    ? args.flags.at("--fetch")
+                                    : std::string();
     if (!fetchId.empty()) {
         // RANDOM ACCESS: only the index + one record are read
         const auto record = verity::io::GraphSerializer::fetchRecord(path, fetchId);

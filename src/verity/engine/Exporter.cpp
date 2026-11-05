@@ -311,13 +311,22 @@ nlohmann::json Exporter::loadLedger(const std::string& path) {
 }
 
 bool Exporter::verifyLedgerJson(const nlohmann::json& ledger, long& firstBad) {
-    // recompute the chain over the ledger's stored entries (teaching-grade)
-    if (!ledger.contains("entries") || !ledger.contains("entries_data")) return false;
+    // Rebuild the chain from the stored records and compare the recomputed
+    // head against the STORED head: tampering any record (or the head) breaks
+    // the comparison. Rebuilding alone would always look self-consistent.
+    if (!ledger.contains("entries") || !ledger.contains("entries_data") ||
+        !ledger.contains("head")) {
+        return false;
+    }
     verity::dm::EvidenceLedger rebuilt;
     for (const auto& record : ledger.at("entries_data")) {
         rebuilt.append(record.get<std::string>());
     }
-    firstBad = rebuilt.verify();
+    const std::string recomputedHead = rebuilt.size() > 0
+                                           ? std::to_string(rebuilt.entries().back().hash)
+                                           : "0";
+    const std::string storedHead = ledger.at("head").get<std::string>();
+    firstBad = recomputedHead == storedHead ? -1 : 0;
     return firstBad == -1;
 }
 

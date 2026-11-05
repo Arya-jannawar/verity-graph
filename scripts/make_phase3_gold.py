@@ -212,10 +212,38 @@ def main() -> int:
         "citations": [{"citing": "D009", "cited": "D002", "span": None}],
     })
 
+    # ---------------- D010: final summary (citation hub, no new claims) ----
+    t = texts.get("D010")
+    if t is None:
+        texts["D010"] = None
+    import sys as _sys
+    _sys.path.insert(0, str(ROOT / "ai"))
+    from readers.txt_reader import read_txt as _read
+    t = _read(SAMPLE / "d010_final_summary.txt")
+    fragments.append({
+        "schema_version": "1.0.0",
+        "documents": [{
+            "id": "D010",
+            "filename": "d010_final_summary.txt",
+            "format": "txt",
+            "normalized_text": t,
+            "metadata": {"language": "en"},
+            "citations": ["D006", "D007"],
+        }],
+        "entities": [],
+        "claims": [],
+        "events": [],
+        "citations": [
+            {"citing": "D010", "cited": "D006", "span": None},
+            {"citing": "D010", "cited": "D007", "span": None},
+        ],
+    })
+
+
     GOLD.mkdir(parents=True, exist_ok=True)
-    for i, fragment in enumerate(fragments):
-        name = f"d00{i + 6}.gold.json"
-        out = GOLD / name
+    names = ["d006", "d007", "d008", "d009", "d010"]
+    for name, fragment in zip(names, fragments):
+        out = GOLD / f"{name}.gold.json"
         out.write_text(json.dumps(fragment, ensure_ascii=False, indent=2) + "\n",
                        encoding="utf-8")
         print(f"wrote {out.relative_to(ROOT)}")
