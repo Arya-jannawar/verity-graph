@@ -102,6 +102,7 @@ set(VERITY_TEST_SOURCES
   tests/ds/test_ds2.cpp
   tests/ds/test_sorts.cpp
   tests/ds/test_topo.cpp
+  tests/ds/test_dsa3.cpp
   tests/dm/test_numtheory.cpp
   tests/dm/test_sets.cpp
   tests/dm/test_counting.cpp
@@ -109,8 +110,11 @@ set(VERITY_TEST_SOURCES
   tests/dm/test_functions.cpp
   tests/dm/test_combinatorics.cpp
   tests/dm/test_algebra.cpp
+  tests/dm/test_logic.cpp
+  tests/dm/test_graphanalysis.cpp
   tests/io/test_jsonloader.cpp
   tests/engine/test_engine2.cpp
+  tests/engine/test_conflicts.cpp
   tests/integration/test_pipeline.cpp
 )
 

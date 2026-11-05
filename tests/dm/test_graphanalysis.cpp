@@ -30,7 +30,7 @@ verity::ds::Graph<std::string, double> cycle4() {
 } // namespace
 
 TEST_CASE("degree sequence and handshake (undirected and digraph)") {
-    const auto g = cycle4();
+    auto g = cycle4();
     CHECK_EQ(verity::dm::degreeSequence(g), std::vector<std::size_t>({2, 2, 2, 2}));
     CHECK(verity::dm::handshakeHolds(g));
     CHECK_EQ(g.edgeCount(), 4u);
@@ -80,7 +80,7 @@ TEST_CASE("bipartite: even cycle yes, odd cycle no") {
 }
 
 TEST_CASE("Euler existence") {
-    const auto circuit = cycle4();
+    auto circuit = cycle4();
     CHECK_EQ(verity::dm::eulerType(circuit), std::string("circuit"));
     circuit.addEdgeUndirected("A", "C", 1);   // A:3, C:3, B:2, D:2 -> exactly 2 odd
     CHECK_EQ(verity::dm::eulerType(circuit), std::string("path"));
@@ -122,7 +122,7 @@ TEST_CASE("induced subgraph and greedy coloring") {
 }
 
 TEST_CASE("A^k walk counting (walks may repeat vertices)") {
-    const auto g = cycle4();
+    auto g = cycle4();
     // length-1 walks: direct edges only
     CHECK_EQ(verity::dm::walkCount(g, std::string("A"), std::string("B"), 1), 1u);
     CHECK_EQ(verity::dm::walkCount(g, std::string("A"), std::string("C"), 1), 0u);

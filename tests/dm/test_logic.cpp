@@ -217,13 +217,17 @@ TEST_CASE("quantifiers: finite domains and negation laws") {
 
     // quantifier negation verified over the domain:
     // !(forall p) == exists !p  and  !(exists p) == forall !p
+    const auto isOdd = [](int x) { return x % 2 != 0; };
     const std::vector<int> mixed{2, 3, 4};
-    CHECK(!forAll(mixed, isEven) == exists(mixed, [](int x) { return !isEven(x); }));
-    CHECK(!exists(mixed, [](int x) { return x > 10; }) == forAll(mixed, [](int x) { return !(x > 10); }));
+    CHECK(!forAll(mixed, isEven) == exists(mixed, isOdd));
+    const auto overTen = [](int x) { return x > 10; };
+    const auto notOverTen = [](int x) { return x <= 10; };
+    CHECK(!exists(mixed, overTen) == forAll(mixed, notOverTen));
 
     // nested quantifiers: every person has an age >= 0
+    const auto ageNonNegative = [](int age) { return age >= 0; };
     const std::vector<std::pair<std::string, int>> people{{"a", 1}, {"b", 5}};
-    CHECK(forAll(people, [](const std::pair<std::string, int>& p) {
-        return forAll(std::vector<int>{p.second}, [](int age) { return age >= 0; });
+    CHECK(forAll(people, [&ageNonNegative](const std::pair<std::string, int>& p) {
+        return forAll(std::vector<int>{p.second}, ageNonNegative);
     }));
 }
