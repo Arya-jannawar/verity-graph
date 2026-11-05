@@ -326,13 +326,13 @@ public:
     }
 
     /// Least upper bound (join) of a and b; throws when none exists.
+    /// u is least iff every other upper bound v satisfies u ≤ v.
     [[nodiscard]] T leastUpperBound(const T& a, const T& b) const {
         const auto ups = upperBounds(a, b);
         for (const T& u : ups) {
             bool isLeast = true;
             for (const T& v : ups) {
-                if (!(u == v) && !contains(v, u)) {   // v ≤ u fails
-                    // u is least only if every other upper bound v satisfies v ≤ u
+                if (!(u == v) && !contains(u, v)) {   // u ≤ v must hold
                     isLeast = false;
                     break;
                 }

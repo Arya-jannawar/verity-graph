@@ -138,13 +138,19 @@ private:
             ++size_;
             return true;
         }
+        bool inserted;
         if (key < node->key) {
-            return insertNode(node->left, key);
+            inserted = insertNode(node->left, key);
+        } else if (node->key < key) {
+            inserted = insertNode(node->right, key);
+        } else {
+            return false;   // duplicate
         }
-        if (node->key < key) {
-            return insertNode(node->right, key);
+        if (inserted) {
+            // rebalance along the entire recursion path (heights changed below)
+            node = rebalance(std::move(node));
         }
-        return false;   // duplicate
+        return inserted;
     }
 
     [[nodiscard]] std::unique_ptr<Node> removeNode(std::unique_ptr<Node> node, const T& key) {

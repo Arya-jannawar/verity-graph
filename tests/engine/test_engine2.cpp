@@ -26,15 +26,13 @@ const char* kAliasData = R"JSON({
     {"id": "E005", "name": "John Smith", "type": "Person", "aliases": [],
      "mentions": [{"document_id": "D004", "span": {"start": 0, "end": 10, "quote": "John Smith"}}]},
     {"id": "E010", "name": "J. Smith", "type": "Person", "aliases": [],
-     "mentions": [{"document_id": "D004", "span": {"start": 27, "end": 35, "quote": "J. Smith"}}]},
+     "mentions": [{"document_id": "D004", "span": {"start": 29, "end": 37, "quote": "J. Smith"}}]},
     {"id": "E011", "name": "Mr. Smith", "type": "Person", "aliases": [],
-     "mentions": [{"document_id": "D004", "span": {"start": 54, "end": 63, "quote": "Mr. Smith"}}]},
+     "mentions": [{"document_id": "D004", "span": {"start": 65, "end": 74, "quote": "Mr. Smith"}}]},
     {"id": "E012", "name": "Smith, John", "type": "Person", "aliases": [],
-     "mentions": [{"document_id": "D004", "span": {"start": 85, "end": 96, "quote": "Smith, John"}}]},
-    {"id": "E020", "name": "Will Smith", "type": "Person", "aliases": [],
-     "mentions": [{"document_id": "D004", "span": {"start": 96, "end": 96, "quote": ""}}]},
-    {"id": "E021", "name": "A. Smith", "type": "Person", "aliases": [],
-     "mentions": [{"document_id": "D004", "span": {"start": 96, "end": 96, "quote": ""}}]}
+     "mentions": [{"document_id": "D004", "span": {"start": 95, "end": 106, "quote": "Smith, John"}}]},
+    {"id": "E020", "name": "Will Smith", "type": "Person", "aliases": [], "mentions": []},
+    {"id": "E021", "name": "A. Smith", "type": "Person", "aliases": [], "mentions": []}
   ],
   "claims": [], "events": [], "citations": []
 })JSON";

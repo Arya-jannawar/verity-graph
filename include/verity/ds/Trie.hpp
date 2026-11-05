@@ -73,8 +73,12 @@ public:
     }
 
     /// Removes a word; returns false when absent. Prunes dead branches.
+    /// Uses the same letters-only key normalization as insert.
     bool remove(const std::string& word) {
-        const std::string w = detail::trieNormalize(word);
+        std::string w;
+        for (const char c : detail::trieNormalize(word)) {
+            if (c >= 'a' && c <= 'z') w.push_back(c);
+        }
         if (w.empty() || !search(w)) return false;
         removeFrom(root_, w, 0);
         --size_;

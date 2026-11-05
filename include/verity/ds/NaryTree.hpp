@@ -47,7 +47,14 @@ public:
 
     [[nodiscard]] Node& root() noexcept { return *root_; }
     [[nodiscard]] const Node& root() const noexcept { return *root_; }
-    [[nodiscard]] std::size_t size() const noexcept { return count_; }
+
+    /// Number of nodes (O(n): nodes attach through Node::addChild, so the
+    /// count is computed by traversal rather than maintained incrementally).
+    [[nodiscard]] std::size_t size() const {
+        std::size_t n = 0;
+        countNodes(root_.get(), n);
+        return n;
+    }
 
     void preOrder(const std::function<void(const T&)>& visit) const {
         preWalk(root_.get(), visit);
@@ -86,6 +93,11 @@ public:
     }
 
 private:
+    static void countNodes(const Node* node, std::size_t& n) {
+        ++n;
+        for (const auto& child : node->children) countNodes(child.get(), n);
+    }
+
     static void preWalk(const Node* node, const std::function<void(const T&)>& visit) {
         visit(node->value);
         for (const auto& child : node->children) preWalk(child.get(), visit);
