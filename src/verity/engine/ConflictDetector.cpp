@@ -130,7 +130,11 @@ private:
                 const model::ClaimRecord& a = *claims[i];
                 const model::ClaimRecord& b = *claims[j];
                 // polarity Unknown is preserved, never treated as a clash
-                if (a.polarity == "Unknown" || b.polarity == "Unknown") continue;
+                // only two POSITIVE claims with different same-kind values
+                // clash here; negative/unknown polarity is NegationRule's or
+                // is preserved (CONTRACT 10.4)
+                if (a.polarity != "Positive" || b.polarity != "Positive") continue;
+                if (a.object.kind != b.object.kind) continue;
                 if (!valuesConflict(a.object, b.object)) continue;
                 if (overlap_ && !validityOverlaps(a, b)) continue;
                 findings.push_back(makeConflict(
