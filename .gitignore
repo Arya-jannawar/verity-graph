@@ -1,0 +1,20 @@
+# Build output
+build/
+out/
+!.gitkeep
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# IDE / OS
+.vs/
+.vscode/
+.idea/
+Thumbs.db
+
+# Original prompt documents are inputs, not deliverables
+1st_Prompt_VERITY_GRAPH_ZAI_SUPER_PROMPT.txt
+*.log.tmp

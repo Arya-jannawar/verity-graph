@@ -1,0 +1,24 @@
+# ninja log v7
+227	4754	8156154786264083	CMakeFiles/verity_tests.dir/tests/dm/test_counting.cpp.obj	bd2c68a4bf4aa7b0
+47	5352	8156154784395674	CMakeFiles/verity_core.dir/src/verity/util/Logger.cpp.obj	58193025ae426994
+175	6898	8156154785746339	CMakeFiles/verity_tests.dir/tests/ds/test_ds_core.cpp.obj	42e07879be58ce6
+209	7249	8156154786077582	CMakeFiles/verity_tests.dir/tests/dm/test_numtheory.cpp.obj	5fca95e2aff33525
+56	9057	8156154784483121	CMakeFiles/verity_core.dir/src/verity/model/Node.cpp.obj	9f72115dc5bef3b7
+86	9279	8156154784810252	CMakeFiles/verity_core.dir/src/verity/model/ClaimNode.cpp.obj	9a3e99f60615d7e8
+94	9998	8156154784931006	CMakeFiles/verity_core.dir/src/verity/model/NodeStore.cpp.obj	c9defd8e1251a5f6
+219	10046	8156154786175674	CMakeFiles/verity_tests.dir/tests/dm/test_sets.cpp.obj	738e8553bda283b9
+185	11277	8156154785848047	CMakeFiles/verity_tests.dir/tests/ds/test_hashtable.cpp.obj	43b9eb416daa2c61
+159	12416	8156154785570943	CMakeFiles/verity_tests.dir/tests/oop/test_binding.cpp.obj	e3989f680ed279de
+244	13610	8156154786423382	CMakeFiles/verity_tests.dir/tests/integration/test_pipeline.cpp.obj	436c6caad44d7bbd
+194	13662	8156154785932986	CMakeFiles/verity_tests.dir/tests/ds/test_graph.cpp.obj	84ff3323fb727b3b
+122	13828	8156154785217269	CMakeFiles/verity_core.dir/src/verity/engine/VerityEngine.cpp.obj	bb20a471ec7093e8
+167	14173	8156154785661495	CMakeFiles/verity_tests.dir/tests/oop/test_nodestore.cpp.obj	b4262cd143e5dbe5
+114	16141	8156154785060974	CMakeFiles/verity_core.dir/src/verity/engine/GraphBuilder.cpp.obj	77c72dd319c8f19e
+235	16915	8156154786339466	CMakeFiles/verity_tests.dir/tests/io/test_jsonloader.cpp.obj	e10b0a9b03329854
+149	17412	8156154785485506	CMakeFiles/verity_tests.dir/tests/oop/test_model.cpp.obj	eda5924606dea9e1
+140	17451	8156154785395326	CMakeFiles/verity_tests.dir/tests/test_main.cpp.obj	6357f0d6dbe693f7
+104	19579	8156154784974441	CMakeFiles/verity_core.dir/src/verity/io/JsonLoader.cpp.obj	df0ae82a34acc0c7
+19580	19732	8156154979775989	verity_core.lib	d508dc2fa5bbb106
+19732	20099	8156154981294658	verity_tests.exe	5da7205dba2e53a1
+131	20625	8156154785302868	CMakeFiles/verity_cli.dir/app/main.cpp.obj	b97e4c3fa64b263a
+20625	20881	8156154990225270	verity.exe	f4d57fc4caac2cd8

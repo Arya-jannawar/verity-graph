@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"D:/VIT/cp project/build-asan/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
