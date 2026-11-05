@@ -145,6 +145,10 @@ int cmdIngest(const Args& args) {
     engine.ingest(records);
     writeSession(path);
 
+    // Phase-2: ingest runs entity resolution and the timeline check.
+    const auto resolution = verity::engine::EntityResolver::resolve(records);
+    const auto timeline = verity::engine::TimelineBuilder::build(records);
+
     if (args.json) {
         nlohmann::json out;
         out["ok"] = true;
@@ -165,6 +169,23 @@ int cmdIngest(const Args& args) {
                   << records.citations.size() << " citations\n";
         std::cout << "graph: " << engine.graph().nodeCount() << " nodes, "
                   << engine.graph().edgeCount() << " edges\n";
+        if (resolution.mergedPairs > 0) {
+            std::cout << "entity resolution: " << resolution.mergedPairs
+                      << " matched pair(s), " << resolution.classes.size()
+                      << " canonical class(es)\n";
+            for (const auto& [canonical, aliases] : resolution.aliasesByCanonical) {
+                if (aliases.size() > 1) {
+                    std::cout << "  canonical " << canonical << " <-";
+                    for (const auto& alias : aliases) std::cout << " \"" << alias << "\"";
+                    std::cout << "\n";
+                }
+            }
+        }
+        if (timeline.finding.has_value()) {
+            std::cout << timeline.finding->statement << ": witness";
+            for (const auto& id : timeline.finding->witness) std::cout << " " << id;
+            std::cout << "\n";
+        }
         std::cout << "session saved to " << sessionPath() << "\n";
     }
     return kExitOk;

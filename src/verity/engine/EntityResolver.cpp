@@ -20,12 +20,29 @@ std::string lower(const std::string& s) {
     return out;
 }
 
-/// Last whitespace-separated token, lowercased ("Smith, John" -> "john"?? no:
-/// the surname convention "Smith, John" has the surname FIRST). We treat the
-/// LAST token as the surname for "First Last" forms and the FIRST token for
-/// "Last, First" forms.
+/// Strips leading honorific titles ("mr.", "ms.", "mrs.", "dr.") after
+/// lowercasing — "Mr. Smith" parses like a bare surname.
+std::string stripTitles(const std::string& lowered) {
+    static const char* titles[] = {"mr. ", "ms. ", "mrs. ", "dr. "};
+    std::string out = lowered;
+    bool changed = true;
+    while (changed) {
+        changed = false;
+        for (const char* t : titles) {
+            const std::string prefix(t);
+            if (out.rfind(prefix, 0) == 0) {
+                out = out.substr(prefix.size());
+                changed = true;
+            }
+        }
+    }
+    return out;
+}
+
+/// Surname token: "Smith, John" -> "smith"; "John Smith" -> "smith";
+/// "Mr. Smith" -> "smith". Titles are stripped first.
 std::string surnameToken(const std::string& name) {
-    const std::string l = lower(name);
+    const std::string l = stripTitles(lower(name));
     const std::size_t comma = l.find(',');
     if (comma != std::string::npos) {
         return l.substr(0, comma);
@@ -35,9 +52,10 @@ std::string surnameToken(const std::string& name) {
     return l.substr(lastSpace + 1);
 }
 
-/// First-name candidate (the part that is not the surname token), lowercased.
+/// First-name candidate (the part that is not the surname token), lowercased;
+/// titles stripped.
 std::string firstNameToken(const std::string& name) {
-    const std::string l = lower(name);
+    const std::string l = stripTitles(lower(name));
     const std::size_t comma = l.find(',');
     if (comma != std::string::npos && comma + 2 <= l.size()) {
         return l.substr(comma + 2);   // after ", "
@@ -156,8 +174,22 @@ ResolutionResult EntityResolver::resolve(const model::ExtractionRecord& records)
     // canonical classes come from the DSU (same partition); keep sorted order
     result.classes = dsuClasses;
 
-    // 5. Canonical representative: prefer the longest name (full name over
-    // initials), ties broken by smallest id.
+    // 5. Canonical representative: prefer the name that is neither an
+    // abbreviation (contains an initial like "j.") nor a rearranged form
+    // (contains a comma like "Smith, John") nor a bare title ("Mr. Smith");
+    // then prefer the LONGER name; ties broken by smallest id. So
+    // "John Smith" beats "J. Smith" / "Smith, John" / "Mr. Smith".
+    auto nameQuality = [](const std::string& name) {
+        // 0 = worst (rearranged "Smith, John"), 3 = best (plain full name).
+        std::string l = lower(name);
+        if (l.find(',') != std::string::npos) return 0;
+        if (l.rfind("mr. ", 0) == 0 || l.rfind("ms. ", 0) == 0 ||
+            l.rfind("mrs. ", 0) == 0 || l.rfind("dr. ", 0) == 0) {
+            return 1;
+        }
+        if (l.find(". ") != std::string::npos) return 2;   // "j. smith" initials
+        return 3;
+    };
     for (const auto& cls : result.classes) {
         std::string canonical = cls.front();
         for (const std::string& id : cls) {
@@ -168,8 +200,12 @@ ResolutionResult EntityResolver::resolve(const model::ExtractionRecord& records)
                 if (info.id == canonical) b = &info;
             }
             if (a != nullptr && b != nullptr) {
-                const bool aBetter = a->name.size() > b->name.size() ||
-                                     (a->name.size() == b->name.size() && a->id < b->id);
+                const int qa = nameQuality(a->name);
+                const int qb = nameQuality(b->name);
+                const bool aBetter = qa != qb ? qa > qb            // higher quality value = worse
+                                              : (a->name.size() != b->name.size()
+                                                     ? a->name.size() > b->name.size()
+                                                     : a->id < b->id);
                 if (aBetter) canonical = id;
             }
         }

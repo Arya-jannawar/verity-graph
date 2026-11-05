@@ -34,23 +34,31 @@ class Trie {
     struct Node {
         std::unique_ptr<Node> children[26]{};
         bool isWord = false;
+        std::string original;   // stored verbatim for suggestions
     };
 
 public:
     Trie() = default;
 
-    /// Inserts a word (case-insensitive). Returns true if newly inserted.
+    /// Inserts a word (case-insensitive; non-letter characters are skipped
+    /// during the path walk, and the original string is kept at the leaf).
+    /// Returns true if newly inserted.
     bool insert(const std::string& word) {
-        const std::string w = detail::trieNormalize(word);
+        std::string w;
+        w.reserve(word.size());
+        for (const char c : detail::trieNormalize(word)) {
+            if (c >= 'a' && c <= 'z') w.push_back(c);
+        }
         if (w.empty()) return false;
         Node* node = &root_;
         for (const char c : w) {
-            const std::size_t idx = charIndex(c);
+            const std::size_t idx = charIndex(c);   // guaranteed in [0,26)
             if (!node->children[idx]) node->children[idx] = std::make_unique<Node>();
             node = node->children[idx].get();
         }
         if (node->isWord) return false;
         node->isWord = true;
+        node->original = word;
         ++size_;
         return true;
     }
@@ -98,10 +106,9 @@ private:
     }
 
     [[nodiscard]] const Node* walk(const std::string& s) const {
-        const std::string w = detail::trieNormalize(s);
         const Node* node = &root_;
-        for (const char c : w) {
-            if (c < 'a' || c > 'z') return nullptr;
+        for (const char c : detail::trieNormalize(s)) {
+            if (c < 'a' || c > 'z') continue;   // punctuation is transparent
             const Node* next = node->children[charIndex(c)].get();
             if (next == nullptr) return nullptr;
             node = next;
@@ -133,7 +140,7 @@ private:
     }
 
     void collect(const Node* node, std::string& current, std::vector<std::string>& out) const {
-        if (node->isWord) out.push_back(current);
+        if (node->isWord) out.push_back(node->original.empty() ? current : node->original);
         for (std::size_t i = 0; i < 26; ++i) {
             if (node->children[i] != nullptr) {
                 current.push_back(static_cast<char>('a' + i));

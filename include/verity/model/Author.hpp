@@ -16,7 +16,10 @@
 // Use in Verity: authors of documents are persons that also act as citation
 // sources — one identity, one Node id.
 
+#include <memory>
 #include <string>
+
+#include <nlohmann/json.hpp>
 
 #include "verity/model/Node.hpp"
 
@@ -46,7 +49,7 @@ private:
     std::string url_;
 };
 
-class Author final : public Person, public SourceNode {
+class Author : public Person, public SourceNode {
 public:
     /// Most-derived class: initializes the VIRTUAL BASE Node itself.
     Author(NodeId id, std::string name, std::string affiliation, std::string url)
@@ -54,8 +57,22 @@ public:
           Person(id, name, std::move(affiliation)),
           SourceNode(id, name, std::move(url)) {}
 
-    [[nodiscard]] std::string describe() const {
+    // Node's pure virtuals implemented here (Author is concrete).
+    [[nodiscard]] std::string type() const override { return "Author"; }
+    [[nodiscard]] std::string describe() const override {
         return id().str() + " Author '" + label() + "' <" + url() + "> @ " + affiliation();
+    }
+    [[nodiscard]] nlohmann::json toJson() const override {
+        nlohmann::json j;
+        j["id"] = id().str();
+        j["label"] = label();
+        j["type"] = "Author";
+        j["affiliation"] = affiliation();
+        j["url"] = url();
+        return j;
+    }
+    [[nodiscard]] std::unique_ptr<Node> clone() const override {
+        return std::make_unique<Author>(*this);
     }
 };
 

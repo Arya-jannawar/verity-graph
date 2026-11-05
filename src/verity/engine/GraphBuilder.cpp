@@ -1,5 +1,8 @@
 #include "verity/engine/GraphBuilder.hpp"
 
+#include <tuple>
+#include <vector>
+
 #include <string>
 
 #include "verity/model/ClaimNode.hpp"
@@ -13,7 +16,9 @@ namespace verity::engine {
 
 std::size_t GraphBuilder::build(const model::ExtractionRecord& records,
                                 model::NodeStore& store, EvidenceGraph& graph) {
-    std::size_t edges = 0;
+    // Two passes: create ALL nodes first (claims reference events, events
+    // reference entities), then apply the edges once every endpoint exists.
+    std::vector<std::tuple<model::NodeId, model::NodeId, EdgeAttr>> pendingEdges;
 
     // Feed every loaded id into the counters so post-load nextId() calls
     // never collide with ids from the document set.
@@ -43,8 +48,7 @@ std::size_t GraphBuilder::build(const model::ExtractionRecord& records,
             EdgeAttr attr;
             attr.relation = model::RelationType::MentionedIn;
             attr.label = "mention";
-            graph.addEdge(entityId, model::NodeId(m.document_id), attr);
-            ++edges;
+            pendingEdges.emplace_back(entityId, model::NodeId(m.document_id), std::move(attr));
         }
     }
 
@@ -76,24 +80,22 @@ std::size_t GraphBuilder::build(const model::ExtractionRecord& records,
         subjectEdge.relation = model::RelationType::SubjectOf;
         subjectEdge.weight = confidence;
         subjectEdge.label = c.predicate;
-        graph.addEdge(claimId, subjectId, subjectEdge);
-        ++edges;
+        pendingEdges.emplace_back(claimId, subjectId, std::move(subjectEdge));
 
         if (c.object.kind == model::ClaimObject::Kind::EntityRef) {
             EdgeAttr objectEdge;
             objectEdge.relation = model::RelationType::ObjectOf;
             objectEdge.weight = confidence;
             objectEdge.label = c.predicate;
-            graph.addEdge(claimId, model::NodeId(c.object.entity_id), objectEdge);
-            ++edges;
+            pendingEdges.emplace_back(claimId, model::NodeId(c.object.entity_id),
+                                      std::move(objectEdge));
         }
 
         EdgeAttr evidenceEdge;
         evidenceEdge.relation = model::RelationType::DocumentEvidence;
         evidenceEdge.weight = confidence;
         evidenceEdge.label = "evidence";
-        graph.addEdge(claimId, docId, evidenceEdge);
-        ++edges;
+        pendingEdges.emplace_back(claimId, docId, std::move(evidenceEdge));
 
         (void)store.add(std::move(node));
     }
@@ -111,14 +113,12 @@ std::size_t GraphBuilder::build(const model::ExtractionRecord& records,
         EdgeAttr subjectEdge;
         subjectEdge.relation = model::RelationType::SubjectOf;
         subjectEdge.label = "event_subject";
-        graph.addEdge(eventId, entityId, subjectEdge);
-        ++edges;
+        pendingEdges.emplace_back(eventId, entityId, std::move(subjectEdge));
 
         EdgeAttr evidenceEdge;
         evidenceEdge.relation = model::RelationType::DocumentEvidence;
         evidenceEdge.label = "evidence";
-        graph.addEdge(eventId, docId, evidenceEdge);
-        ++edges;
+        pendingEdges.emplace_back(eventId, docId, std::move(evidenceEdge));
 
         (void)store.add(std::move(node));
     }
@@ -128,11 +128,14 @@ std::size_t GraphBuilder::build(const model::ExtractionRecord& records,
         EdgeAttr attr;
         attr.relation = model::RelationType::Cites;
         attr.label = "cites";
-        graph.addEdge(model::NodeId(ct.citing), model::NodeId(ct.cited), attr);
-        ++edges;
+        pendingEdges.emplace_back(model::NodeId(ct.citing), model::NodeId(ct.cited),
+                                  std::move(attr));
     }
 
-    return edges;
+    for (auto& [from, to, attr] : pendingEdges) {
+        graph.addEdge(from, to, std::move(attr));
+    }
+    return pendingEdges.size();
 }
 
 } // namespace verity::engine

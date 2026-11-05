@@ -91,13 +91,22 @@ set(VERITY_TEST_SOURCES
   tests/oop/test_model.cpp
   tests/oop/test_binding.cpp
   tests/oop/test_nodestore.cpp
+  tests/oop/test_oop2.cpp
   tests/ds/test_ds_core.cpp
   tests/ds/test_hashtable.cpp
   tests/ds/test_graph.cpp
+  tests/ds/test_ds2.cpp
+  tests/ds/test_sorts.cpp
+  tests/ds/test_topo.cpp
   tests/dm/test_numtheory.cpp
   tests/dm/test_sets.cpp
   tests/dm/test_counting.cpp
+  tests/dm/test_relations.cpp
+  tests/dm/test_functions.cpp
+  tests/dm/test_combinatorics.cpp
+  tests/dm/test_algebra.cpp
   tests/io/test_jsonloader.cpp
+  tests/engine/test_engine2.cpp
   tests/integration/test_pipeline.cpp
 )
 

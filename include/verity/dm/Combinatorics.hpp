@@ -71,9 +71,11 @@ void combinationsIter(const std::vector<T>& items, std::size_t k,
         combo.reserve(k);
         for (std::size_t i : idx) combo.push_back(items[i]);
         out.push_back(std::move(combo));
-        // advance to next combination of indices
+        // advance to next combination of indices: find the rightmost slot
+        // that can still be incremented (>= is the saturation test; a strict
+        // == here would let out-of-range vectors slip through)
         std::size_t pos = k;
-        while (pos > 0 && idx[pos - 1] == n - (k - pos)) --pos;
+        while (pos > 0 && idx[pos - 1] >= n - (k - pos)) --pos;
         if (pos == 0) break;
         ++idx[pos - 1];
         for (std::size_t i = pos; i < k; ++i) idx[i] = idx[i - 1] + 1;
