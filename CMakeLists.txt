@@ -54,9 +54,13 @@ add_library(verity_core STATIC
   src/verity/model/Node.cpp
   src/verity/model/ClaimNode.cpp
   src/verity/model/NodeStore.cpp
+  src/verity/model/Document.cpp
+  src/verity/model/Evidence.cpp
   src/verity/io/JsonLoader.cpp
   src/verity/engine/GraphBuilder.cpp
   src/verity/engine/VerityEngine.cpp
+  src/verity/engine/EntityResolver.cpp
+  src/verity/engine/TimelineBuilder.cpp
 )
 target_include_directories(verity_core PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/include

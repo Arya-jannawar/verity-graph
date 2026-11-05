@@ -1,12 +1,15 @@
-// VERITY GRAPH — `verity` command-line interface (Phase 1 slice).
+// VERITY GRAPH — `verity` command-line interface (Phase 2 slice).
 //
 // Commands:
 //   help
 //   ingest <extraction.json> [--json]
 //   neighbors <id> [--depth k] [--json]
 //   query evidence <name>
+//   query autocomplete <prefix>
+//   timeline
 //   status
-//   dm sets | dm numtheory | dm counting
+//   dm sets | dm numtheory | dm counting | dm relations | dm functions |
+//      dm groups | dm combinatorics
 //
 // Cross-process convention (frozen): `ingest` validates and builds the graph
 // in memory, then records the extraction path in out/verity_session.json.
@@ -25,9 +28,16 @@
 
 #include <nlohmann/json.hpp>
 
+#include "verity/dm/Algebra.hpp"
+#include "verity/dm/Combinatorics.hpp"
 #include "verity/dm/Counting.hpp"
 #include "verity/dm/FiniteSet.hpp"
+#include "verity/dm/Functions.hpp"
 #include "verity/dm/NumTheory.hpp"
+#include "verity/dm/Relations.hpp"
+#include "verity/ds/Trie.hpp"
+#include "verity/engine/EntityResolver.hpp"
+#include "verity/engine/TimelineBuilder.hpp"
 #include "verity/engine/VerityEngine.hpp"
 #include "verity/io/JsonLoader.hpp"
 #include "verity/model/Node.hpp"
@@ -48,8 +58,10 @@ const char* kHelpText =
     "  verity ingest <extraction.json> [--json]\n"
     "  verity neighbors <id> [--depth k] [--json]\n"
     "  verity query evidence <name>\n"
+    "  verity query autocomplete <prefix>\n"
+    "  verity timeline\n"
     "  verity status\n"
-    "  verity dm <sets|numtheory|counting>\n"
+    "  verity dm <sets|numtheory|counting|relations|functions|groups|combinatorics>\n"
     "\n"
     "Ingest records the extraction path in out/verity_session.json; read\n"
     "commands re-load it across processes. Exit codes: 0 ok, 1 error, 2 usage.\n";
@@ -227,7 +239,7 @@ int cmdStatus() {
 
 int cmdDm(const Args& args) {
     if (args.positional.size() != 1) {
-        std::cerr << "usage: verity dm <sets|numtheory|counting>\n";
+        std::cerr << "usage: verity dm <sets|numtheory|counting|relations|functions|groups|combinatorics>\n";
         return kExitUsage;
     }
     const std::string& which = args.positional[0];
@@ -272,6 +284,154 @@ int cmdDm(const Args& args) {
     return kExitUsage;
 }
 
+int cmdTimeline() {
+    const verity::engine::VerityEngine engine =
+        verity::engine::VerityEngine::fromExtractionFile(readSessionExtraction());
+    const auto result = verity::engine::TimelineBuilder::build(engine.records());
+    if (result.finding.has_value()) {
+        const auto& f = *result.finding;
+        std::cout << f.statement << "\n";
+        std::cout << "witness path:";
+        for (const auto& id : f.witness) std::cout << " " << id;
+        std::cout << "\nclaims on the cycle:";
+        for (const auto& id : f.claimIds) std::cout << " " << id;
+        std::cout << "\nHasse diagram and topological order withheld for cyclic data\n";
+        return kExitOk;
+    }
+    std::cout << "chronological order:";
+    for (const auto& id : result.chronologicalOrder) std::cout << " " << id;
+    std::cout << "\ntopological order:";
+    for (const auto& id : result.topologicalOrder) std::cout << " " << id;
+    std::cout << "\nHasse edges:";
+    for (const auto& [a, b] : result.hasseEdges) std::cout << " " << a << "->" << b;
+    std::cout << "\nincomparable pairs: " << result.incomparablePairs.size() << "\n";
+    std::cout << "DOT:\n" << result.hasseDot;
+    return kExitOk;
+}
+
+int cmdAutocomplete(const Args& args) {
+    if (args.positional.empty()) {
+        std::cerr << "usage: verity query autocomplete <prefix>\n";
+        return kExitUsage;
+    }
+    const verity::engine::VerityEngine engine =
+        verity::engine::VerityEngine::fromExtractionFile(readSessionExtraction());
+    verity::ds::Trie trie;
+    for (const auto& entity : engine.records().entities) {
+        trie.insert(entity.name);
+        for (const std::string& alias : entity.aliases) trie.insert(alias);
+    }
+    const auto words = trie.wordsWithPrefix(args.positional[0]);
+    if (words.empty()) {
+        std::cout << "no matches for prefix '" << args.positional[0] << "'\n";
+        return kExitOk;
+    }
+    std::cout << "autocomplete '" << args.positional[0] << "': " << words.size() << " match(es)\n";
+    for (const auto& w : words) std::cout << "  " << w << "\n";
+    return kExitOk;
+}
+
+int cmdDmRelations() {
+    // divisibility on divisors of 12: reflexive antisymmetric transitive
+    const std::vector<int> elems{1, 2, 3, 4, 6, 12};
+    verity::dm::Relation<int> r(elems);
+    for (const int a : elems) {
+        for (const int b : elems) {
+            if (b % a == 0) r.add(a, b);
+        }
+    }
+    std::cout << "R = divides on {1,2,3,4,6,12}\n";
+    std::cout << "reflexive=" << r.isReflexive() << " antisymmetric=" << r.isAntisymmetric()
+              << " transitive=" << r.isTransitive() << " partialOrder=" << r.isPartialOrder()
+              << " lattice=" << r.isLattice() << "\n";
+    const auto hasse = r.hasseDiagram();
+    std::cout << "Hasse edges:";
+    for (const auto& a : hasse.elements()) {
+        for (const auto& b : hasse.elements()) {
+            if (a < b && hasse.contains(a, b)) std::cout << " " << a << "<" << b;
+        }
+    }
+    std::cout << "\nlub(2,3) = " << r.leastUpperBound(2, 3)
+              << "  glb(4,6) = " << r.greatestLowerBound(4, 6) << "\n";
+    // equivalence closure demo
+    verity::dm::Relation<int> s(std::vector<int>{1, 2, 3});
+    s.add(1, 2);
+    const auto cls = s.equivalenceClosure().equivalenceClasses();
+    std::cout << "closure of {1~2} over {1,2,3}: " << cls.size() << " classes\n";
+    return kExitOk;
+}
+
+int cmdDmFunctions() {
+    const verity::dm::FiniteSet<int> domain = verity::dm::FiniteSet<int>::fromVector({1, 2, 3});
+    const verity::dm::FiniteSet<int> codomain = verity::dm::FiniteSet<int>::fromVector({4, 5, 6});
+    verity::dm::FiniteFunction<int, int> f(domain, codomain, {{1, 4}, {2, 5}, {3, 6}});
+    std::cout << "f: {1,2,3}->{4,5,6}, f(x)=x+3: total=" << f.isTotal()
+              << " injective=" << f.isInjective() << " surjective=" << f.isSurjective()
+              << " bijective=" << f.isBijective() << "\n";
+    const auto inv = f.inverse();
+    std::cout << "f^-1(5) = " << *inv.apply(5) << "\n";
+    // composition with itself is defined on codomain==domain? not here; use square domain
+    const verity::dm::FiniteSet<int> sq = verity::dm::FiniteSet<int>::fromVector({0, 1, 2});
+    verity::dm::FiniteFunction<int, int> g(sq, sq, {{0, 1}, {1, 2}, {2, 0}});
+    const auto g2 = verity::dm::FiniteFunction<int, int>::compose(g, g);
+    std::cout << "g^2(0) = " << *g2.apply(0) << "\n";
+    return kExitOk;
+}
+
+int cmdDmGroups() {
+    const verity::dm::ZnPlus z7{7};
+    const auto elems = z7.elements();
+    const auto addMod7 = [&z7](std::uint64_t a, std::uint64_t b) { return z7.op(a, b); };
+    std::cout << "(Z_7,+): group=" << verity::dm::groupHolds(elems, addMod7, z7.identity())
+              << " generators:";
+    for (const auto g : z7.cyclicGenerators()) std::cout << " " << g;
+    std::cout << "\n";
+    const auto sub = z7.subgroupGeneratedBy(2);
+    std::cout << "<2> = {";
+    for (std::size_t i = 0; i < sub.size(); ++i) std::cout << (i ? "," : "") << sub[i];
+    std::cout << "} order " << sub.size() << " divides 7: "
+              << verity::dm::lagrangeHolds(elems.size(), sub.size()) << "\n";
+    const verity::dm::ZpMul zp{11};
+    const auto mulMod11 = [&zp](std::uint64_t a, std::uint64_t b) { return zp.op(a, b); };
+    std::cout << "(Z_11*,x): group="
+              << verity::dm::groupHolds(zp.elements(), mulMod11, zp.identity())
+              << " generators: " << zp.cyclicGenerators().size() << "\n";
+    // honest failing example: (Z_6, +) is a group, but (Z_6, ×) is NOT
+    // (0 has no inverse; only units {1,5} would form one)
+    const std::vector<int> z6{0, 1, 2, 3, 4, 5};
+    const auto add6 = [](int a, int b) { return (a + b) % 6; };
+    const auto mul6 = [](int a, int b) { return (a * b) % 6; };
+    std::cout << "(Z_6,+) group=" << verity::dm::groupHolds(z6, add6, 0) << "\n";
+    std::cout << "(Z_6, x) group (honest failure)="
+              << verity::dm::groupHolds(z6, mul6, 1) << "\n";
+    return kExitOk;
+}
+
+int cmdDmCombinatorics() {
+    std::vector<std::string> seq{"a", "c", "b"};
+    std::vector<std::string> state = seq;
+    int count = 1;
+    while (verity::dm::nextPermutation(state)) ++count;
+    std::cout << "permutations of {a,c,b} enumerated: " << count << " (3! = 6)\n";
+    const std::vector<std::vector<bool>> poset{
+        {false, true, false, false},
+        {false, false, true, false},
+        {false, false, false, true},
+        {false, false, false, false}};
+    std::cout << "linear extensions of chain a<b<c<d: "
+              << verity::dm::countLinearExtensions(poset) << " (expected 1)\n";
+    const std::vector<std::vector<bool>> diamond{
+        {false, true, true, false},
+        {false, false, false, true},
+        {false, false, false, true},
+        {false, false, false, false}};
+    std::cout << "linear extensions of diamond: "
+              << verity::dm::countLinearExtensions(diamond) << " (expected 2)\n";
+    std::cout << "pigeonhole (10 items, 9 boxes): "
+              << (verity::dm::pigeonholeHolds(10, 9) ? "some box has >=2" : "no conclusion") << "\n";
+    return kExitOk;
+}
+
 } // namespace
 
 int main(int argc, char** argv) {
@@ -291,16 +451,34 @@ int main(int argc, char** argv) {
         if (command == "ingest") return cmdIngest(args);
         if (command == "neighbors") return cmdNeighbors(args);
         if (command == "query") {
-            if (args.positional.empty() || args.positional[0] != "evidence") {
-                std::cerr << "usage: verity query evidence <name>\n";
+            if (args.positional.empty()) {
+                std::cerr << "usage: verity query evidence <name> | query autocomplete <prefix>\n";
                 return kExitUsage;
             }
-            auto sub = args;
-            sub.positional.erase(sub.positional.begin());
-            return cmdQueryEvidence(sub);
+            if (args.positional[0] == "evidence") {
+                auto sub = args;
+                sub.positional.erase(sub.positional.begin());
+                return cmdQueryEvidence(sub);
+            }
+            if (args.positional[0] == "autocomplete") {
+                auto sub = args;
+                sub.positional.erase(sub.positional.begin());
+                return cmdAutocomplete(sub);
+            }
+            std::cerr << "usage: verity query evidence <name> | query autocomplete <prefix>\n";
+            return kExitUsage;
         }
+        if (command == "timeline") return cmdTimeline();
         if (command == "status") return cmdStatus();
-        if (command == "dm") return cmdDm(args);
+        if (command == "dm") {
+            if (!args.positional.empty() && args.positional[0] == "relations") return cmdDmRelations();
+            if (!args.positional.empty() && args.positional[0] == "functions") return cmdDmFunctions();
+            if (!args.positional.empty() && args.positional[0] == "groups") return cmdDmGroups();
+            if (!args.positional.empty() && args.positional[0] == "combinatorics") {
+                return cmdDmCombinatorics();
+            }
+            return cmdDm(args);
+        }
         std::cerr << "usage: unknown command '" << command << "'\n" << kHelpText;
         return kExitUsage;
     } catch (const verity::util::VerityError& e) {

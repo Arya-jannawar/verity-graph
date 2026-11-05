@@ -8,16 +8,18 @@
 //
 // Complexity: all methods O(1).
 
+#include <istream>
 #include <optional>
 #include <string>
 
 #include "verity/model/Enums.hpp"
 #include "verity/model/Extraction.hpp"   // Span, ClaimObject, DateInterval
+#include "verity/model/Interfaces.hpp"   // IScorable
 #include "verity/model/Node.hpp"
 
 namespace verity::model {
 
-class ClaimNode : public Node {
+class ClaimNode : public Node, public IScorable {
 public:
     /// Full constructor (default arguments demonstrate the overload set).
     explicit ClaimNode(std::string label, NodeId subjectId, std::string predicate,
@@ -59,11 +61,22 @@ public:
     [[nodiscard]] std::unique_ptr<Node> clone() const override {
         return std::make_unique<ClaimNode>(*this);
     }
+    /// IScorable: a claim's score is its extraction confidence.
+    [[nodiscard]] double score() const override { return confidence_; }
 
     /// Short human rendering of a ClaimObject ("E002" | "text" | date | qty).
     [[nodiscard]] static std::string objectToString(const ClaimObject& o);
 
     friend class GraphInspector;   // private-state introspection (tests/debug)
+
+    // --- Phase-2 operator overloads ------------------------------------------
+    /// Stream extraction: reads a confidence value and applies the validated
+    /// setter (demonstration of >> with encapsulated validation).
+    friend std::istream& operator>>(std::istream& is, ClaimNode& claim) {
+        double value = 0.0;
+        if (is >> value) claim.setConfidence(value);
+        return is;
+    }
 
 private:
     NodeId subjectId_;

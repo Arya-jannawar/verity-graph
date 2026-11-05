@@ -1,19 +1,46 @@
 #pragma once
 // VERITY GRAPH — Entity node: a canonical actor in the evidence graph.
 //
-// Phase-1 scope: construction, validated mutation, describe/toJson/clone.
-// Phase 2 adds operators (==, <, alias-union +) on top of this class.
+// Phase-2 operators: == (identity by name+type+aliases), < (name then type
+// then id), + (alias union). The MERGE DOMAIN for the alias-union monoid is
+// the alias multiset (AliasSet), NOT raw Entity objects: AliasSet has an
+// empty identity {} and associative union, so (AliasSet, +, {}) is a genuine
+// commutative monoid (tested in test_operators). Entity::+ requires matching
+// names and appends the union of aliases.
 //
-// Complexity: all methods O(1) except toJson/describe O(aliases).
+// Complexity: operators O(aliases); describe/toJson O(aliases).
 
 #include <optional>
+#include <set>
 #include <string>
 #include <vector>
 
 #include "verity/model/Enums.hpp"
 #include "verity/model/Node.hpp"
+#include "verity/util/VerityError.hpp"
 
 namespace verity::model {
+
+/// The alias aggregate: the proper domain of the alias-union monoid.
+struct AliasSet {
+    std::set<std::string> aliases;
+
+    AliasSet& operator+=(const AliasSet& other) {
+        aliases.insert(other.aliases.begin(), other.aliases.end());
+        return *this;
+    }
+    [[nodiscard]] friend AliasSet operator+(AliasSet a, const AliasSet& b) {
+        a += b;
+        return a;
+    }
+    [[nodiscard]] bool operator==(const AliasSet& other) const noexcept {
+        return aliases == other.aliases;
+    }
+    [[nodiscard]] static const AliasSet& identity() noexcept {
+        static const AliasSet empty;
+        return empty;
+    }
+};
 
 class Entity : public Node {
 public:
@@ -63,6 +90,38 @@ public:
     }
 
     friend class GraphInspector;   // private-state introspection (tests/debug)
+
+    // --- Phase-2 operators ---------------------------------------------------
+    /// Identity: same name, same type, same alias set (id-independent so a
+    /// mention entity and its canonical twin compare equal pre-merge).
+    [[nodiscard]] friend bool operator==(const Entity& a, const Entity& b) {
+        if (a.label() != b.label() || a.entityType_ != b.entityType_) return false;
+        AliasSet sa;
+        sa.aliases.insert(a.aliases_.begin(), a.aliases_.end());
+        AliasSet sb;
+        sb.aliases.insert(b.aliases_.begin(), b.aliases_.end());
+        return sa == sb;
+    }
+    [[nodiscard]] friend bool operator!=(const Entity& a, const Entity& b) { return !(a == b); }
+
+    /// Ordering: name, then type, then id (deterministic entity lists).
+    [[nodiscard]] friend bool operator<(const Entity& a, const Entity& b) {
+        if (a.label() != b.label()) return a.label() < b.label();
+        if (a.entityType_ != b.entityType_) return a.entityType_ < b.entityType_;
+        return a.id().str() < b.id().str();
+    }
+
+    /// Alias union: requires matching non-empty names; result keeps this
+    /// entity's name/type and the union of both alias sets.
+    [[nodiscard]] friend Entity operator+(const Entity& a, const Entity& b) {
+        if (a.label() != b.label()) {
+            throw util::VerityError("Entity + requires matching names ('" + a.label() +
+                                    "' vs '" + b.label() + "')");
+        }
+        Entity merged = a;
+        for (const std::string& alias : b.aliases_) merged.addAlias(alias);
+        return merged;
+    }
 
 private:
     EntityType entityType_;
