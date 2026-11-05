@@ -28,7 +28,7 @@ GOLD_DIR = _REPO_ROOT / "data" / "gold"
 @pytest.fixture(scope="module")
 def documents() -> dict[str, str]:
     txts = sorted(SAMPLE_DIR.glob("*.txt"))
-    assert len(txts) == 3, f"expected 3 sample documents, found {len(txts)}"
+    assert len(txts) == 5, f"expected 5 sample documents, found {len(txts)}"
     return {p.name: read_txt(p) for p in txts}
 
 
@@ -87,10 +87,10 @@ def test_utf8_code_points_not_bytes(documents: dict[str, str]) -> None:
 
 def test_mock_merges_documents(record: dict) -> None:
     assert record["schema_version"] == "1.0.0"
-    assert len(record["documents"]) == 3
-    assert len(record["entities"]) == 9
-    assert len(record["claims"]) == 6
-    assert record["events"] == []
+    assert len(record["documents"]) == 5
+    assert len(record["entities"]) == 12
+    assert len(record["claims"]) == 9
+    assert len(record["events"]) == 3
     assert len(record["citations"]) == 2
     # entity ids merged across fragments stay unique and sorted
     ids = [e["id"] for e in record["entities"]]
