@@ -119,6 +119,26 @@ build CMakeFiles\verity_core.dir\src\verity\io\JsonLoader.cpp.obj: CXX_COMPILER_
   TARGET_PDB = verity_core.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\verity_core.dir
 
+build CMakeFiles\verity_core.dir\src\verity\io\GraphSerializer.cpp.obj: CXX_COMPILER__verity_core_unscanned_RelWithDebInfo D$:\VIT\cp$ project\src\verity\io\GraphSerializer.cpp || cmake_object_order_depends_target_verity_core
+  CONFIG = RelWithDebInfo
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /O2 /Ob1 /DNDEBUG -std:c++17 -MD /W4 /permissive- /EHsc /utf-8 /fsanitize=address
+  INCLUDES = -I"D:\VIT\cp project\include" -external:I"D:\VIT\cp project\third_party" -external:W0
+  OBJECT_DIR = CMakeFiles\verity_core.dir
+  OBJECT_FILE_DIR = CMakeFiles\verity_core.dir\src\verity\io
+  TARGET_COMPILE_PDB = CMakeFiles\verity_core.dir\verity_core.pdb
+  TARGET_PDB = verity_core.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\verity_core.dir
+
+build CMakeFiles\verity_core.dir\src\verity\engine\Exporter.cpp.obj: CXX_COMPILER__verity_core_unscanned_RelWithDebInfo D$:\VIT\cp$ project\src\verity\engine\Exporter.cpp || cmake_object_order_depends_target_verity_core
+  CONFIG = RelWithDebInfo
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /O2 /Ob1 /DNDEBUG -std:c++17 -MD /W4 /permissive- /EHsc /utf-8 /fsanitize=address
+  INCLUDES = -I"D:\VIT\cp project\include" -external:I"D:\VIT\cp project\third_party" -external:W0
+  OBJECT_DIR = CMakeFiles\verity_core.dir
+  OBJECT_FILE_DIR = CMakeFiles\verity_core.dir\src\verity\engine
+  TARGET_COMPILE_PDB = CMakeFiles\verity_core.dir\verity_core.pdb
+  TARGET_PDB = verity_core.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\verity_core.dir
+
 build CMakeFiles\verity_core.dir\src\verity\engine\GraphBuilder.cpp.obj: CXX_COMPILER__verity_core_unscanned_RelWithDebInfo D$:\VIT\cp$ project\src\verity\engine\GraphBuilder.cpp || cmake_object_order_depends_target_verity_core
   CONFIG = RelWithDebInfo
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /O2 /Ob1 /DNDEBUG -std:c++17 -MD /W4 /permissive- /EHsc /utf-8 /fsanitize=address
@@ -207,7 +227,7 @@ build CMakeFiles\verity_core.dir\src\verity\engine\Reasoning.cpp.obj: CXX_COMPIL
 #############################################
 # Link the static library verity_core.lib
 
-build verity_core.lib: CXX_STATIC_LIBRARY_LINKER__verity_core_RelWithDebInfo CMakeFiles\verity_core.dir\src\verity\util\Logger.cpp.obj CMakeFiles\verity_core.dir\src\verity\model\Node.cpp.obj CMakeFiles\verity_core.dir\src\verity\model\ClaimNode.cpp.obj CMakeFiles\verity_core.dir\src\verity\model\NodeStore.cpp.obj CMakeFiles\verity_core.dir\src\verity\model\Document.cpp.obj CMakeFiles\verity_core.dir\src\verity\model\Evidence.cpp.obj CMakeFiles\verity_core.dir\src\verity\io\JsonLoader.cpp.obj CMakeFiles\verity_core.dir\src\verity\engine\GraphBuilder.cpp.obj CMakeFiles\verity_core.dir\src\verity\engine\VerityEngine.cpp.obj CMakeFiles\verity_core.dir\src\verity\engine\EntityResolver.cpp.obj CMakeFiles\verity_core.dir\src\verity\engine\TimelineBuilder.cpp.obj CMakeFiles\verity_core.dir\src\verity\dm\Logic.cpp.obj CMakeFiles\verity_core.dir\src\verity\dm\Inference.cpp.obj CMakeFiles\verity_core.dir\src\verity\engine\ConflictDetector.cpp.obj CMakeFiles\verity_core.dir\src\verity\engine\Reasoning.cpp.obj
+build verity_core.lib: CXX_STATIC_LIBRARY_LINKER__verity_core_RelWithDebInfo CMakeFiles\verity_core.dir\src\verity\util\Logger.cpp.obj CMakeFiles\verity_core.dir\src\verity\model\Node.cpp.obj CMakeFiles\verity_core.dir\src\verity\model\ClaimNode.cpp.obj CMakeFiles\verity_core.dir\src\verity\model\NodeStore.cpp.obj CMakeFiles\verity_core.dir\src\verity\model\Document.cpp.obj CMakeFiles\verity_core.dir\src\verity\model\Evidence.cpp.obj CMakeFiles\verity_core.dir\src\verity\io\JsonLoader.cpp.obj CMakeFiles\verity_core.dir\src\verity\io\GraphSerializer.cpp.obj CMakeFiles\verity_core.dir\src\verity\engine\Exporter.cpp.obj CMakeFiles\verity_core.dir\src\verity\engine\GraphBuilder.cpp.obj CMakeFiles\verity_core.dir\src\verity\engine\VerityEngine.cpp.obj CMakeFiles\verity_core.dir\src\verity\engine\EntityResolver.cpp.obj CMakeFiles\verity_core.dir\src\verity\engine\TimelineBuilder.cpp.obj CMakeFiles\verity_core.dir\src\verity\dm\Logic.cpp.obj CMakeFiles\verity_core.dir\src\verity\dm\Inference.cpp.obj CMakeFiles\verity_core.dir\src\verity\engine\ConflictDetector.cpp.obj CMakeFiles\verity_core.dir\src\verity\engine\Reasoning.cpp.obj
   CONFIG = RelWithDebInfo
   LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /O2 /Ob1 /DNDEBUG -MD
   LINK_FLAGS = /machine:x64
@@ -489,6 +509,16 @@ build CMakeFiles\verity_tests.dir\tests\io\test_jsonloader.cpp.obj: CXX_COMPILER
   TARGET_PDB = verity_tests.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\verity_tests.dir
 
+build CMakeFiles\verity_tests.dir\tests\io\test_phase4.cpp.obj: CXX_COMPILER__verity_tests_unscanned_RelWithDebInfo D$:\VIT\cp$ project\tests\io\test_phase4.cpp || cmake_object_order_depends_target_verity_tests
+  CONFIG = RelWithDebInfo
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /O2 /Ob1 /DNDEBUG -std:c++17 -MD /W4 /permissive- /EHsc /utf-8 /fsanitize=address
+  INCLUDES = -I"D:\VIT\cp project\include" -external:I"D:\VIT\cp project\third_party" -external:W0
+  OBJECT_DIR = CMakeFiles\verity_tests.dir
+  OBJECT_FILE_DIR = CMakeFiles\verity_tests.dir\tests\io
+  TARGET_COMPILE_PDB = CMakeFiles\verity_tests.dir\
+  TARGET_PDB = verity_tests.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\verity_tests.dir
+
 build CMakeFiles\verity_tests.dir\tests\engine\test_engine2.cpp.obj: CXX_COMPILER__verity_tests_unscanned_RelWithDebInfo D$:\VIT\cp$ project\tests\engine\test_engine2.cpp || cmake_object_order_depends_target_verity_tests
   CONFIG = RelWithDebInfo
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /O2 /Ob1 /DNDEBUG -std:c++17 -MD /W4 /permissive- /EHsc /utf-8 /fsanitize=address
@@ -527,7 +557,7 @@ build CMakeFiles\verity_tests.dir\tests\integration\test_pipeline.cpp.obj: CXX_C
 #############################################
 # Link the executable verity_tests.exe
 
-build verity_tests.exe: CXX_EXECUTABLE_LINKER__verity_tests_RelWithDebInfo CMakeFiles\verity_tests.dir\tests\test_main.cpp.obj CMakeFiles\verity_tests.dir\tests\oop\test_model.cpp.obj CMakeFiles\verity_tests.dir\tests\oop\test_binding.cpp.obj CMakeFiles\verity_tests.dir\tests\oop\test_nodestore.cpp.obj CMakeFiles\verity_tests.dir\tests\oop\test_oop2.cpp.obj CMakeFiles\verity_tests.dir\tests\ds\test_ds_core.cpp.obj CMakeFiles\verity_tests.dir\tests\ds\test_hashtable.cpp.obj CMakeFiles\verity_tests.dir\tests\ds\test_graph.cpp.obj CMakeFiles\verity_tests.dir\tests\ds\test_ds2.cpp.obj CMakeFiles\verity_tests.dir\tests\ds\test_sorts.cpp.obj CMakeFiles\verity_tests.dir\tests\ds\test_topo.cpp.obj CMakeFiles\verity_tests.dir\tests\ds\test_dsa3.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_numtheory.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_sets.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_counting.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_relations.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_functions.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_combinatorics.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_algebra.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_logic.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_graphanalysis.cpp.obj CMakeFiles\verity_tests.dir\tests\io\test_jsonloader.cpp.obj CMakeFiles\verity_tests.dir\tests\engine\test_engine2.cpp.obj CMakeFiles\verity_tests.dir\tests\engine\test_conflicts.cpp.obj CMakeFiles\verity_tests.dir\tests\integration\test_pipeline.cpp.obj | verity_core.lib || verity_core.lib
+build verity_tests.exe: CXX_EXECUTABLE_LINKER__verity_tests_RelWithDebInfo CMakeFiles\verity_tests.dir\tests\test_main.cpp.obj CMakeFiles\verity_tests.dir\tests\oop\test_model.cpp.obj CMakeFiles\verity_tests.dir\tests\oop\test_binding.cpp.obj CMakeFiles\verity_tests.dir\tests\oop\test_nodestore.cpp.obj CMakeFiles\verity_tests.dir\tests\oop\test_oop2.cpp.obj CMakeFiles\verity_tests.dir\tests\ds\test_ds_core.cpp.obj CMakeFiles\verity_tests.dir\tests\ds\test_hashtable.cpp.obj CMakeFiles\verity_tests.dir\tests\ds\test_graph.cpp.obj CMakeFiles\verity_tests.dir\tests\ds\test_ds2.cpp.obj CMakeFiles\verity_tests.dir\tests\ds\test_sorts.cpp.obj CMakeFiles\verity_tests.dir\tests\ds\test_topo.cpp.obj CMakeFiles\verity_tests.dir\tests\ds\test_dsa3.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_numtheory.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_sets.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_counting.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_relations.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_functions.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_combinatorics.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_algebra.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_logic.cpp.obj CMakeFiles\verity_tests.dir\tests\dm\test_graphanalysis.cpp.obj CMakeFiles\verity_tests.dir\tests\io\test_jsonloader.cpp.obj CMakeFiles\verity_tests.dir\tests\io\test_phase4.cpp.obj CMakeFiles\verity_tests.dir\tests\engine\test_engine2.cpp.obj CMakeFiles\verity_tests.dir\tests\engine\test_conflicts.cpp.obj CMakeFiles\verity_tests.dir\tests\integration\test_pipeline.cpp.obj | verity_core.lib || verity_core.lib
   CONFIG = RelWithDebInfo
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /O2 /Ob1 /DNDEBUG -MD
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
@@ -540,6 +570,47 @@ build verity_tests.exe: CXX_EXECUTABLE_LINKER__verity_tests_RelWithDebInfo CMake
   TARGET_IMPLIB = verity_tests.lib
   TARGET_PDB = verity_tests.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\verity_tests.dir
+
+# =============================================================================
+# Object build statements for EXECUTABLE target verity_bench
+
+
+#############################################
+# Order-only phony target for verity_bench
+
+build cmake_object_order_depends_target_verity_bench: phony || .
+
+build CMakeFiles\verity_bench.dir\scripts\bench.cpp.obj: CXX_COMPILER__verity_bench_unscanned_RelWithDebInfo D$:\VIT\cp$ project\scripts\bench.cpp || cmake_object_order_depends_target_verity_bench
+  CONFIG = RelWithDebInfo
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /O2 /Ob1 /DNDEBUG -std:c++17 -MD /W4 /permissive- /EHsc /utf-8 /fsanitize=address
+  INCLUDES = -I"D:\VIT\cp project\include" -external:I"D:\VIT\cp project\third_party" -external:W0
+  OBJECT_DIR = CMakeFiles\verity_bench.dir
+  OBJECT_FILE_DIR = CMakeFiles\verity_bench.dir\scripts
+  TARGET_COMPILE_PDB = CMakeFiles\verity_bench.dir\
+  TARGET_PDB = verity_bench.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\verity_bench.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target verity_bench
+
+
+#############################################
+# Link the executable verity_bench.exe
+
+build verity_bench.exe: CXX_EXECUTABLE_LINKER__verity_bench_RelWithDebInfo CMakeFiles\verity_bench.dir\scripts\bench.cpp.obj
+  CONFIG = RelWithDebInfo
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /O2 /Ob1 /DNDEBUG -MD
+  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
+  LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
+  OBJECT_DIR = CMakeFiles\verity_bench.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_COMPILE_PDB = CMakeFiles\verity_bench.dir\
+  TARGET_FILE = verity_bench.exe
+  TARGET_IMPLIB = verity_bench.lib
+  TARGET_PDB = verity_bench.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\verity_bench.dir
 
 
 #############################################
@@ -592,6 +663,8 @@ build test_prep\all: phony test_prep\verity_all_tests
 # =============================================================================
 # Target aliases.
 
+build verity_bench: phony verity_bench.exe
+
 build verity_cli: phony verity.exe
 
 build verity_core: phony verity_core.lib
@@ -606,7 +679,7 @@ build verity_tests: phony verity_tests.exe
 #############################################
 # Folder: D:/VIT/cp project/build-msan
 
-build all: phony verity_core.lib verity.exe verity_tests.exe
+build all: phony verity_core.lib verity.exe verity_tests.exe verity_bench.exe
 
 # =============================================================================
 # Built-in targets

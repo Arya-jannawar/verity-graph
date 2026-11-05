@@ -87,3 +87,28 @@ test/log proves it) / **Failed** / **Not run**. Evidence points at logs under
 | Ranker (heap + noisy-OR), keyentities/backbone/path/top-evidence/trace CLI | PHASES P3 | Reasoning.cpp + main.cpp | phase3_cli_acceptance.log | Verified |
 | D006–D009 planted: date conflict, CEO conflict, alibi, circular sourcing, benign near-conflicts, intermediary | PHASES P3 | data/sample/d006-d009 + gold | planted-findings + benign + intermediary tests | Verified |
 | Zero warnings; ASan clean; pytest green | PHASES P3 | — | phase3_doctest_full.log (171/171), phase3_asan_msvc.log, phase3_pytest.log (39) | Verified |
+
+## Phase 4 — Persistence, proof, presentation
+
+| Req | Source | Implementation | Test / evidence | Status |
+|---|---|---|---|---|
+| GraphSerializer binary save/load: magic+version, records, offset index at end, random access via seekg/seekp | PHASES P4 | src/verity/io/GraphSerializer.cpp | test_phase4 round-trip + indexed random access + fetchRecord | Verified |
+| Overloaded << >> record I/O | PHASES P4 | GraphSerializer.cpp operator<<>> | exercised in round-trip | Verified |
+| Stream failures → StorageError; corrupt files rejected (bad magic, bad index, truncation) | PHASES P4 | GraphSerializer.cpp | test_phase4 "corruption is rejected" | Verified |
+| Atomic save (temp+rename, bug fixed: rename always ran) | brief §8 | GraphSerializer.cpp save | round-trip test | Verified |
+| CLI: save/load with --fetch | PHASES P4 | app/main.cpp | phase4_demo.log step 7 | Verified |
+| Miller-Rabin deterministic witness set | PHASES P4 | dm/Crypto.hpp | test_phase4 (dense 0..3000 agreement + large primes) | Verified |
+| CRT with defined non-coprime/inconsistent/overflow behavior | brief §8 | dm/Crypto.hpp crt | test_phase4 "CRT…" | Verified |
+| Fermat check with Carmichael teaching point | PHASES P4 | dm/Crypto.hpp | test_phase4 "Fermat check" | Verified |
+| Evidence ledger chain h_i = H(rec, h_prev); verify clean, FAIL tampered copy | PHASES P4 | dm/Ledger.hpp + Exporter | test_phase4 ledger case; demo step 8-9 | Verified |
+| Teaching-grade labeling (not SHA-256) | brief §8 | Ledger.hpp/Exporter/UI | wording assertions in tests + UI note | Verified |
+| Tree checks (|E|=|V|-1, full-binary leaves) + expression tree + spanning-tree verification | PHASES P4 | ds/Trees.hpp | test_phase4 | Verified |
+| Adjacency-matrix variant behind same interface | PHASES P4 | ds/GraphMatrix.hpp | test_phase4 interface-parity case | Verified |
+| 4 benchmark families with REAL numbers | PHASES P4 | scripts/bench.cpp/.sh | docs/BENCHMARKS.md + out/validation/phase4_benchmarks_raw.txt | Verified |
+| Exporters json/dot/html (standalone offline HTML w/ embedded vis-network) | PHASES P4 | engine/Exporter.cpp | test_phase4 "exporters…" | Verified |
+| UI: Graph/Conflicts/Timeline/Provenance/DM Lab reading out/graph.json, file-import fallback, "Potential contradiction" wording, offline | PHASES P4 | ui/index.html + js/app.js + css/verity.css | DM Lab fixture cross-checks; wording in payload test | Verified (code + export path; screenshots Not run) |
+| DM Lab live browser computation cross-checked vs exported fixtures | brief §9 | ui/js/app.js fixtureCheck | fixture lines in every DM card | Verified |
+| D010 + format-variant fixtures + SAMPLE_DATA.md | PHASES P4 | data/sample, docs/SAMPLE_DATA.md | pytest | Verified |
+| run_demo.sh offline end-to-end incl. ledger tamper FAILS | PHASES P4 | scripts/run_demo.sh | out/validation/phase4_demo.log (exit 0, tamper rejected) | Verified |
+| Full documentation set | PHASES P4 | docs/*.md | this file + git history | Verified |
+| Zero warnings; ASan; pytest | PHASES P4 | — | phase4 logs (final verification below) | Verified |

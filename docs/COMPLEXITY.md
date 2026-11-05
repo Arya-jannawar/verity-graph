@@ -57,3 +57,34 @@ Phase 1 entries. All benchmarks numbers live in `docs/BENCHMARKS.md` (Phase 4).
 | GraphBuilder.build | O(D + N + C + EV + edges) | |
 | VerityEngine.neighbors | O(V + E) | BFS k-hop |
 | queryEvidence | O(entities + claims) | canonical name + alias match |
+
+## Phase 3 additions
+
+| Structure/Algorithm | Complexity | Notes |
+|---|---|---|
+| Formula parse | O(n) | shunting-yard |
+| truthTable | O(2^v · n), v ≤ 12 | guarded throw beyond |
+| forwardChain | O(rounds · rules) | fixpoint detection |
+| resolution | O(clauses²), ≤ 32 clauses | guarded throw beyond |
+| Dijkstra | O((V+E) log V) | handwritten MinHeap |
+| Kruskal | O(E log E) | DSU + undirected projection |
+| Prim | O(E log V) | heap-based |
+| Tarjan SCC | O(V + E) | iterative |
+| cut vertices/bridges | O(V + E) | recursive DFS (evidence-sized graphs) |
+| Rabin-Karp | O(n + m) expected | verified matches only |
+| bipartite/greedy coloring | O(V + E) / O(V·deg) | BFS 2-coloring / first-fit |
+| A^k walks | O(k·V³) | dense matrix power, wrapping uint64 |
+
+## Phase 4 additions
+
+| Structure/Algorithm | Complexity | Notes |
+|---|---|---|
+| GraphSerializer save | O(records) | length-prefixed, atomic temp+rename |
+| loadIndex | O(index) | trailer + index only |
+| fetchRecord | O(index + record) | seekg straight to the record |
+| isProbablePrime | O(12 · log³ n) | deterministic witness set over uint64 |
+| crt | O(r · log m) | teaching-scale bounds, guarded |
+| ledger verify | O(n) | recompute + stored-head comparison |
+| isTree / isSpanningTree | O(V + E) | BFS reachability + edge-count law |
+| GraphMatrix addEdge/hasEdge | O(1) | O(V²) memory — sparse graphs lose (see BENCHMARKS.md) |
+| GraphMatrix build | O(V²) | measured: 1.9 s at 10k nodes vs 11.6 ms list |

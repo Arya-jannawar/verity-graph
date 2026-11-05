@@ -40,3 +40,35 @@ values and overflow guard", "modPow: known values and edge cases", "modInverse:
 known values and failure paths", "sieve agrees with isPrime for all n in
 [0, 5000]", "nextPrime: strictly greater", "eulerTotient: known values and
 multiplicative law".
+
+## 2. Applied number theory (Phase 4)
+
+### Miller–Rabin
+Write n − 1 = 2^s·d with d odd. n is COMPOSITE when some witness a finds
+a^d ≢ ±1 (mod n) and a^(2^r d) ≢ −1 for all r < s. With the fixed witness set
+{2,3,5,7,11,13,17,19,23,29,31,37} the test is DETERMINISTIC for all
+n < 3.3·10^24 — i.e., exact over the entire uint64 domain; the probable-prime
+name is kept for honesty.
+
+### Chinese Remainder Theorem
+For pairwise coprime moduli the system x ≡ r_i (mod m_i) has a unique
+solution mod ∏m_i (constructed by incremental recombination with modular
+inverses). Non-coprime moduli are REJECTED (ParseError), inconsistent
+repeated moduli are detected, and the combined modulus overflow is guarded —
+all tested.
+
+### Fermat check
+a^(p−1) ≡ 1 (mod p) for primes with gcd(a,p)=1. CARMICHAEL NUMBERS (561)
+pass Fermat for all coprime bases — the check is a teaching demonstration of
+the weakness Miller-Rabin repairs (the test pins the honest 2-vs-561 TRUE).
+
+### Evidence ledger
+h_i = H(record_i || h_{i−1}) with a teaching-grade modular rotate-mix hash.
+Verification recomputes the chain and compares the STORED head — tampering
+any record (or the head) breaks the comparison on a disposable copy while the
+pristine file verifies. Explicitly NOT cryptographic.
+
+## Tests
+tests/io/test_phase4.cpp ("Miller-Rabin: deterministic witness set", "CRT:
+consistent, non-coprime and overflow behavior", "Fermat check", "evidence
+ledger: verify passes clean, fails on a tampered copy").
