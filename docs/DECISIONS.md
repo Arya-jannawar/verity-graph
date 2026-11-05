@@ -1,0 +1,14 @@
+# DECISIONS.md — explicit reconciliations and choices
+
+| Date | Decision | Why | Alternatives rejected |
+|---|---|---|---|
+| 2026-11-06 | Baseline = PHASES.md + brief defaults (no SPEC.md found in workspace or on the owner's GitHub) | Brief §2 directs exactly this when SPEC.md is absent; blocking the whole project was not an option | Inventing SPEC.md contents (forbidden) |
+| 2026-11-06 | Error hierarchy classes are namespace-level (`verity::util::GraphError`, `DuplicateNodeError`, …) rather than nested inside GraphError | Catch-by-base/derived tests and CLI mapping are simpler; PHASES.md wording "(DuplicateNodeError, MissingNodeError)" is satisfied | Nested classes (`GraphError::DuplicateNodeError`) |
+| 2026-11-06 | Node copy is protected + user-defined (not defaulted) so the live-object counter stays balanced through `clone()` | Defaulted copy skipped the counter increment and drifted `liveObjects()` negative — found by test | Public copy (slicing risk); counter dropped from copies (test would fail) |
+| 2026-11-06 | `HashTable` move leaves the source with prime-sized empty buckets | A moved-from zero-bucket table divides by zero in `bucketOf` — found by ASan run | Standard "moved-from = valid unspecified" practice (too dangerous here) |
+| 2026-11-06 | `modPow` uses the portable overflow-safe multiply (no `__int128`) | MSVC has no `__int128`; the clang-MSVC-target link lacks `__umodti3` | 128-bit modulo (non-portable) |
+| 2026-11-06 | Sanitizer evidence via MSVC `cl.exe /fsanitize=address` (RelWithDebInfo) | LLVM clang ASan on windows-msvc cannot unwind C++ exceptions; MSVC's ASan passes the full 76-case suite incl. throw-paths (log: `out/validation/phase1_asan_msvc.log`) | Labeling ASan "Not run" (unnecessary — a working path exists); clang ASan with throw-tests excluded (weakens evidence) |
+| 2026-11-06 | UBSan and valgrind: **Not run** (unavailable on this Windows host); documented Linux commands provided | Brief §12 requires honest labeling; no WSL C++ toolchain present | Pretending they ran |
+| 2026-11-06 | Gold span offsets computed by `scripts/make_phase1_gold.py` with occurrence-indexed search; tool checked into scripts/ as development tooling | Hand-counted offsets are error-prone; ambiguity policy is explicit | First-match search only (forbidden by brief §8) |
+| 2026-11-06 | Phase-1 CLI persists `out/verity_session.json` (extraction path) for cross-process commands | Resolves the original phase-1 in-memory-ingest example honestly; replaced by binary `graph.vg` in Phase 4 | Re-ingesting on every command without state; premature binary format |
+| 2026-11-06 | `nextPrime(n)` returns the smallest prime **strictly greater** than n | HashTable growth must not return the same capacity; documented in CONTRACT §5 usage | next-prime-or-equal (ambiguous for HT growth) |

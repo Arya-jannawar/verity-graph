@@ -1,0 +1,132 @@
+{
+  "schema_version": "1.0.0",
+  "documents": [
+    {
+      "id": "D002",
+      "filename": "d002_northstar_overview.txt",
+      "format": "txt",
+      "normalized_text": "Northstar Meridian Labs Overview\n\nNorthstar Meridian Labs is a fictional research laboratory located in\nCrescent Bay. David Okoro is the chief executive officer of Northstar\nMeridian Labs.\n\nElena Vasquez is an independent consultant who advises Northstar\nMeridian Labs on metadata standards.\n",
+      "metadata": {
+        "title": "Northstar Meridian Labs Overview",
+        "language": "en"
+      },
+      "citations": []
+    }
+  ],
+  "entities": [
+    {
+      "id": "E006",
+      "name": "Northstar Meridian Labs",
+      "type": "Organization",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D002",
+          "span": {
+            "start": 0,
+            "end": 23,
+            "quote": "Northstar Meridian Labs"
+          }
+        },
+        {
+          "document_id": "D002",
+          "span": {
+            "start": 34,
+            "end": 57,
+            "quote": "Northstar Meridian Labs"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E007",
+      "name": "David Okoro",
+      "type": "Person",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D002",
+          "span": {
+            "start": 118,
+            "end": 129,
+            "quote": "David Okoro"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E008",
+      "name": "Crescent Bay",
+      "type": "Location",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D002",
+          "span": {
+            "start": 104,
+            "end": 116,
+            "quote": "Crescent Bay"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E009",
+      "name": "Elena Vasquez",
+      "type": "Person",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D002",
+          "span": {
+            "start": 190,
+            "end": 203,
+            "quote": "Elena Vasquez"
+          }
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "C003",
+      "subject_id": "E006",
+      "predicate": "located_at",
+      "object": {
+        "kind": "EntityRef",
+        "entity_id": "E008"
+      },
+      "polarity": "Positive",
+      "confidence": 0.95,
+      "document_id": "D002",
+      "span": {
+        "start": 34,
+        "end": 103,
+        "quote": "Northstar Meridian Labs is a fictional research laboratory located in"
+      },
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "id": "C004",
+      "subject_id": "E006",
+      "predicate": "has_ceo",
+      "object": {
+        "kind": "EntityRef",
+        "entity_id": "E007"
+      },
+      "polarity": "Positive",
+      "confidence": 0.95,
+      "document_id": "D002",
+      "span": {
+        "start": 118,
+        "end": 187,
+        "quote": "David Okoro is the chief executive officer of Northstar\nMeridian Labs"
+      },
+      "valid_from": "2021-06",
+      "valid_to": null
+    }
+  ],
+  "events": [],
+  "citations": []
+}

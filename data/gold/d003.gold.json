@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.0.0",
+  "documents": [
+    {
+      "id": "D003",
+      "filename": "d003_partnership_wire.txt",
+      "format": "txt",
+      "normalized_text": "Partnership Wire\n\nAster Vale Systems and Northstar Meridian Labs announced a joint\nmetadata research partnership at a press event held at Café Meridian\nin Bellhaven.\n\nJohn Smith and Elena Vasquez attended the announcement. The companies\ncited the overview documents as background material.\n",
+      "metadata": {
+        "title": "Partnership Wire",
+        "language": "en"
+      },
+      "citations": [
+        "D001",
+        "D002"
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "id": "E001",
+      "name": "Aster Vale Systems",
+      "type": "Organization",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D003",
+          "span": {
+            "start": 18,
+            "end": 36,
+            "quote": "Aster Vale Systems"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E005",
+      "name": "John Smith",
+      "type": "Person",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D003",
+          "span": {
+            "start": 167,
+            "end": 177,
+            "quote": "John Smith"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E006",
+      "name": "Northstar Meridian Labs",
+      "type": "Organization",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D003",
+          "span": {
+            "start": 41,
+            "end": 64,
+            "quote": "Northstar Meridian Labs"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E009",
+      "name": "Elena Vasquez",
+      "type": "Person",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D003",
+          "span": {
+            "start": 182,
+            "end": 195,
+            "quote": "Elena Vasquez"
+          }
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "C005",
+      "subject_id": "E001",
+      "predicate": "announced",
+      "object": {
+        "kind": "StringValue",
+        "text": "joint metadata research partnership"
+      },
+      "polarity": "Positive",
+      "confidence": 0.9,
+      "document_id": "D003",
+      "span": {
+        "start": 18,
+        "end": 112,
+        "quote": "Aster Vale Systems and Northstar Meridian Labs announced a joint\nmetadata research partnership"
+      },
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "id": "C006",
+      "subject_id": "E005",
+      "predicate": "present_at",
+      "object": {
+        "kind": "StringValue",
+        "text": "Café Meridian"
+      },
+      "polarity": "Positive",
+      "confidence": 0.85,
+      "document_id": "D003",
+      "span": {
+        "start": 167,
+        "end": 221,
+        "quote": "John Smith and Elena Vasquez attended the announcement"
+      },
+      "valid_from": null,
+      "valid_to": null
+    }
+  ],
+  "events": [],
+  "citations": [
+    {
+      "citing": "D003",
+      "cited": "D001",
+      "span": null
+    },
+    {
+      "citing": "D003",
+      "cited": "D002",
+      "span": null
+    }
+  ]
+}

@@ -12,7 +12,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from ai.extractors.base import BaseExtractor
+from extractors.base import BaseExtractor
 
 SCHEMA_VERSION = "1.0.0"
 

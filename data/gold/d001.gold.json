@@ -1,0 +1,148 @@
+{
+  "schema_version": "1.0.0",
+  "documents": [
+    {
+      "id": "D001",
+      "filename": "d001_aster_vale_overview.txt",
+      "format": "txt",
+      "normalized_text": "Aster Vale Systems Overview\n\nAster Vale Systems is a fictional software company based in Bellhaven.\nMaria Chen has served as chief executive officer of Aster Vale Systems\nsince January 2022. The company was founded in 2019.\n\nProduct X, a metadata search platform, is developed by Aster Vale Systems.\nJohn Smith works as a senior engineer at Aster Vale Systems.\n",
+      "metadata": {
+        "title": "Aster Vale Systems Overview",
+        "language": "en"
+      },
+      "citations": []
+    }
+  ],
+  "entities": [
+    {
+      "id": "E001",
+      "name": "Aster Vale Systems",
+      "type": "Organization",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D001",
+          "span": {
+            "start": 0,
+            "end": 18,
+            "quote": "Aster Vale Systems"
+          }
+        },
+        {
+          "document_id": "D001",
+          "span": {
+            "start": 29,
+            "end": 47,
+            "quote": "Aster Vale Systems"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E002",
+      "name": "Maria Chen",
+      "type": "Person",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D001",
+          "span": {
+            "start": 100,
+            "end": 110,
+            "quote": "Maria Chen"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E003",
+      "name": "Bellhaven",
+      "type": "Location",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D001",
+          "span": {
+            "start": 89,
+            "end": 98,
+            "quote": "Bellhaven"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E004",
+      "name": "Product X",
+      "type": "Product",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D001",
+          "span": {
+            "start": 225,
+            "end": 234,
+            "quote": "Product X"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E005",
+      "name": "John Smith",
+      "type": "Person",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D001",
+          "span": {
+            "start": 300,
+            "end": 310,
+            "quote": "John Smith"
+          }
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "subject_id": "E001",
+      "predicate": "located_at",
+      "object": {
+        "kind": "EntityRef",
+        "entity_id": "E003"
+      },
+      "polarity": "Positive",
+      "confidence": 0.95,
+      "document_id": "D001",
+      "span": {
+        "start": 29,
+        "end": 99,
+        "quote": "Aster Vale Systems is a fictional software company based in Bellhaven."
+      },
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "id": "C002",
+      "subject_id": "E001",
+      "predicate": "has_ceo",
+      "object": {
+        "kind": "EntityRef",
+        "entity_id": "E002"
+      },
+      "polarity": "Positive",
+      "confidence": 0.95,
+      "document_id": "D001",
+      "span": {
+        "start": 100,
+        "end": 170,
+        "quote": "Maria Chen has served as chief executive officer of Aster Vale Systems"
+      },
+      "valid_from": "2022-01",
+      "valid_to": null
+    }
+  ],
+  "events": [],
+  "citations": []
+}
