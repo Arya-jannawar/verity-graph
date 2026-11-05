@@ -70,6 +70,12 @@ _TEMPLATES = [
     (re.compile(r"(?P<a>[A-Z][\w'&.\- ]*?(?:Labs|Systems|Inc|Corp))\s+and\s+(?P<b>[A-Z][\w'&.\- ]*?(?:Labs|Systems|Inc|Corp))\s+announced\s+(?P<what>[a-z][a-z\s]+?)(?:\.| at\b)"), "announced"),
     # present_at
     (re.compile(r"(?P<person>[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)\s+and\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?\s+attended\s+(?P<what>[a-z][a-z\s]+?)"), "present_at"),
+    # launched
+    (re.compile(r"(?P<org>[A-Z][\w'&.\- ]*?(?:Labs|Systems|Inc|Corp))\s+(?:did\s+not\s+)?launch(?:ed)?\s+(?P<what>[A-Z][\w ]*?(?:X|Lens))\s+(?:in|at)\s+(?P<place>[A-Z][a-z]+)\s+on\s+(?P<date>\d{4}-\d{2}-\d{2})"), "launched"),
+    (re.compile(r"(?P<what>[A-Z][\w ]*?(?:X|Lens))\s+launched\s+in\s+(?P<place>[A-Z][a-z]+)\s+on\s+(?P<date>\d{4}-\d{2}-\d{2})"), "launched"),
+    (re.compile(r"(?P<org>[A-Z][\w'&.\- ]*?(?:Labs|Systems|Inc|Corp))\s+(?:did\s+not\s+)?launch(?:ed)?\s+(?P<what>[A-Z][\w ]*?(?:X|Lens))\s+on\s+(?P<date>\d{4}-\d{2}-\d{2})"), "launched"),
+    # numeric shipment claims
+    (re.compile(r"(?P<what>[A-Z][\w ]*?(?:X|Lens))\s+shipped\s+(?P<qty>\d+)\s+(?P<unit>modules)"), "launched"),
     # happened_before
     (re.compile(r"(?P<a>[A-Z][\w ]+?)\s+happened before\s+(?P<b>[A-Z][\w ]+?)"), "happened_before"),
     (re.compile(r"before\s+(?P<b>[A-Z][\w ]+?),\s*(?P<a>[A-Z][\w ]+?)\s+(?:took place|happened|occurred)"), "happened_before"),
@@ -167,19 +173,41 @@ class RuleBasedExtractor(BaseExtractor):
                     # documented; the Phase-3 pytest covers positive, negative,
                     # denial and unrelated-negation examples.
                     window_start = max(0, m.start() - 60)
-                    window = text[window_start:m.start()]
+                    window = text[window_start:m.end()]   # cue may sit inside the match
                     negated = any(cue in window.lower() for cue in
                                   ("did not", "didnt", "did n't", "denied", "not "))
-                    subject = groups.get("org") or groups.get("a") or groups.get("person")
-                    if subject is None or subject not in entity_ids:
+                    subject = (groups.get("org") or groups.get("a")
+                               or groups.get("person") or groups.get("what"))
+                    if subject is None:
                         continue
-                    object_text = (groups.get("person") or groups.get("place")
-                                   or groups.get("what") or groups.get("b") or "")
+                    if subject not in entity_ids:
+                        # the lazy org group can swallow leading words
+                        # ("Analysts reported Aster Vale Systems"); resolve the
+                        # subject as the longest known entity name that ends
+                        # the captured prefix — no silent first-match guessing
+                        resolved = None
+                        for name in sorted(entity_ids, key=len, reverse=True):
+                            if subject.endswith(name):
+                                resolved = name
+                                break
+                        if resolved is None:
+                            continue
+                        subject = resolved
                     object_value: dict
-                    if object_text in entity_ids:
-                        object_value = {"kind": "EntityRef", "entity_id": entity_ids[object_text]}
+                    if groups.get("date"):
+                        object_value = {"kind": "DateValue", "date": groups["date"]}
+                    elif groups.get("qty"):
+                        object_value = {"kind": "QuantityValue",
+                                        "quantity": float(groups["qty"]),
+                                        "unit": groups.get("unit", "")}
                     else:
-                        object_value = {"kind": "StringValue", "text": object_text.strip()}
+                        object_text = (groups.get("person") or groups.get("place")
+                                       or groups.get("what") or groups.get("b") or "")
+                        if object_text in entity_ids:
+                            object_value = {"kind": "EntityRef",
+                                            "entity_id": entity_ids[object_text]}
+                        else:
+                            object_value = {"kind": "StringValue", "text": object_text.strip()}
                     claims.append({
                         "id": f"C{claim_counter:03d}",
                         "subject_id": entity_ids[subject],

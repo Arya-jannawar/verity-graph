@@ -63,3 +63,27 @@ test/log proves it) / **Failed** / **Not run**. Evidence points at logs under
 | CLI: timeline, query autocomplete, dm relations/functions/groups/combinatorics | PHASES P2 | app/main.cpp | phase2_cli_acceptance.log | Verified |
 | D004 (aliases) + D005 (temporal cycle) with gold | PHASES P2 | data/sample, data/gold | pytest spans; resolver/timeline tests | Verified |
 | Zero warnings; ASan clean | PHASES P2 | — | phase2_doctest_full.log (135/135), phase2_asan_msvc.log | Verified |
+
+## Phase 3 — Logic & reasoning
+
+| Req | Source | Implementation | Test / evidence | Status |
+|---|---|---|---|---|
+| Full exception hierarchy (ExtractionError, StorageError, RuleError) with catch-by-base/derived/rethrow tests | PHASES P3 | util/VerityError.hpp | tests/engine/test_conflicts.cpp "exception hierarchy…" | Verified |
+| ConflictRule (Strategy) ×5; adding a rule needs ZERO detector changes; RuleFactory::fromText with frozen grammar | PHASES P3 | engine/ConflictRule.hpp, ConflictDetector.cpp | test_conflicts "a NEW ConflictRule integrates…", "RuleFactory grammar…" | Verified |
+| Observer: detector notifies CLI printer + JSON collector | PHASES P3 | Conflict.hpp listeners | test_conflicts "Observer listeners…" | Verified |
+| FixedCache<K,V,N> LRU (non-type param) for entity lookups; countIf/intersectSorted templates | PHASES P3 | engine/FixedCache.hpp, util/FuncTemplates.hpp | test_conflicts "FixedCache: LRU…"; used in DetectionContext | Verified |
+| Formula AST, shunting-yard parser, prefix/infix/postfix, evaluation, truth tables, tautology/contradiction/satisfiable, equivalences (De Morgan/distributivity/contrapositive/absorption), CNF/DNF bounded | PHASES P3 DM | dm/Logic.hpp/.cpp | tests/dm/test_logic.cpp (12 cases) | Verified |
+| Horn forward chaining with derivations; modus tollens/disjunctive syllogism/resolution on EXPLICIT literal representations; hypothetical syllogism | PHASES P3 | dm/Inference.hpp/.cpp | test_logic "inference…" cases | Verified |
+| Finite-domain quantifiers + negation laws | PHASES P3 | dm/Quantifiers.hpp | test_logic "quantifiers…" | Verified |
+| Noisy-OR monoid ([0,1], combine, 0) via Phase-2 MonoidLaws pattern + order independence + dedup/circular penalty | PHASES P3 | dm/NoisyOr.hpp | test_graphanalysis "noisy-OR…" (fp tolerance) | Verified |
+| dm::GraphAnalysis: degree sequence, handshake (incl. digraph), isolated/pendant, bipartite, Euler, guarded Hamiltonian, induced subgraph, coloring, A^k walks | PHASES P3 | dm/GraphAnalysis.hpp | tests/dm/test_graphanalysis.cpp | Verified |
+| Dijkstra (1-conf), Kruskal (DSU), Prim, Tarjan SCC, articulation/bridges, Rabin-Karp | PHASES P3 DSA | ds/GraphAlgorithms.hpp, ds/StringSearch.hpp | tests/ds/test_dsa3.cpp (brute-force oracles) | Verified |
+| Negation cue detection wired into rule extractor (limitations published) | PHASES P3 AI | ai/extractors/rule.py | pytest test_negation_* incl. published scope leak | Verified |
+| LLMExtractor: env config, strict JSON, one retry, strict span discard, fake-client tests, no network | PHASES P3 | ai/extractors/llm.py | pytest test_llm_* | Verified |
+| Honest precision/recall report (TP/FP/FN, per-predicate, zero-division guards, mock labeled) | PHASES P3 | ai/extractors/evaluation.py + run_extract --evaluate-gold | pytest + real report (P=0.333 R=0.118) | Verified |
+| ConflictDetector grounded through HashTable index; findings with id/rule/claims/docs/spans/derivation/severity/"Potential contradiction"/benign | PHASES P3 | ConflictDetector.cpp | test_conflicts planted-findings case | Verified |
+| EvidenceBuilder (claim↔doc, three siblings) | PHASES P3 | engine/Reasoning.cpp | exercised by top-evidence + tests | Verified |
+| ProvenanceTracer (origin tree, circular via cycle detection, extra edges retained) | PHASES P3 | Reasoning.cpp | test_conflicts "circular sourcing…" | Verified |
+| Ranker (heap + noisy-OR), keyentities/backbone/path/top-evidence/trace CLI | PHASES P3 | Reasoning.cpp + main.cpp | phase3_cli_acceptance.log | Verified |
+| D006–D009 planted: date conflict, CEO conflict, alibi, circular sourcing, benign near-conflicts, intermediary | PHASES P3 | data/sample/d006-d009 + gold | planted-findings + benign + intermediary tests | Verified |
+| Zero warnings; ASan clean; pytest green | PHASES P3 | — | phase3_doctest_full.log (171/171), phase3_asan_msvc.log, phase3_pytest.log (39) | Verified |

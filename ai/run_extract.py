@@ -142,6 +142,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", required=True, help="output extraction JSON path")
     parser.add_argument("--gold-dir", default=str(_REPO_ROOT / "data" / "gold"),
                         help="gold annotation directory (mock extractor)")
+    parser.add_argument("--evaluate-gold", action="store_true",
+                        help="print the honest precision/recall report against gold "
+                             "(rule extractor only; mock replays gold by design)")
     args = parser.parse_args(argv)
 
     input_dir = Path(args.input)
@@ -177,6 +180,14 @@ def main(argv: list[str] | None = None) -> int:
         f"{len(record['entities'])} entities, {len(record['claims'])} claims, "
         f"{len(record['events'])} events, {len(record['citations'])} citations"
     )
+    if args.evaluate_gold:
+        if args.extractor == "mock":
+            print("evaluation skipped: the mock extractor replays gold by design; "
+                  "its numbers are NOT quality evidence", file=sys.stderr)
+        else:
+            from extractors.evaluation import format_report, score_extractor_files
+            scores = score_extractor_files(args.out, args.gold_dir)
+            print(format_report(scores, args.extractor))
     return EXIT_OK
 
 
