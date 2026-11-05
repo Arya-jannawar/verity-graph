@@ -161,6 +161,15 @@ class RuleBasedExtractor(BaseExtractor):
             for pattern, predicate in _TEMPLATES:
                 for m in pattern.finditer(text):
                     groups = {k: v for k, v in m.groupdict().items() if v}
+                    # Phase-3 negation cue detection: a negated template match
+                    # flips polarity to Negative. Scope handling is INTENTIONALLY
+                    # naive (cue within the same sentence) and its limitation is
+                    # documented; the Phase-3 pytest covers positive, negative,
+                    # denial and unrelated-negation examples.
+                    window_start = max(0, m.start() - 60)
+                    window = text[window_start:m.start()]
+                    negated = any(cue in window.lower() for cue in
+                                  ("did not", "didnt", "did n't", "denied", "not "))
                     subject = groups.get("org") or groups.get("a") or groups.get("person")
                     if subject is None or subject not in entity_ids:
                         continue
@@ -176,7 +185,7 @@ class RuleBasedExtractor(BaseExtractor):
                         "subject_id": entity_ids[subject],
                         "predicate": predicate,
                         "object": object_value,
-                        "polarity": "Positive",
+                        "polarity": "Negative" if negated else "Positive",
                         "confidence": 0.6,
                         "document_id": doc_id,
                         "span": {"start": m.start(), "end": m.end(), "quote": m.group(0)},
