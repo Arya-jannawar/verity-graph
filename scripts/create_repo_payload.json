@@ -1,0 +1,6 @@
+{
+  "name": "verity-graph",
+  "description": "VERITY GRAPH - offline-first document evidence graph and potential-contradiction analysis (C++17 engine, Python extraction, five-tab Evidence Observatory UI)",
+  "private": false,
+  "auto_init": false
+}

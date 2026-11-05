@@ -231,18 +231,25 @@ function renderAccessibleNodeList() {
 
 function renderInspector(id) {
   const node = nodeById(id);
-  const excerpts = (state.report.claims || [])
+  let excerpts = (state.report.claims || [])
     .filter((c) => c.subject_id === id || c.object.entity_id === id)
     .map((c) => `<div class="excerpt"><span class="doc-id">${c.document_id}` +
       `</span> [${c.span.start},${c.span.end}) "${escapeHtml(c.span.quote)}" — ` +
-      `${c.predicate} (${c.polarity}, confidence ${c.confidence})</div>`)
-    .join("");
+      `${c.predicate} (${c.polarity}, confidence ${c.confidence})</div>`);
+  if (node.kind === "Claim") {
+    // a claim node inspects its OWN source excerpt
+    excerpts = (state.report.claims || [])
+      .filter((c) => c.id === id)
+      .map((c) => `<div class="excerpt"><span class="doc-id">${c.document_id}` +
+        `</span> [${c.span.start},${c.span.end}) "${escapeHtml(c.span.quote)}" — ` +
+        `${c.predicate} (${c.polarity}, confidence ${c.confidence})</div>`);
+  }
   const neighbors = neighborsOf(id).map((n) => `<code>${n}</code>`).join(" ");
   $("#inspector").innerHTML =
     `<h3>${node.id} — ${escapeHtml(node.label || "")}</h3>` +
     `<p>kind: <strong>${node.kind}</strong></p>` +
     `<h3>neighbors</h3><p>${neighbors || "(none)"}</p>` +
-    `<h3>claim excerpts</h3>${excerpts || "<p class='empty-state'>none</p>"}`;
+    `<h3>claim excerpts</h3>${excerpts.join("") || "<p class='empty-state'>none</p>"}`;
 }
 
 function wireGraphControls() {
