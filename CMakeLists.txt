@@ -131,6 +131,16 @@ target_include_directories(verity_tests SYSTEM PRIVATE
 target_link_libraries(verity_tests PRIVATE verity_core)
 add_test(NAME verity_all_tests COMMAND verity_tests)
 
+# benchmarks (Phase 4) — built with the Release flags of the parent build
+add_executable(verity_bench scripts/bench.cpp)
+target_include_directories(verity_bench PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+target_include_directories(verity_bench SYSTEM PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/third_party
+)
+target_link_libraries(verity_bench PRIVATE verity_ds)
+
 # ---------------------------------------------------------------------------
 # Windows + clang sanitizer support: the MSVC STL requests its ASan runtime
 # (stl_asan.lib) via #pragma comment(lib, ...). clang does not add the MSVC
