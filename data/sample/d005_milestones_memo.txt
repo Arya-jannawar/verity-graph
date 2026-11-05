@@ -1,0 +1,5 @@
+Product X Milestones Memo
+
+Product X reached internal beta before the pilot rollout. The pilot
+rollout happened before the public beta. According to the follow-up
+review, the public beta happened before the internal beta review.

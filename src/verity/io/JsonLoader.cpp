@@ -176,6 +176,16 @@ model::ExtractionRecord JsonLoader::parseExtraction(const std::string& jsonText)
     // ---- claims -----------------------------------------------------------
     const auto& claims = requireField(root, "claims", "root");
     if (!claims.is_array()) fail("root.claims must be an array");
+    // Pre-pass: happened_before claims bind EVENTS, so event ids must be
+    // known while validating claims (full event parsing happens below).
+    std::set<std::string> eventIds;
+    if (root.contains("events") && root.at("events").is_array()) {
+        for (const auto& ev : root.at("events")) {
+            if (ev.is_object() && ev.contains("id") && ev.at("id").is_string()) {
+                eventIds.insert(ev.at("id").get<std::string>());
+            }
+        }
+    }
     std::set<std::string> claimIds;
     for (const auto& c : claims) {
         model::ClaimRecord cr;
@@ -197,13 +207,27 @@ model::ExtractionRecord JsonLoader::parseExtraction(const std::string& jsonText)
         } catch (const std::exception& e) {
             fail("claim " + cr.id + ": bad object — " + e.what());
         }
-        if (cr.object.kind == model::ClaimObject::Kind::EntityRef &&
-            !entityIds.count(cr.object.entity_id)) {
-            fail("claim " + cr.id + ": object references unknown entity '" +
-                 cr.object.entity_id + "'");
-        }
-        if (!entityIds.count(cr.subject_id)) {
-            fail("claim " + cr.id + ": subject references unknown entity '" + cr.subject_id + "'");
+        // happened_before claims bind EVENTS (domain Event -> Event); all
+        // other predicates bind entities.
+        if (cr.predicate == "happened_before") {
+            if (!eventIds.count(cr.subject_id)) {
+                fail("claim " + cr.id + ": happened_before subject must be an event '" +
+                     cr.subject_id + "'");
+            }
+            if (cr.object.kind != model::ClaimObject::Kind::EntityRef ||
+                !eventIds.count(cr.object.entity_id)) {
+                fail("claim " + cr.id + ": happened_before object must be an event reference");
+            }
+        } else {
+            if (cr.object.kind == model::ClaimObject::Kind::EntityRef &&
+                !entityIds.count(cr.object.entity_id)) {
+                fail("claim " + cr.id + ": object references unknown entity '" +
+                     cr.object.entity_id + "'");
+            }
+            if (!entityIds.count(cr.subject_id)) {
+                fail("claim " + cr.id + ": subject references unknown entity '" +
+                     cr.subject_id + "'");
+            }
         }
         const std::string polarity = requireString(c, "polarity", "claim " + cr.id);
         (void)model::polarityFromString(polarity);
@@ -238,7 +262,7 @@ model::ExtractionRecord JsonLoader::parseExtraction(const std::string& jsonText)
     // ---- events -----------------------------------------------------------
     const auto& events = requireField(root, "events", "root");
     if (!events.is_array()) fail("root.events must be an array");
-    std::set<std::string> eventIds;
+    std::set<std::string> parsedEventIds;   // distinct from the claims pre-pass set
     for (const auto& ev : events) {
         model::EventRecord er;
         er.id = requireString(ev, "id", "event");
@@ -259,7 +283,7 @@ model::ExtractionRecord JsonLoader::parseExtraction(const std::string& jsonText)
             fail("event " + er.id + ": references unknown document '" + er.document_id + "'");
         }
         er.span = parseSpan(requireField(ev, "span", "event " + er.id), "event " + er.id);
-        if (!eventIds.insert(er.id).second) fail("duplicate event id: " + er.id);
+        if (!parsedEventIds.insert(er.id).second) fail("duplicate event id: " + er.id);
         rec.events.push_back(std::move(er));
     }
 

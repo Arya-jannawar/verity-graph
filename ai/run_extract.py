@@ -34,13 +34,16 @@ EXIT_USAGE = 2
 
 
 def build_extractor(name: str, documents: dict[str, str], args: argparse.Namespace) -> BaseExtractor:
-    """Instantiates the named extractor (mock only in phase 1)."""
+    """Instantiates the named extractor (mock replays gold; rule is heuristic)."""
     if name == "mock":
         return MockExtractor(documents, args.gold_dir)
-    available = ["mock"]
+    if name == "rule":
+        from extractors.rule import RuleBasedExtractor
+        return RuleBasedExtractor(documents)
+    available = ["mock", "rule"]
     raise SystemExit(
         f"unknown extractor '{name}'. Available extractors: {', '.join(available)}. "
-        "Rule-based and LLM extractors arrive in later phases."
+        "The LLM extractor arrives in phase 3."
     )
 
 
@@ -49,6 +52,7 @@ def validate_semantics(record: dict) -> list[str]:
     errors: list[str] = []
     docs = {d["id"]: d["normalized_text"] for d in record["documents"]}
     entity_ids = {e["id"] for e in record["entities"]}
+    event_ids = {e["id"] for e in record["events"]}
 
     def check_span(where: str, doc_id: str, span: dict) -> None:
         text = docs.get(doc_id)
@@ -74,11 +78,22 @@ def validate_semantics(record: dict) -> list[str]:
             )
 
     for claim in record["claims"]:
-        if claim["subject_id"] not in entity_ids:
-            errors.append(f"claim {claim['id']}: unknown subject '{claim['subject_id']}'")
-        obj = claim["object"]
-        if obj["kind"] == "EntityRef" and obj["entity_id"] not in entity_ids:
-            errors.append(f"claim {claim['id']}: unknown EntityRef '{obj['entity_id']}'")
+        # happened_before claims bind events; all other predicates bind entities
+        if claim["predicate"] == "happened_before":
+            if claim["subject_id"] not in event_ids:
+                errors.append(
+                    f"claim {claim['id']}: happened_before subject must be an event "
+                    f"'{claim['subject_id']}'"
+                )
+            obj = claim["object"]
+            if obj["kind"] != "EntityRef" or obj["entity_id"] not in event_ids:
+                errors.append(f"claim {claim['id']}: happened_before object must be an event ref")
+        else:
+            if claim["subject_id"] not in entity_ids:
+                errors.append(f"claim {claim['id']}: unknown subject '{claim['subject_id']}'")
+            obj = claim["object"]
+            if obj["kind"] == "EntityRef" and obj["entity_id"] not in entity_ids:
+                errors.append(f"claim {claim['id']}: unknown EntityRef '{obj['entity_id']}'")
         if claim["document_id"] not in docs:
             errors.append(f"claim {claim['id']}: unknown document '{claim['document_id']}'")
         check_span(f"claim {claim['id']}", claim["document_id"], claim["span"])
@@ -122,7 +137,7 @@ def validate_schema(record: dict) -> list[str]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Verity extraction runner")
     parser.add_argument("--input", required=True, help="directory with *.txt source documents")
-    parser.add_argument("--extractor", required=True, choices=["mock"],
+    parser.add_argument("--extractor", required=True, choices=["mock", "rule"],
                         help="extraction strategy (mock replays gold by design)")
     parser.add_argument("--out", required=True, help="output extraction JSON path")
     parser.add_argument("--gold-dir", default=str(_REPO_ROOT / "data" / "gold"),

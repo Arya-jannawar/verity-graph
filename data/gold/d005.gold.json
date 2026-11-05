@@ -1,0 +1,132 @@
+{
+  "schema_version": "1.0.0",
+  "documents": [
+    {
+      "id": "D005",
+      "filename": "d005_milestones_memo.txt",
+      "format": "txt",
+      "normalized_text": "Product X Milestones Memo\n\nProduct X reached internal beta before the pilot rollout. The pilot\nrollout happened before the public beta. According to the follow-up\nreview, the public beta happened before the internal beta review.\n",
+      "metadata": {
+        "title": "Product X Milestones Memo",
+        "language": "en"
+      },
+      "citations": []
+    }
+  ],
+  "entities": [
+    {
+      "id": "E004",
+      "name": "Product X",
+      "type": "Product",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D005",
+          "span": {
+            "start": 0,
+            "end": 9,
+            "quote": "Product X"
+          }
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "C007",
+      "subject_id": "EV001",
+      "predicate": "happened_before",
+      "object": {
+        "kind": "EntityRef",
+        "entity_id": "EV002"
+      },
+      "polarity": "Positive",
+      "confidence": 0.9,
+      "document_id": "D005",
+      "span": {
+        "start": 27,
+        "end": 83,
+        "quote": "Product X reached internal beta before the pilot rollout"
+      },
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "id": "C008",
+      "subject_id": "EV002",
+      "predicate": "happened_before",
+      "object": {
+        "kind": "EntityRef",
+        "entity_id": "EV003"
+      },
+      "polarity": "Positive",
+      "confidence": 0.9,
+      "document_id": "D005",
+      "span": {
+        "start": 85,
+        "end": 134,
+        "quote": "The pilot\nrollout happened before the public beta"
+      },
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "id": "C009",
+      "subject_id": "EV003",
+      "predicate": "happened_before",
+      "object": {
+        "kind": "EntityRef",
+        "entity_id": "EV001"
+      },
+      "polarity": "Positive",
+      "confidence": 0.9,
+      "document_id": "D005",
+      "span": {
+        "start": 171,
+        "end": 227,
+        "quote": "the public beta happened before the internal beta review"
+      },
+      "valid_from": null,
+      "valid_to": null
+    }
+  ],
+  "events": [
+    {
+      "id": "EV001",
+      "label": "internal beta",
+      "entity_id": "E004",
+      "date": "2024",
+      "document_id": "D005",
+      "span": {
+        "start": 45,
+        "end": 58,
+        "quote": "internal beta"
+      }
+    },
+    {
+      "id": "EV002",
+      "label": "pilot rollout",
+      "entity_id": "E004",
+      "date": "2024",
+      "document_id": "D005",
+      "span": {
+        "start": 89,
+        "end": 102,
+        "quote": "pilot\nrollout"
+      }
+    },
+    {
+      "id": "EV003",
+      "label": "public beta",
+      "entity_id": "E004",
+      "date": "2024",
+      "document_id": "D005",
+      "span": {
+        "start": 123,
+        "end": 134,
+        "quote": "public beta"
+      }
+    }
+  ],
+  "citations": []
+}

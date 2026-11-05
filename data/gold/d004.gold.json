@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0.0",
+  "documents": [
+    {
+      "id": "D004",
+      "filename": "d004_consulting_note.txt",
+      "format": "txt",
+      "normalized_text": "Consulting Note\n\nJohn Smith joined the review board this quarter. J. Smith previously\nadvised Aster Vale Systems on metadata standards.\n\nA memo addressed to Mr. Smith confirmed his travel plans. The visitor\nregister lists Smith, John as an independent consultant.\n",
+      "metadata": {
+        "title": "Consulting Note",
+        "language": "en"
+      },
+      "citations": []
+    }
+  ],
+  "entities": [
+    {
+      "id": "E005",
+      "name": "John Smith",
+      "type": "Person",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D004",
+          "span": {
+            "start": 17,
+            "end": 27,
+            "quote": "John Smith"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E010",
+      "name": "J. Smith",
+      "type": "Person",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D004",
+          "span": {
+            "start": 66,
+            "end": 74,
+            "quote": "J. Smith"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E011",
+      "name": "Mr. Smith",
+      "type": "Person",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D004",
+          "span": {
+            "start": 157,
+            "end": 166,
+            "quote": "Mr. Smith"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E012",
+      "name": "Smith, John",
+      "type": "Person",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D004",
+          "span": {
+            "start": 222,
+            "end": 233,
+            "quote": "Smith, John"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E001",
+      "name": "Aster Vale Systems",
+      "type": "Organization",
+      "aliases": [],
+      "mentions": [
+        {
+          "document_id": "D004",
+          "span": {
+            "start": 94,
+            "end": 112,
+            "quote": "Aster Vale Systems"
+          }
+        }
+      ]
+    }
+  ],
+  "claims": [],
+  "events": [],
+  "citations": []
+}

@@ -60,7 +60,7 @@ _STOP_TOKENS = {
 
 _TEMPLATES = [
     # has_ceo
-    (re.compile(r"(?P<org>[A-Z][\w'&.\- ]*?(?:Labs|Systems|Inc|Corp))\s+(?:named|appointed)\s+(?P<person>[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)\s+(?:as\s+)?CEO", re.IGNORECASE | re.IGNORECASE), "has_ceo"),
+    (re.compile(r"(?P<org>[A-Z][\w'&.\- ]*?(?:Labs|Systems|Inc|Corp))\s+(?:named|appointed)\s+(?P<person>[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)\s+(?:as\s+)?CEO"), "has_ceo"),
     (re.compile(r"(?P<person>[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)\s+is the chief executive officer of\s+(?P<org>[A-Z][\w'&.\- ]*?(?:Labs|Systems|Inc|Corp))"), "has_ceo"),
     (re.compile(r"(?P<person>[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)\s+has served as chief executive officer of\s+(?P<org>[A-Z][\w'&.\- ]*?(?:Labs|Systems|Inc|Corp))"), "has_ceo"),
     # located_at
